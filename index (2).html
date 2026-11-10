@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topf Oder Deckel GmbH – Dein Minecraft-Shop!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --himmel: #86c5f4;
+      --stein: #8b8b8b;
+      --stein-hell: #c6c6c6;
+      --stein-dunkel: #555;
+      --gold: #ffd84a;
+      --text: #1f1f1f;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--himmel); }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "VT323", "Courier New", monospace;
+      font-size: 1.6rem;
+      line-height: 1.35;
+      min-height: 100vh;
+    }
+    /* Minecraft-Welt als feststehender Hintergrund */
+    #szene {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      shape-rendering: crispEdges;
+    }
+    main { max-width: 780px; margin: 0 auto; padding: 40px 16px 56px; }
+
+    /* Das halbtransparente Fenster */
+    .fenster {
+      background: rgba(198, 198, 198, 0.82);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      border: 4px solid #000;
+      box-shadow: inset 4px 4px 0 rgba(255,255,255,.85), inset -4px -4px 0 var(--stein-dunkel), 8px 8px 0 rgba(0,0,0,.25);
+    }
+    .titelleiste {
+      background: rgba(35, 35, 35, 0.9);
+      padding: 28px 24px 24px;
+      text-align: center;
+      border-bottom: 4px solid #000;
+    }
+    h1 {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-weight: 400;
+      font-size: clamp(1.3rem, 5.5vw, 2.6rem);
+      line-height: 1.4;
+      margin: 0 0 16px;
+      color: #fff;
+      text-shadow: 4px 4px 0 #000;
+      overflow-wrap: break-word;
+    }
+    .untertitel {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-size: clamp(0.6rem, 2.2vw, 0.9rem);
+      color: var(--gold);
+      text-shadow: 2px 2px 0 #000;
+      margin: 0;
+    }
+    .inhalt { padding: 24px; }
+    h2 {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-weight: 400;
+      font-size: clamp(0.75rem, 2.8vw, 1rem);
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+    p { margin: 0 0 12px; max-width: 60ch; }
+    .block + .block { margin-top: 28px; }
+
+    .knoepfe { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    button {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-size: 0.7rem;
+      line-height: 1.6;
+      color: #fff;
+      text-shadow: 2px 2px 0 #3a3a3a;
+      background: var(--stein);
+      border: 4px solid #000;
+      box-shadow: inset 4px 4px 0 var(--stein-hell), inset -4px -4px 0 var(--stein-dunkel);
+      padding: 16px 12px;
+      cursor: pointer;
+    }
+    button:hover { background: #7a8ad0; }
+    button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    button[aria-pressed="true"] {
+      background: #6a7bc4;
+      box-shadow: inset 4px 4px 0 var(--stein-dunkel), inset -4px -4px 0 #8d9be0;
+    }
+    #info {
+      margin-top: 18px;
+      background: rgba(30, 30, 30, 0.88);
+      color: #fff;
+      border: 4px solid #000;
+      padding: 14px 18px;
+      min-height: 4.4rem;
+    }
+    #info strong { color: var(--gold); font-weight: 400; }
+    .abschluss {
+      text-align: center;
+      background: var(--gold);
+      border: 4px solid #000;
+      box-shadow: inset 4px 4px 0 #fff3b0, inset -4px -4px 0 #c79a12;
+      padding: 18px;
+    }
+    .abschluss p { margin: 0 auto 6px; }
+    .abschluss .pixel { font-family: "Press Start 2P", "Courier New", monospace; font-size: 0.75rem; line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+  <!-- Hintergrund: Baustelle in der Minecraft-Welt mit dem Skin ODERDECKEL -->
+  <svg id="szene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6db5ee"/><stop offset="1" stop-color="#c4e6fb"/>
+      </linearGradient>
+      <pattern id="erde" width="80" height="80" patternUnits="userSpaceOnUse">
+        <rect width="80" height="80" fill="#8a5a32"/>
+        <rect width="40" height="40" fill="#94623a"/><rect x="40" y="40" width="40" height="40" fill="#7d5230"/>
+        <rect x="10" y="10" width="10" height="10" fill="#6b4426"/><rect x="56" y="20" width="10" height="10" fill="#6b4426"/>
+        <rect x="20" y="56" width="10" height="10" fill="#a67044"/><rect x="62" y="62" width="10" height="10" fill="#a67044"/>
+      </pattern>
+      <pattern id="gras" width="80" height="24" patternUnits="userSpaceOnUse">
+        <rect width="80" height="24" fill="#5da130"/><rect width="80" height="8" fill="#74b83f"/>
+        <rect x="20" y="8" width="10" height="8" fill="#4d8a28"/><rect x="52" y="12" width="10" height="8" fill="#4d8a28"/>
+      </pattern>
+      <pattern id="stein" width="40" height="40" patternUnits="userSpaceOnUse">
+        <rect width="40" height="40" fill="#8b8b8b"/><rect y="38" width="40" height="2" fill="#6a6a6a"/><rect x="38" width="2" height="40" fill="#6a6a6a"/>
+        <rect x="8" y="8" width="8" height="8" fill="#9a9a9a"/><rect x="24" y="22" width="8" height="8" fill="#7a7a7a"/>
+      </pattern>
+      <pattern id="holz" width="40" height="40" patternUnits="userSpaceOnUse">
+        <rect width="40" height="40" fill="#b8945a"/><rect y="38" width="40" height="2" fill="#8f6f3a"/><rect y="18" width="40" height="2" fill="#a38349"/>
+        <rect x="10" y="8" width="6" height="4" fill="#a38349"/><rect x="26" y="28" width="6" height="4" fill="#a38349"/>
+      </pattern>
+      <pattern id="stamm" width="40" height="40" patternUnits="userSpaceOnUse">
+        <rect width="40" height="40" fill="#6b4a2a"/><rect x="6" width="4" height="40" fill="#5a3d1f"/><rect x="24" width="4" height="40" fill="#7c5a35"/>
+      </pattern>
+    </defs>
+
+    <rect width="1600" height="900" fill="url(#himmel)"/>
+    <!-- Sonne und Wolken -->
+    <rect x="1260" y="50" width="120" height="120" fill="#fff7b0" opacity=".45"/>
+    <rect x="1280" y="70" width="80" height="80" fill="#fff7b0"/>
+    <g fill="#fff" opacity=".92">
+      <rect x="160" y="130" width="240" height="40"/><rect x="200" y="90" width="160" height="40"/>
+      <rect x="820" y="210" width="280" height="40"/><rect x="880" y="170" width="160" height="40"/>
+      <rect x="520" y="290" width="200" height="40"/><rect x="1180" y="330" width="220" height="40"/>
+    </g>
+    <!-- Hügel -->
+    <path d="M0 720V610H160V570H360V540H520V590H700V630H880V590H1060V560H1240V600H1420V570H1600V720Z" fill="#7bbf5a"/>
+    <path d="M0 720V660H120V640H300V670H520V650H760V680H980V650H1180V670H1400V640H1600V720Z" fill="#4e9a38"/>
+    <!-- Bäume -->
+    <g>
+      <rect x="40" y="640" width="16" height="80" fill="#6b4a2a"/><rect x="0" y="590" width="96" height="56" fill="#2f7d2a"/><rect x="16" y="566" width="64" height="32" fill="#3a8f33"/>
+      <rect x="560" y="660" width="12" height="60" fill="#6b4a2a"/><rect x="528" y="622" width="76" height="44" fill="#2f7d2a"/><rect x="540" y="602" width="52" height="26" fill="#3a8f33"/>
+    </g>
+    <!-- Boden -->
+    <rect y="720" width="1600" height="24" fill="url(#gras)"/>
+    <rect y="744" width="1600" height="156" fill="url(#erde)"/>
+
+    <!-- Baustelle: halbfertiges Holzhaus -->
+    <rect x="1150" y="680" width="330" height="40" fill="url(#stein)"/>
+    <rect x="1150" y="600" width="110" height="80" fill="url(#holz)"/>
+    <rect x="1330" y="600" width="150" height="80" fill="url(#holz)"/>
+    <rect x="1190" y="560" width="80" height="40" fill="url(#holz)"/>
+    <rect x="1370" y="560" width="70" height="40" fill="url(#holz)"/>
+    <rect x="1150" y="480" width="40" height="200" fill="url(#stamm)"/>
+    <rect x="1440" y="480" width="40" height="200" fill="url(#stamm)"/>
+    <rect x="1150" y="466" width="180" height="14" fill="#5a3d1f"/>
+    <rect x="1400" y="466" width="80" height="14" fill="#5a3d1f"/>
+    <!-- Gerüst -->
+    <g fill="#d9c07a">
+      <rect x="1098" y="520" width="10" height="200"/><rect x="1138" y="520" width="10" height="200"/>
+      <rect x="1094" y="600" width="58" height="8"/><rect x="1094" y="540" width="58" height="8"/><rect x="1094" y="660" width="58" height="8"/>
+    </g>
+    <!-- Fackel -->
+    <rect x="1198" y="540" width="6" height="22" fill="#8a5a32"/><rect x="1196" y="528" width="10" height="12" fill="#ffb020"/>
+    <!-- Kisten und Steinhaufen -->
+    <rect x="1500" y="680" width="40" height="40" fill="url(#holz)"/><rect x="1540" y="680" width="40" height="40" fill="url(#holz)"/><rect x="1520" y="640" width="40" height="40" fill="url(#holz)"/>
+    <rect x="340" y="680" width="40" height="40" fill="url(#stein)"/><rect x="380" y="680" width="40" height="40" fill="url(#stein)"/><rect x="360" y="640" width="40" height="40" fill="url(#stein)"/>
+    <rect x="450" y="680" width="40" height="40" fill="#a06a2c"/><rect x="450" y="696" width="40" height="8" fill="#3a2410"/><rect x="466" y="696" width="8" height="12" fill="#ffd84a"/>
+
+    <!-- Skin ODERDECKEL -->
+    <rect x="206" y="716" width="88" height="8" fill="#000" opacity=".25"/>
+    <g id="figur"></g>
+    <g>
+      <rect x="158" y="516" width="184" height="30" fill="#000" opacity=".55"/>
+      <text x="250" y="538" text-anchor="middle" font-family="'Press Start 2P', monospace" font-size="14" fill="#fff">OderDeckel</text>
+    </g>
+  </svg>
+
+  <main>
+    <div class="fenster">
+      <div class="titelleiste">
+        <h1>Topf Oder Deckel GmbH</h1>
+        <p class="untertitel">Dein Minecraft-Shop!</p>
+      </div>
+
+      <div class="inhalt">
+        <section class="block">
+          <h2>Willkommen! 🎮</h2>
+          <p>Du suchst Minecraft-Blöcke, seltene Items oder Hilfe bei deinem nächsten Bauprojekt? Dann bist du hier genau richtig.</p>
+          <p>Wir bieten dir faire Preise, freundlichen Kontakt und eine unkomplizierte Abwicklung.</p>
+        </section>
+
+        <section class="block">
+          <h2>Was wir anbieten</h2>
+          <div class="knoepfe">
+            <button type="button" aria-pressed="false" data-titel="🛠️ Bauprojekt-Hilfe" data-text="Wir unterstützen dich bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block.">🛠️ Bauprojekt-Hilfe</button>
+            <button type="button" aria-pressed="false" data-titel="🏰 Bauwerke erweitern" data-text="Deine Base, Burg oder dein Haus soll größer werden? Wir bauen mit dir weiter.">🏰 Bauwerke erweitern</button>
+            <button type="button" aria-pressed="false" data-titel="⛏️ Ressourcen sammeln" data-text="Dir fehlen Materialien? Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">⛏️ Ressourcen sammeln</button>
+            <button type="button" aria-pressed="false" data-titel="🧱 Blöcke &amp; Baumaterial" data-text="Verschiedene Blöcke und Baumaterialien für deine Bauprojekte.">🧱 Blöcke &amp; Baumaterial</button>
+            <button type="button" aria-pressed="false" data-titel="💎 Items &amp; Ressourcen" data-text="Nützliche Materialien und ausgewählte Minecraft-Items.">💎 Items &amp; Ressourcen</button>
+          </div>
+          <div id="info" aria-live="polite">Klick auf einen Button, um mehr zu erfahren.</div>
+        </section>
+
+        <section class="block abschluss">
+          <p class="pixel">Dein Minecraft. Deine Projekte. Unsere Unterstützung!</p>
+          <p>Schau dich um und entdecke unsere Angebote!</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Buttons
+    var knoepfe = document.querySelectorAll('.knoepfe button');
+    var info = document.getElementById('info');
+    knoepfe.forEach(function (b) {
+      b.addEventListener('click', function () {
+        knoepfe.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        info.innerHTML = '<strong>' + b.dataset.titel + '</strong><br>' + b.dataset.text;
+      });
+    });
+
+    // Figur ODERDECKEL: komplett magenta, Gesicht mit zwei Augen und breitem Mund
+    var P = 5, OX = 210, OY = 560, FARBE = '#d930e4', KANTE = '#a01fa8', NS = 'http://www.w3.org/2000/svg';
+    var figur = document.getElementById('figur');
+    function rechteck(x, y, w, h, fill, kante) {
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', OX + x * P); r.setAttribute('y', OY + y * P);
+      r.setAttribute('width', w * P); r.setAttribute('height', h * P);
+      r.setAttribute('fill', fill);
+      if (kante) { r.setAttribute('stroke', KANTE); r.setAttribute('stroke-width', 1.5); }
+      figur.appendChild(r);
+    }
+    // Körperteile in Skin-Pixeln (Vorderansicht): Kopf, Körper, Arme, Beine
+    [[4,0,8,8],[4,8,8,12],[0,8,4,12],[12,8,4,12],[4,20,4,12],[8,20,4,12]].forEach(function (t) {
+      rechteck(t[0], t[1], t[2], t[3], FARBE, true);
+    });
+    // Gesicht: Augen (Spalte 1 und 6, Zeile 4) und Mund (Spalte 2 bis 5, Zeile 6)
+    rechteck(4 + 1, 4, 1, 1, '#000');
+    rechteck(4 + 6, 4, 1, 1, '#000');
+    rechteck(4 + 2, 6, 4, 1, '#000');
+  </script>
+</body>
+</html>
