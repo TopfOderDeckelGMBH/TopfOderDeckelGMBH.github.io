@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Freikaufen – Topf Oder Deckel GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --akzent: #c01fd0; --text: #1d1d1f; --grau: #6e6e73; --gelb: #ffd23f; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { background: #f5f5f7; }
+    body {
+      margin: 0; color: var(--text); min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1.125rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
+    }
+    .hintergrund { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #f5f5f7; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: schweben 18s ease-in-out infinite alternate; }
+    .blob.a { width: 52vw; height: 52vw; left: -14vw; top: -14vw; background: rgba(217, 48, 228, .30); }
+    .blob.b { width: 56vw; height: 56vw; right: -16vw; top: 6vh; background: rgba(255, 90, 90, .26); animation-delay: -6s; }
+    .blob.c { width: 40vw; height: 40vw; left: 28vw; bottom: -14vw; background: rgba(255, 205, 70, .28); animation-delay: -11s; }
+    @keyframes schweben { to { transform: translate(4vw, 3vw) scale(1.08); } }
+
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(245, 245, 247, .72); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0, 0, 0, .08); }
+    .nav-innen { max-width: 980px; margin: 0 auto; height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; font-size: .85rem; }
+    .marke { font-weight: 600; letter-spacing: -.01em; }
+    nav a { color: var(--text); text-decoration: none; opacity: .8; }
+    nav a:hover { opacity: 1; }
+
+    main { max-width: 680px; margin: 0 auto; padding: 56px 20px 72px; text-align: center; }
+    .emoji { font-size: 4rem; line-height: 1; margin-bottom: 8px; animation: wackeln 3s ease-in-out infinite; }
+    @keyframes wackeln { 50% { transform: rotate(8deg) scale(1.06); } }
+    h1 {
+      font-size: clamp(2.4rem, 9vw, 4.4rem); font-weight: 700; line-height: 1.05; letter-spacing: -.04em; margin: 0 0 14px;
+      background: linear-gradient(90deg, #7b2ff7, #d930e4 50%, #ff5d9e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .lead { color: var(--grau); max-width: 36ch; margin: 0 auto 32px; font-size: 1.2rem; }
+
+    .glas { background: rgba(255, 255, 255, .66); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); border: 1px solid rgba(255, 255, 255, .8); border-radius: 32px; box-shadow: 0 10px 40px rgba(60, 30, 100, .10); }
+    .preiskarte { padding: 24px 20px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 18px; }
+    .chip { background: #fff; border-radius: 999px; padding: 10px 22px; box-shadow: 0 2px 10px rgba(60, 30, 100, .10); }
+    .gross { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; }
+    .oder { color: var(--grau); }
+    .preiskarte .hinweis { flex-basis: 100%; margin: 4px 0 0; }
+    form { padding: 32px 28px; text-align: left; animation: plop .5s cubic-bezier(.2, .9, .3, 1.15) both; }
+    @keyframes plop { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+    .feld { margin-bottom: 18px; }
+    .lbl { display: block; font-size: .9rem; font-weight: 600; margin: 0 0 6px; }
+    .eingabe { width: 100%; font: inherit; font-size: 1rem; color: var(--text); background: rgba(255, 255, 255, .9); border: 1px solid rgba(0, 0, 0, .14); border-radius: 14px; padding: 12px 14px; }
+    .eingabe:focus { outline: 3px solid rgba(192, 31, 208, .3); border-color: var(--akzent); }
+    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 8px; }
+    .hinweis { color: var(--grau); font-size: .9rem; margin: 8px 0 0; }
+    .pille { display: inline-block; border: 0; font: inherit; font-weight: 500; font-size: 1.05rem; cursor: pointer; background: var(--akzent); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 999px; transition: transform .2s ease, background .2s ease; }
+    .pille:hover { background: #a519b3; transform: scale(1.03); }
+    .pille:disabled { background: #b8b8c0; cursor: not-allowed; transform: none; }
+    .pille:focus-visible, .eingabe:focus-visible { outline: 3px solid var(--akzent); outline-offset: 3px; }
+    .ergebnis { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(0, 0, 0, .1); }
+    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 1rem; background: rgba(255, 255, 255, .9); border-radius: 14px; padding: 16px; margin: 0 0 14px; }
+    .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .kopiert { color: var(--akzent); font-weight: 600; margin: 0; }
+    .zurueck { display: inline-block; margin-top: 28px; color: var(--akzent); text-decoration: none; }
+    .zurueck:hover { text-decoration: underline; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="hintergrund" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+
+  <nav>
+    <div class="nav-innen">
+      <span class="marke">Topf Oder Deckel</span>
+      <a href="index.html">‹ Zurück zur Startseite</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="emoji" aria-hidden="true">🕵️</div>
+    <h1>Freikaufen.</h1>
+    <p class="lead">Kein Hitman-Auftrag nötig: Du kannst dich jederzeit freikaufen und bist danach vor Hitmans sicher.</p>
+
+    <div class="preiskarte glas">
+      <div class="chip"><span class="gross">💶 1 Euro</span></div>
+      <span class="oder">oder</span>
+      <div class="chip"><span class="gross">💎 178 Diamantblöcke</span></div>
+      <p class="hinweis">Der Wert in Diamantblöcken ist 1 Euro nach unserem Kurs: 16 Diamanten = 1 Cent, 1 Block = 9 Diamanten.</p>
+    </div>
+
+    <form id="formular" class="glas">
+      <div class="feld">
+        <label class="lbl" for="mcname">Dein Minecraft-Name</label>
+        <input class="eingabe" id="mcname" autocomplete="off" maxlength="32" required>
+      </div>
+      <div class="feld">
+        <label class="lbl" for="zahlung">Wie möchtest du bezahlen?</label>
+        <select class="eingabe" id="zahlung">
+          <option value="1 Euro">1 Euro</option>
+          <option value="178 Diamantblöcke">178 Diamantblöcke</option>
+        </select>
+        <p class="hinweis">Wir melden uns bei dir und sprechen die Bezahlung ab. Bezahlt wird hier auf der Seite nichts.</p>
+      </div>
+
+      <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <button type="submit" class="pille">Jetzt freikaufen</button>
+
+      <div id="ergebnis" class="ergebnis" hidden>
+        <span class="lbl" id="status" aria-live="polite"></span>
+        <pre id="text"></pre>
+        <div class="aktionen">
+          <button type="button" class="pille" id="kopieren">Text kopieren</button>
+          <p id="kopiert" class="kopiert" hidden>Kopiert!</p>
+        </div>
+      </div>
+    </form>
+
+    <a class="zurueck" href="index.html">‹ Zurück zur Startseite</a>
+  </main>
+
+  <script>
+    // Discord: Webhook-URL des Kanals für Freikäufe. Solange hier nichts steht, wird der Standardkanal genommen.
+    var DISCORD_WEBHOOK = '';
+    var DISCORD_STANDARD = 'https://discord.com/api/webhooks/1569667931376320572/uk2-K4RnN9vdh7ACTNDnA32K02JCAUUnMR5Qd3jROqkiQZzM3TThJJU5QugEVVoqv9H0';
+
+    var form = document.getElementById('formular');
+    var ergebnis = document.getElementById('ergebnis');
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = 'Freikauf bei der Topf Oder Deckel GmbH\n\nMinecraft-Name: ' + v('mcname') + '\nBezahlung: ' + v('zahlung');
+      document.getElementById('text').textContent = t;
+      var status = document.getElementById('status');
+      var senden = form.querySelector('button[type=submit]');
+      var zeigen = function (text) {
+        status.textContent = text; ergebnis.hidden = false;
+        ergebnis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      var hook = DISCORD_WEBHOOK || DISCORD_STANDARD;
+      if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
+      if (document.getElementById('website').value) return; // Spam-Falle
+      senden.disabled = true;
+      fetch(hook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: 'Freikauf-Bot',
+          allowed_mentions: { parse: [] },
+          content: '🕵️ Neuer Freikauf von ' + v('mcname'),
+          embeds: [{ title: 'Freikaufen', description: t.slice(0, 3500), color: 14233828, timestamp: new Date().toISOString() }]
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        zeigen('Dein Freikauf wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+      }).catch(function () {
+        zeigen('Senden hat nicht geklappt. Kopiere den Text und schick ihn uns:');
+      }).then(function () {
+        setTimeout(function () { senden.disabled = false; }, 30000);
+      });
+    });
+
+    document.getElementById('kopieren').addEventListener('click', function () {
+      var pre = document.getElementById('text');
+      var fertig = function () {
+        var k = document.getElementById('kopiert');
+        k.hidden = false; setTimeout(function () { k.hidden = true; }, 2000);
+      };
+      var auswaehlen = function () {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        document.execCommand('copy'); fertig();
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
+      else auswaehlen();
+    });
+  </script>
+</body>
+</html>
