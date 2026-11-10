@@ -1,16 +1,112 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
-	<head>
-		<meta charset="UTF-8">
-			<title>Meine Website</title>
-			<style>
-				body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
-				h1 { color: #2a6; }
-			</style>
-		</head>
-	<body>
-		<h1>Hallo Welt!</h1>
-		<p>Das ist meine erste Website.</p>
-		<button onclick="alert('Hi!')">Klick mich</button>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topf Oder Deckel GmbH – Dein Minecraft-Shop!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --erde: #4a2f18;
+      --gras: #5da130;
+      --gras-dunkel: #3f7320;
+      --nacht: #1c1814;
+      --text: #f2ede0;
+      --diamant: #4aedd9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--nacht);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+    header {
+      background: var(--erde);
+      border-bottom: 18px solid var(--gras);
+      box-shadow: 0 6px 0 var(--gras-dunkel);
+      padding: 64px 24px 56px;
+    }
+    .innen { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-weight: 400;
+      font-size: clamp(1.6rem, 6.5vw, 3.2rem);
+      line-height: 1.35;
+      margin: 0 0 24px;
+      color: var(--text);
+      text-shadow: 4px 4px 0 #000;
+      overflow-wrap: break-word;
+    }
+    .untertitel {
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-size: clamp(0.7rem, 2.4vw, 1rem);
+      line-height: 1.8;
+      color: var(--diamant);
+      margin: 0;
+    }
+    main { padding: 48px 24px 72px; }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.6rem;
+      line-height: 1.3;
+      margin: 48px 0 12px;
+    }
+    h2:first-child { margin-top: 0; }
+    p { margin: 0 0 16px; max-width: 68ch; }
+    ul { list-style: none; padding: 0; margin: 16px 0 0; }
+    li {
+      border-left: 6px solid var(--gras);
+      padding: 4px 0 4px 16px;
+      margin-bottom: 14px;
+      max-width: 68ch;
+    }
+    .abschluss {
+      margin-top: 56px;
+      padding: 24px;
+      background: var(--erde);
+      border-left: 6px solid var(--diamant);
+    }
+    .abschluss p { margin: 0 0 8px; }
+    .abschluss p:last-child { margin: 0; }
+    .abschluss strong { font-size: 1.2rem; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--diamant); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="innen">
+      <h1>Topf Oder Deckel GmbH</h1>
+      <p class="untertitel">Dein Minecraft-Shop!</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="innen">
+      <h2>Willkommen bei der Topf Oder Deckel GmbH! 🎮</h2>
+      <p>Du suchst hochwertige Minecraft-Blöcke, seltene Items oder zuverlässige Dienstleistungen für dein nächstes Bauprojekt? Dann bist du hier genau richtig!</p>
+      <p>Bei der Topf Oder Deckel GmbH findest du eine Auswahl an Minecraft-Blöcken, Items und verschiedenen Dienstleistungen rund um Minecraft. Egal, ob du deine Bauwerke erweitern, Ressourcen sammeln oder dir bei einem Projekt helfen lassen möchtest – wir bieten dir passende Angebote zu fairen Preisen.</p>
+
+      <h2>Was wir anbieten:</h2>
+      <ul>
+        <li>🧱 <strong>Minecraft-Blöcke:</strong> Verschiedene Blöcke und Baumaterialien für deine Bauprojekte.</li>
+        <li>💎 <strong>Items &amp; Ressourcen:</strong> Nützliche Materialien und ausgewählte Minecraft-Items.</li>
+        <li>🛠️ <strong>Dienstleistungen:</strong> Unterstützung bei Bauprojekten und weitere Minecraft-Services.</li>
+        <li>🤝 <strong>Zuverlässiger Service:</strong> Freundlicher Kontakt und eine unkomplizierte Abwicklung.</li>
+      </ul>
+
+      <h2>Warum Topf Oder Deckel GmbH?</h2>
+      <p>Unser Ziel ist es, dir den Handel mit Minecraft-Blöcken und Dienstleistungen so einfach wie möglich zu machen. Qualität, faire Preise und zufriedene Kunden stehen bei uns im Mittelpunkt.</p>
+
+      <div class="abschluss">
+        <p><strong>Topf Oder Deckel GmbH – Dein Minecraft. Deine Projekte. Unsere Unterstützung!</strong></p>
+        <p>Schau dich um und entdecke unsere Angebote!</p>
+      </div>
+    </div>
+  </main>
+</body>
 </html>
