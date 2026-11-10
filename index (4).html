@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topf Oder Deckel GmbH – Dein Minecraft-Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      --akzent: #c01fd0;
+      --text: #1d1d1f;
+      --grau: #6e6e73;
+      --glas: rgba(255, 255, 255, 0.66);
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; background: #f5f5f7; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1.125rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Weicher Farbverlauf-Hintergrund */
+    .hintergrund { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #f5f5f7; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: schweben 18s ease-in-out infinite alternate; }
+    .blob.a { width: 52vw; height: 52vw; left: -14vw; top: -14vw; background: rgba(217, 48, 228, .30); }
+    .blob.b { width: 56vw; height: 56vw; right: -16vw; top: 6vh; background: rgba(60, 170, 255, .34); animation-delay: -6s; }
+    .blob.c { width: 40vw; height: 40vw; left: 28vw; bottom: -14vw; background: rgba(255, 205, 70, .28); animation-delay: -11s; }
+    @keyframes schweben { to { transform: translate(4vw, 3vw) scale(1.08); } }
+
+    /* Navigation */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(245, 245, 247, .72);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+    .nav-innen { max-width: 980px; margin: 0 auto; height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; font-size: .85rem; }
+    .marke { font-weight: 600; letter-spacing: -.01em; }
+    .nav-links { display: flex; gap: 24px; }
+    nav a { color: var(--text); text-decoration: none; opacity: .8; }
+    nav a:hover { opacity: 1; }
+
+    section { scroll-margin-top: 64px; }
+    .breit { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 72px 20px 24px; }
+    h1 {
+      font-size: clamp(2.8rem, 10vw, 6.2rem);
+      font-weight: 700;
+      line-height: 1.03;
+      letter-spacing: -.04em;
+      margin: 0 auto 18px;
+      max-width: 11ch;
+      text-wrap: balance;
+      background: linear-gradient(90deg, #7b2ff7, #d930e4 50%, #ff5d9e);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .unter { font-size: clamp(1.3rem, 3.6vw, 1.9rem); font-weight: 600; letter-spacing: -.02em; color: var(--text); margin: 0 0 10px; }
+    .lead { color: var(--grau); max-width: 34ch; margin: 0 auto 28px; font-size: 1.2rem; }
+    .cta { display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .pille {
+      display: inline-block; background: var(--akzent); color: #fff; text-decoration: none;
+      padding: 12px 24px; border-radius: 999px; font-weight: 500; font-size: 1.05rem;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .pille:hover { background: #a519b3; transform: scale(1.03); }
+    .link { color: var(--akzent); text-decoration: none; font-size: 1.05rem; }
+    .link:hover { text-decoration: underline; }
+
+    /* Figur */
+    .buehne { position: relative; width: 330px; max-width: 90vw; margin: 34px auto 0; }
+    .buehne::before {
+      content: ""; position: absolute; left: 50%; top: 52%; width: 340px; height: 340px; transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(217, 48, 228, .32), rgba(217, 48, 228, 0) 68%); z-index: -1;
+    }
+    .helm { cursor: default; outline: none; }
+    .helm:focus-visible { outline: 3px solid var(--akzent); outline-offset: 4px; }
+    .figur { display: block; width: 100%; height: auto; overflow: visible; }
+    .huepfen { animation: huepfen 2.4s ease-in-out infinite; }
+    .schatten { transform-box: fill-box; transform-origin: center; animation: schatten 2.4s ease-in-out infinite; }
+    .winken { transform-box: fill-box; transform-origin: 50% 12%; animation: winken 1.1s ease-in-out infinite; }
+    .auge { transform-box: fill-box; transform-origin: 50% 50%; animation: blinzeln 4.6s infinite; }
+    @keyframes huepfen { 50% { transform: translateY(-9px); } }
+    @keyframes schatten { 50% { transform: scale(.88); opacity: .6; } }
+    @keyframes winken { 0%, 100% { transform: rotate(-135deg); } 50% { transform: rotate(-166deg); } }
+    @keyframes blinzeln { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+    .name { text-align: center; margin: 6px 0 0; font-size: .95rem; font-weight: 600; color: var(--grau); }
+
+    /* Abschnitte */
+    .abschnitt { padding: 96px 0 24px; text-align: center; }
+    h2 { font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; margin: 0 0 12px; }
+    .abschnitt > .breit > p { color: var(--grau); max-width: 40ch; margin: 0 auto 32px; }
+
+    /* Auswahl als Segment-Schalter */
+    .schalter {
+      display: flex; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 20px;
+      padding: 4px; border-radius: 26px; background: rgba(0, 0, 0, .06); flex-wrap: wrap; justify-content: center;
+    }
+    .schalter::-webkit-scrollbar { display: none; }
+    .schalter button {
+      font: inherit; font-size: .95rem; font-weight: 500; white-space: nowrap;
+      color: var(--text); background: transparent; border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer;
+      transition: background .25s ease, box-shadow .25s ease;
+    }
+    .schalter button:hover { background: rgba(255, 255, 255, .5); }
+    .schalter button[aria-selected="true"] { background: #fff; box-shadow: 0 1px 6px rgba(0, 0, 0, .16); }
+    .schalter button:focus-visible { outline: 3px solid var(--akzent); outline-offset: 2px; }
+
+    .glas {
+      background: var(--glas);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: 32px;
+      box-shadow: 0 10px 40px rgba(60, 30, 100, .10);
+    }
+    .detail { padding: 44px 28px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .detail .icon { font-size: 3.6rem; line-height: 1; margin-bottom: 14px; }
+    .detail h3 { font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: -.02em; margin: 0 0 8px; }
+    .detail p { margin: 0; color: var(--grau); max-width: 36ch; font-size: 1.2rem; }
+    .detail.neu > * { animation: einblenden .4s ease both; }
+    @keyframes einblenden { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+
+    /* Anfrage-Formular */
+    .formular { margin-top: 16px; padding: 32px 28px; text-align: left; }
+    .formular h3 { font-size: 1.4rem; letter-spacing: -.02em; margin: 0 0 20px; }
+    .formular fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .feld { margin-bottom: 18px; }
+    .lbl { display: block; font-size: .9rem; font-weight: 600; margin: 0 0 6px; }
+    .eingabe {
+      width: 100%; font: inherit; font-size: 1rem; color: var(--text);
+      background: rgba(255, 255, 255, .9); border: 1px solid rgba(0, 0, 0, .14);
+      border-radius: 14px; padding: 12px 14px;
+    }
+    .eingabe:focus { outline: 3px solid rgba(192, 31, 208, .3); border-color: var(--akzent); }
+    textarea.eingabe { min-height: 130px; resize: vertical; }
+    .zeile { display: grid; grid-template-columns: 1fr 110px 42px; gap: 8px; margin-bottom: 8px; }
+    .weg { font: inherit; font-size: 1.3rem; line-height: 1; background: rgba(0, 0, 0, .06); border: 0; border-radius: 14px; cursor: pointer; color: var(--text); }
+    .weg:hover { background: rgba(0, 0, 0, .12); }
+    .klein {
+      display: inline-block; font: inherit; font-size: .95rem; font-weight: 500; color: var(--text); text-decoration: none;
+      background: rgba(0, 0, 0, .06); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer;
+    }
+    .klein:hover { background: rgba(0, 0, 0, .12); }
+    button.pille { border: 0; font: inherit; font-weight: 500; font-size: 1.05rem; cursor: pointer; }
+    .formular :focus-visible { outline: 3px solid var(--akzent); outline-offset: 2px; }
+    .ergebnis { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(0, 0, 0, .1); }
+    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 1rem; background: rgba(255, 255, 255, .9); border-radius: 14px; padding: 16px; margin: 0 0 14px; }
+    .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .kopiert { color: var(--akzent); font-weight: 600; margin: 0; }
+    .tag { display: inline-block; font-size: .7rem; font-weight: 600; background: var(--gelb); color: #4a2a00; border-radius: 999px; padding: 2px 8px; margin-left: 6px; }
+    .bald { background: var(--gelb); color: #4a2a00; font-weight: 600; border-radius: 14px; padding: 12px 16px; margin: 0 0 20px; }
+    .haken { display: flex; gap: 10px; align-items: flex-start; font-size: 1rem; cursor: pointer; }
+    .haken input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--akzent); flex: none; }
+    .eingabe:disabled { opacity: .55; cursor: not-allowed; }
+    button.pille:disabled { background: #b8b8c0; cursor: not-allowed; transform: none; }
+    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 8px; }
+    .hinweis { color: var(--grau); font-size: .9rem; margin: 8px 0 0; }
+    .karten { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); text-align: left; }
+    .karte { padding: 30px 28px; }
+    .karte .icon { font-size: 2.2rem; line-height: 1; margin-bottom: 14px; }
+    .karte h3 { font-size: 1.3rem; letter-spacing: -.015em; margin: 0 0 6px; }
+    .karte p { margin: 0; color: var(--grau); font-size: 1.05rem; }
+
+    .schluss { text-align: center; padding: 110px 20px 70px; }
+    .schluss h2 { max-width: 14ch; margin: 0 auto 14px; text-wrap: balance; }
+    .schluss p { color: var(--grau); margin: 0 0 24px; }
+    footer { text-align: center; color: var(--grau); font-size: .8rem; padding: 22px 20px 34px; border-top: 1px solid rgba(0, 0, 0, .08); }
+
+    .js .zeigen { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); }
+    .js .zeigen.sichtbar { opacity: 1; transform: none; }
+    @media (max-width: 560px) { .nav-links { gap: 16px; } .hero { padding-top: 48px; } }
+    .ploppen { animation: plop .4s cubic-bezier(.2, .9, .3, 1.15) both; }
+    @keyframes plop { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+      .js .zeigen { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hintergrund" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+
+  <nav>
+    <div class="nav-innen">
+      <span class="marke">Topf Oder Deckel</span>
+      <div class="nav-links"><a href="#angebote">Angebote</a><a href="#warum">Warum wir</a><a href="#mitmachen">Mitmachen</a></div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Topf Oder Deckel GmbH</h1>
+    <p class="unter">Dein Minecraft-Shop.</p>
+    <p class="lead">Blöcke, seltene Items und Hilfe bei deinem nächsten Bauprojekt. Zu fairen Preisen und ganz unkompliziert.</p>
+    <div class="cta"><a class="pille" href="#angebote">Angebote ansehen</a><a class="link" href="#warum">Warum wir ›</a></div>
+
+    <div class="buehne">
+      <svg class="figur" viewBox="-140 -262 280 282" role="img" aria-label="OderDeckel mit Bauarbeiterhelm und Spitzhacke">
+        <defs>
+          <linearGradient id="kopf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ee62f7"/><stop offset="1" stop-color="#c624d2"/></linearGradient>
+          <linearGradient id="koerper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#df3cea"/><stop offset="1" stop-color="#b820c4"/></linearGradient>
+          <linearGradient id="helm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe46b"/><stop offset="1" stop-color="#ffbf00"/></linearGradient>
+          <filter id="weich"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+        <ellipse class="schatten" cx="0" cy="6" rx="62" ry="8" fill="#2b1040" opacity=".22" filter="url(#weich)"/>
+        <g class="huepfen">
+          <rect x="-38" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
+          <rect x="6" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
+          <rect x="-74" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/>
+          <rect x="-46" y="-134" width="92" height="84" rx="28" fill="url(#koerper)"/>
+          <g class="winken"><rect x="46" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/></g>
+          <g transform="translate(-60 -62) rotate(-35)">
+            <rect x="-4.5" y="-86" width="9" height="102" rx="4.5" fill="#8a5a32"/>
+            <path d="M-36 -76 Q0 -110 36 -76 L30 -65 Q0 -90 -30 -65 Z" fill="#b4bfcc" stroke="#6b7686" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="0" cy="-82" r="4.5" fill="#7a8596"/>
+            <circle cx="0" cy="0" r="12" fill="url(#koerper)"/>
+          </g>
+          <rect x="-50" y="-222" width="100" height="94" rx="32" fill="url(#kopf)"/>
+          <ellipse cx="-20" cy="-206" rx="22" ry="8" fill="#fff" opacity=".22"/>
+          <a class="helm" href="freikaufen.html" aria-label="Geheimer Link"><path d="M-50 -208 C-50 -266 50 -266 50 -208 Z" fill="url(#helm)"/>
+          <rect x="-9" y="-254" width="18" height="46" rx="9" fill="#f2b000"/>
+          <ellipse cx="-26" cy="-232" rx="10" ry="5" fill="#fff" opacity=".4" transform="rotate(-25 -26 -232)"/>
+          <rect x="-62" y="-214" width="124" height="13" rx="6.5" fill="#f0a800"/></a>
+          <g class="auge"><rect x="-34" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="-29" cy="-171" r="2.4" fill="#fff"/></g>
+          <g class="auge"><rect x="19" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="24" cy="-171" r="2.4" fill="#fff"/></g>
+          <ellipse cx="-38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
+          <ellipse cx="38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
+          <path d="M-27 -149 Q0 -123 27 -149" fill="none" stroke="#111" stroke-width="8" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <p class="name">OderDeckel</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="angebote" class="abschnitt">
+      <div class="breit zeigen">
+        <h2>Was wir anbieten.</h2>
+        <p>Such dir aus, wobei wir dir helfen können.</p>
+        <div class="schalter" role="tablist" aria-label="Angebote">
+          <button type="button" role="tab" aria-selected="true" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="🛠️" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">Bauprojekte</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="material" data-kanal="material" data-icon="🧱" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">Blöcke, Items &amp; Ressourcen</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="aufgabe" data-kanal="redstone" data-icon="🔴" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">Redstone-Hilfe</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="textur" data-kanal="textur" data-icon="🎨" data-titel="Textur-Ideen" data-text="Du hast eine Idee für eine eigene Textur? Sag uns, für welches Item, wie es heißen soll und was daraus werden soll.">Texturen</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="hitman" data-kanal="hitman" data-icon="🎯" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">Hitman <span class="tag">Bald</span></button>
+        </div>
+        <div id="detail" class="glas detail" role="tabpanel" aria-live="polite">
+          <div class="icon">🛠️</div>
+          <h3>Bauprojekte</h3>
+          <p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p>
+        </div>
+
+        <form id="anfrage" class="glas formular" hidden>
+          <h3>Deine Anfrage: <span id="anfrage-titel">Bauprojekte</span></h3>
+          <p id="bald" class="bald" hidden>🔒 Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</p>
+          <div class="feld">
+            <label class="lbl" for="mcname">Dein Minecraft-Name</label>
+            <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required>
+          </div>
+          <div class="feld">
+            <label class="lbl" for="dcname">Dein Discord-Name (damit wir dich direkt erreichen)</label>
+            <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required>
+          </div>
+
+          <fieldset id="feld-aufgabe">
+            <div class="feld">
+              <label class="lbl" for="aufgabe">Was sollen wir für dich tun?</label>
+              <textarea class="eingabe" id="aufgabe" name="aufgabe" placeholder="Beschreibe deine Aufgabe, zum Beispiel: Ich möchte ein Haus aus Holz bauen, 20 mal 20 Blöcke groß." maxlength="1500" required></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-material" hidden disabled>
+            <div class="feld">
+              <span class="lbl">Was brauchst du?</span>
+              <div id="zeilen"></div>
+              <button type="button" class="klein" id="mehr">+ Weitere Zeile</button>
+              <p class="hinweis" id="dia-hinweis" hidden>💎 <strong>Diamanten kaufen:</strong> 8 Diamanten = 1 Cent</p>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-textur" hidden disabled>
+            <div class="feld">
+              <label class="lbl" for="t-item">Welches Item?</label>
+              <input class="eingabe" id="t-item" maxlength="60" placeholder="z. B. Diamantspitzhacke" list="bloecke" autocomplete="off" required>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="t-name">Wie soll es heißen?</label>
+              <input class="eingabe" id="t-name" maxlength="60" placeholder="z. B. Bohrhammer" autocomplete="off" required>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="t-idee">Was soll daraus werden?</label>
+              <textarea class="eingabe" id="t-idee" maxlength="1200" placeholder="Beschreibe, wie die Textur aussehen soll: Farben, Form, Vorbild ..." required></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-hitman" hidden disabled>
+            <div class="feld">
+              <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
+              <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
+            </div>
+          </fieldset>
+
+          <div class="feld" id="feld-preis">
+            <label class="lbl" for="preis">Deine Preisvorstellung (optional)</label>
+            <div class="preis">
+              <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag">
+              <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
+            </div>
+            <p class="hinweis"><strong>Kurs:</strong> 16 Diamanten = 1 Cent</p>
+            <p class="hinweis">Schreib uns, was du dafür bezahlen möchtest. Wir melden uns mit einem Angebot.</p>
+          </div>
+
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button type="submit" class="pille">Anfrage erstellen</button>
+
+          <div id="ergebnis" class="ergebnis" hidden>
+            <span class="lbl" id="status" aria-live="polite"></span>
+            <pre id="text"></pre>
+            <div class="aktionen">
+              <button type="button" class="pille" id="kopieren">Anfrage kopieren</button>
+              <p id="kopiert" class="kopiert" hidden>Kopiert!</p>
+            </div>
+          </div>
+          <datalist id="bloecke">
+            <option value="Eichenholz"><option value="Birkenholz"><option value="Stein"><option value="Bruchstein"><option value="Ziegelsteine">
+            <option value="Glas"><option value="Sand"><option value="Erde"><option value="Eisenbarren"><option value="Goldbarren">
+            <option value="Diamant"><option value="Smaragd"><option value="Redstone"><option value="Lapislazuli"><option value="Obsidian"><option value="Kohle">
+          </datalist>
+        </form>
+      </div>
+    </section>
+
+    <section id="warum" class="abschnitt">
+      <div class="breit zeigen">
+        <h2>Warum Topf Oder Deckel?</h2>
+        <p>Qualität, faire Preise und zufriedene Kunden stehen bei uns im Mittelpunkt.</p>
+        <div class="karten">
+          <div class="karte glas"><div class="icon">💰</div><h3>Faire Preise</h3><p>Passende Angebote, die zu deinem Projekt passen.</p></div>
+          <div class="karte glas"><div class="icon">🤝</div><h3>Zuverlässiger Service</h3><p>Freundlicher Kontakt, klar und ehrlich.</p></div>
+          <div class="karte glas"><div class="icon">⚡</div><h3>Unkompliziert</h3><p>Der Handel mit Blöcken und Services so einfach wie möglich.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="schluss zeigen">
+      <h2>Dein Minecraft. Deine Projekte. Unsere Unterstützung.</h2>
+      <p>Schau dich um und entdecke unsere Angebote!</p>
+      <a class="pille" href="#angebote">Zu den Angeboten</a>
+    </section>
+
+    <section id="mitmachen" class="abschnitt" style="padding-bottom:80px">
+      <div class="breit zeigen">
+        <h2>Werde Teil des Teams.</h2>
+        <p>Bewirb dich als Mitarbeiter oder mach ein Praktikum bei uns.</p>
+        <div class="schalter" role="tablist" aria-label="Mitmachen">
+          <button type="button" role="tab" aria-selected="false" data-modus="bewerbung" data-icon="💼" data-titel="Bewerbung als Mitarbeiter" data-text="Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.">Bewerbung</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="praktikum" data-icon="🎓" data-titel="Praktikum" data-text="Du willst erst mal reinschnuppern? Mach ein Praktikum bei uns und lerne Bauen, Redstone und den Shop kennen.">Praktikum</button>
+        </div>
+        <div id="detail2" class="glas detail" role="tabpanel" aria-live="polite" hidden>
+          <div class="icon">💼</div>
+          <h3>Bewerbung als Mitarbeiter</h3>
+          <p>Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.</p>
+        </div>
+
+        <form id="mitmachen-form" class="glas formular" hidden>
+          <h3><span id="m-prefix">Deine</span> <span id="m-titel">Bewerbung als Mitarbeiter</span></h3>
+          <div class="feld">
+            <label class="lbl" for="m-mcname">Dein Minecraft-Name</label>
+            <input class="eingabe" id="m-mcname" autocomplete="off" maxlength="32" required>
+          </div>
+          <div class="feld">
+            <label class="lbl" for="m-dc">Dein Discord-Name (damit wir dich direkt erreichen)</label>
+            <input class="eingabe" id="m-dc" maxlength="40" autocomplete="off" required>
+          </div>
+
+          <fieldset id="feld-bewerbung">
+            <p class="bald">ℹ️ Vor deiner Bewerbung musst du ein <strong>1-tägiges Praktikum</strong> bei uns gemacht haben. Nach deiner Bewerbung musst du noch eine <strong>halbstündige Ausbildung</strong> machen.</p>
+            <div class="feld">
+              <label class="haken"><input type="checkbox" id="b-praktikum" required> Ich habe bereits ein 1-tägiges Praktikum bei euch gemacht.</label>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-warum">Warum möchtest du bei uns mitarbeiten?</label>
+              <textarea class="eingabe" id="b-warum" maxlength="1200" required></textarea>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-erfahrung">Deine Erfahrung in Minecraft (Bauen, Redstone, Handel ...)</label>
+              <textarea class="eingabe" id="b-erfahrung" maxlength="1200" required></textarea>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-zeit">Wie viel Zeit hast du pro Woche?</label>
+              <input class="eingabe" id="b-zeit" maxlength="60" placeholder="z. B. 5 Stunden" required>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-praktikum" hidden disabled>
+            <div class="feld">
+              <label class="lbl" for="p-dauer">Dauer des Praktikums</label>
+              <select class="eingabe" id="p-dauer"><option>1 Tag</option><option>2 Tage</option><option>3 Tage</option></select>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="p-bereich">Wunschbereich</label>
+              <select class="eingabe" id="p-bereich"><option>Bauen</option><option>Redstone</option><option>Ressourcen &amp; Shop</option><option>Egal, ich lasse mich überraschen</option></select>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="p-start">Gewünschter Start</label>
+              <input class="eingabe" id="p-start" maxlength="60" placeholder="z. B. nächste Woche oder 20.11." required>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="p-warum">Warum möchtest du ein Praktikum machen?</label>
+              <textarea class="eingabe" id="p-warum" maxlength="1200" required></textarea>
+            </div>
+          </fieldset>
+
+          <input type="text" id="m-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button type="submit" class="pille">Bewerbung abschicken</button>
+
+          <div id="m-ergebnis" class="ergebnis" hidden>
+            <span class="lbl" id="m-status" aria-live="polite"></span>
+            <pre id="m-text"></pre>
+            <div class="aktionen">
+              <button type="button" class="pille" id="m-kopieren">Text kopieren</button>
+              <p id="m-kopiert" class="kopiert" hidden>Kopiert!</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>© 2026 Topf Oder Deckel GmbH</footer>
+
+  <script>
+    var tabs = document.querySelectorAll('#angebote .schalter button');
+    var detail = document.getElementById('detail');
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.getElementById('anfrage');
+        if (b.getAttribute('aria-selected') === 'true' && !f.hidden) { // erneuter Klick klappt das Formular zu
+          f.hidden = true;
+          return;
+        }
+        tabs.forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+        b.setAttribute('aria-selected', 'true');
+        detail.innerHTML = '<div class="icon">' + b.dataset.icon + '</div><h3>' + b.dataset.titel + '</h3><p>' + b.dataset.text + '</p>';
+        detail.classList.remove('neu'); void detail.offsetWidth; detail.classList.add('neu');
+        modus(b);
+        f.hidden = false;
+        f.classList.remove('ploppen'); void f.offsetWidth; f.classList.add('ploppen');
+        f.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+    var beobachter = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('sichtbar'); beobachter.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.zeigen').forEach(function (el) { beobachter.observe(el); });
+
+    // ---- Anfrage-Formular ----
+    // Discord: pro Reiter ein eigener Bot in einem eigenen Kanal.
+    // Trage zwischen den Anführungszeichen die Webhook-URL des jeweiligen Kanals ein.
+    var DISCORD_WEBHOOKS = {
+      bauprojekte: 'https://discord.com/api/webhooks/1569667931376320572/uk2-K4RnN9vdh7ACTNDnA32K02JCAUUnMR5Qd3jROqkiQZzM3TThJJU5QugEVVoqv9H0',
+      material: 'https://discord.com/api/webhooks/1569809957543747645/roc5jIhIEqPfcq9T_k5zXbC7h8iQQRHubiFoC1j5an8Xya1QnxPNgwbxnvkjQLOqhw4o',
+      redstone: 'https://discord.com/api/webhooks/1569810233566433350/sSze46BCvAyCQFjd2NblJ48rcyX8KKGVUeTnA0LRuxM4pG0EbZvSh4GnRAIlg4oBk03B',
+      hitman: 'https://discord.com/api/webhooks/1569810575288963125/RJt_2P7QI-zKRfo3yJaac76ctTMBz0JGKeC998VaTCyxLDTUcwM3khL86shdYmpnzEe5',
+      textur: 'https://discord.com/api/webhooks/1569821226346741931/92djrPuNrft3LzdBKOeE6cjFWKnpnpevfjsMvRWRbfKvsdiSrAGuIoKY9CqbGFE-XJOW',
+      bewerbung: 'https://discord.com/api/webhooks/1569810975824158890/I2B-ZE6P1i_nZLex7WOE0uGQnUhWQFRkJcKU4vXJI9nF87HzwDY7Q30mxlj0ZAvJBuGt',
+      praktikum: 'https://discord.com/api/webhooks/1569811126710050970/46rCvJWodr9MKFOIZYR96lS1UNJeZ2StHwDe52K1QnxOXzPpj1D0iflUdIIj9SLGKqCn'
+    };
+    // Name, unter dem der jeweilige Bot in Discord schreibt.
+    var BOT_NAMEN = {
+      bauprojekte: 'Bauprojekte-Bot',
+      material: 'Material-Bot',
+      redstone: 'Redstone-Bot',
+      hitman: 'Hitman-Bot',
+      textur: 'Textur-Bot',
+      bewerbung: 'Bewerbungs-Bot',
+      praktikum: 'Praktikums-Bot'
+    };
+
+    // Deine Discord-ID, damit dich der Bot bei jeder neuen Nachricht mit @ markiert.
+    // So findest du sie: Discord > Einstellungen > Erweitert > Entwicklermodus einschalten,
+    // dann rechtsklick auf dein Profil > "Nutzer-ID kopieren". Eine Zahl wie 123456789012345678.
+    var DISCORD_USER_ID = '';
+
+    // Aussehen pro Reiter: Emoji und Farbe des Streifens in Discord.
+    var KANAL_STIL = {
+      bauprojekte: { emoji: '🛠️', farbe: 0xF5A623 },
+      material:    { emoji: '🧱', farbe: 0x8B5A2B },
+      redstone:    { emoji: '🔴', farbe: 0xE03131 },
+      hitman:      { emoji: '🎯', farbe: 0x343A40 },
+      textur:      { emoji: '🎨', farbe: 0x9C36B5 },
+      bewerbung:   { emoji: '💼', farbe: 0x1C7ED6 },
+      praktikum:   { emoji: '🎓', farbe: 0x37B24D }
+    };
+
+    // Baut die Discord-Nachricht: Ping, Titel, übersichtliche Felder und Hinweis zum Abhaken.
+    // felder: Liste aus [Name, Wert, nebeneinander?]
+    function discordNachricht(kanal, titel, felder, kopfzeile) {
+      var st = KANAL_STIL[kanal] || { emoji: '🔔', farbe: 0xD930E4 };
+      var id = /^\d{15,25}$/.test(DISCORD_USER_ID) ? DISCORD_USER_ID : '';
+      return {
+        username: BOT_NAMEN[kanal] || 'Topf Oder Deckel Shop',
+        allowed_mentions: id ? { users: [id] } : { parse: [] },
+        content: (id ? '<@' + id + '> ' : '') + st.emoji + ' ' + kopfzeile,
+        embeds: [{
+          title: st.emoji + ' ' + titel,
+          color: st.farbe,
+          fields: felder.filter(function (f) { return f[1] && String(f[1]).trim(); }).map(function (f) {
+            return { name: f[0], value: String(f[1]).slice(0, 1000), inline: !!f[2] };
+          }),
+          footer: { text: '⏳ Offen · Reagiere mit ✅, wenn erledigt' },
+          timestamp: new Date().toISOString()
+        }]
+      };
+    }
+
+    // Reserve: Wird genommen, solange bei einem Reiter oben nichts eingetragen ist.
+    var DISCORD_STANDARD = '';
+
+    var form = document.getElementById('anfrage');
+    var feldAufgabe = document.getElementById('feld-aufgabe');
+    var feldMaterial = document.getElementById('feld-material');
+    var feldHitman = document.getElementById('feld-hitman');
+    var feldTextur = document.getElementById('feld-textur');
+    var zeilen = document.getElementById('zeilen');
+    var ergebnis = document.getElementById('ergebnis');
+    var aktuell = { titel: '', modus: 'aufgabe' };
+
+    function modus(b) {
+      aktuell.titel = b.dataset.titel;
+      aktuell.modus = b.dataset.modus;
+      aktuell.kanal = b.dataset.kanal;
+      document.getElementById('anfrage-titel').textContent = aktuell.titel;
+      var art = aktuell.modus;
+      var bald = art === 'hitman';
+      feldAufgabe.hidden = art !== 'aufgabe'; feldAufgabe.disabled = art !== 'aufgabe';
+      feldMaterial.hidden = art !== 'material'; feldMaterial.disabled = art !== 'material';
+      feldHitman.hidden = !bald; // bleibt gesperrt (Coming soon)
+      var tex = art === 'textur';
+      feldTextur.hidden = !tex; feldTextur.disabled = !tex;
+      document.getElementById('feld-preis').hidden = tex;
+      ['mcname', 'dcname', 'preis', 'einheit'].forEach(function (id) { document.getElementById(id).disabled = bald; });
+      var absenden = form.querySelector('button[type=submit]');
+      absenden.disabled = bald;
+      absenden.textContent = bald ? 'Bald verfügbar' : (tex ? 'Idee abschicken' : 'Anfrage erstellen');
+      document.getElementById('bald').hidden = !bald;
+      ergebnis.hidden = true;
+    }
+
+    function pruefeDia() {
+      var dia = Array.prototype.some.call(zeilen.querySelectorAll('[name=item]'), function (i) { return /diamant/i.test(i.value); });
+      document.getElementById('dia-hinweis').hidden = !dia;
+      return dia;
+    }
+    zeilen.addEventListener('input', pruefeDia);
+
+    function neueZeile() {
+      var z = document.createElement('div');
+      z.className = 'zeile';
+      z.innerHTML =
+        '<input class="eingabe" name="item" list="bloecke" maxlength="60" placeholder="Block oder Item, z. B. Eichenholz" aria-label="Block oder Item" required>' +
+        '<input class="eingabe" name="anzahl" type="number" min="1" max="100000" step="1" placeholder="Anzahl" aria-label="Anzahl" required>' +
+        '<button type="button" class="weg" aria-label="Zeile entfernen">×</button>';
+      z.querySelector('.weg').addEventListener('click', function () { if (zeilen.children.length > 1) { z.remove(); pruefeDia(); } });
+      zeilen.appendChild(z);
+    }
+    neueZeile();
+    document.getElementById('mehr').addEventListener('click', neueZeile);
+    modus(tabs[0]);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (aktuell.modus === 'hitman') return;
+      var v = function (id) { return document.getElementById(id).value.trim(); };
+      var t = 'Anfrage an die Topf Oder Deckel GmbH\n\nAngebot: ' + aktuell.titel +
+              '\nMinecraft-Name: ' + v('mcname') + '\nDiscord: ' + v('dcname') + '\n\n';
+      var liste = '';
+      if (aktuell.modus === 'material') {
+        t += 'Benötigt:\n';
+        Array.prototype.forEach.call(zeilen.children, function (z) {
+          var item = z.querySelector('[name=item]').value.trim();
+          var anzahl = z.querySelector('[name=anzahl]').value;
+          if (item && anzahl) { t += '- ' + anzahl + '× ' + item + '\n'; liste += '• ' + anzahl + '× ' + item + '\n'; }
+        });
+        if (pruefeDia()) t += '\nDiamanten-Kurs: 8 Diamanten = 1 Cent\n';
+      } else if (aktuell.modus === 'textur') {
+        t += 'Item: ' + v('t-item') + '\nName: ' + v('t-name') + '\n\nIdee:\n' + v('t-idee') + '\n';
+      } else {
+        t += 'Aufgabe:\n' + document.getElementById('aufgabe').value.trim() + '\n';
+      }
+      var preis = aktuell.modus === 'textur' ? '' : document.getElementById('preis').value;
+      var einheit = document.getElementById('einheit').value;
+      if (preis) {
+        if (einheit === 'Diamanten' && Number(preis) === 1) einheit = 'Diamant';
+        t += '\n\nPreisvorstellung: ' + preis + ' ' + einheit;
+      }
+      t = t.trim();
+      document.getElementById('text').textContent = t;
+      var name = document.getElementById('mcname').value.trim();
+      var status = document.getElementById('status');
+      var senden = form.querySelector('button[type=submit]');
+      var zeigen = function (text) {
+        status.textContent = text;
+        ergebnis.hidden = false;
+        ergebnis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      var felder = [['👤 Minecraft-Name', '`' + name + '`', true], ['💬 Discord', '`' + v('dcname') + '`', true]];
+      if (aktuell.modus === 'material') {
+        felder.push(['📦 Bestellung', liste, false]);
+        if (pruefeDia()) felder.push(['💎 Diamanten-Kurs', '8 Diamanten = 1 Cent', true]);
+      } else if (aktuell.modus === 'textur') {
+        felder.push(['🎨 Item', v('t-item'), true], ['🏷️ Name', v('t-name'), true], ['💡 Idee', v('t-idee'), false]);
+      } else {
+        felder.push(['📝 Aufgabe', v('aufgabe'), false]);
+      }
+      if (preis) felder.push(['💰 Preisvorstellung', preis + ' ' + einheit, true]);
+      var hook = DISCORD_WEBHOOKS[aktuell.kanal] || DISCORD_STANDARD;
+      if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
+      if (document.getElementById('website').value) return; // Spam-Falle
+      senden.disabled = true;
+      fetch(hook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(discordNachricht(aktuell.kanal, 'Anfrage: ' + aktuell.titel, felder, 'Neue Anfrage von **' + name + '**'))
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        zeigen('Deine Anfrage wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+      }).catch(function () {
+        zeigen('Senden hat nicht geklappt. Kopiere die Anfrage und schick sie uns:');
+      }).then(function () {
+        setTimeout(function () { if (aktuell.modus !== 'hitman') senden.disabled = false; }, 30000);
+      });
+    });
+
+    document.getElementById('kopieren').addEventListener('click', function () {
+      var pre = document.getElementById('text');
+      var fertig = function () {
+        var k = document.getElementById('kopiert');
+        k.hidden = false;
+        setTimeout(function () { k.hidden = true; }, 2000);
+      };
+      var auswaehlen = function () {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        document.execCommand('copy'); fertig();
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
+      else auswaehlen();
+    });
+
+    // ---- Bewerbung und Praktikum (Bereich ganz unten) ----
+    var tabs2 = document.querySelectorAll('#mitmachen .schalter button');
+    var detail2 = document.getElementById('detail2');
+    var form2 = document.getElementById('mitmachen-form');
+    var m = { modus: 'bewerbung', kanal: 'bewerbung', titel: 'Bewerbung als Mitarbeiter' };
+
+    function wechsel2(b) {
+      if (b.getAttribute('aria-selected') === 'true') {
+        tabs2.forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+        detail2.hidden = true; form2.hidden = true;
+        return;
+      }
+      m.modus = b.dataset.modus; m.kanal = b.dataset.modus; m.titel = b.dataset.titel;
+      var bew = m.modus === 'bewerbung';
+      var fb = document.getElementById('feld-bewerbung'), fp = document.getElementById('feld-praktikum');
+      fb.hidden = !bew; fb.disabled = !bew;
+      fp.hidden = bew; fp.disabled = bew;
+      document.getElementById('m-prefix').textContent = bew ? 'Deine' : 'Dein';
+      document.getElementById('m-titel').textContent = m.titel;
+      form2.querySelector('button[type=submit]').textContent = bew ? 'Bewerbung abschicken' : 'Praktikumsanfrage abschicken';
+      document.getElementById('m-ergebnis').hidden = true;
+      tabs2.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      detail2.innerHTML = '<div class="icon">' + b.dataset.icon + '</div><h3>' + b.dataset.titel + '</h3><p>' + b.dataset.text + '</p>';
+      detail2.hidden = false; form2.hidden = false;
+      [detail2, form2].forEach(function (el) { el.classList.remove('ploppen'); void el.offsetWidth; el.classList.add('ploppen'); });
+      detail2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    tabs2.forEach(function (b) { b.addEventListener('click', function () { wechsel2(b); }); });
+
+    form2.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = function (id) { return document.getElementById(id).value.trim(); };
+      var bew = m.modus === 'bewerbung';
+      var t = (bew ? 'Bewerbung als Mitarbeiter' : 'Praktikumsanfrage') + ' bei der Topf Oder Deckel GmbH\n\n' +
+              'Minecraft-Name: ' + v('m-mcname') + '\n' + 'Discord: ' + v('m-dc') + '\n' + '\n';
+      if (bew) {
+        t += 'Praktikum (1 Tag) absolviert: ja\n\nWarum bei uns:\n' + v('b-warum') + '\n\nErfahrung:\n' + v('b-erfahrung') + '\n\nZeit pro Woche: ' + v('b-zeit');
+      } else {
+        t += 'Dauer: ' + v('p-dauer') + '\nWunschbereich: ' + v('p-bereich') + '\nGewünschter Start: ' + v('p-start') + '\n\nWarum ein Praktikum:\n' + v('p-warum');
+      }
+      document.getElementById('m-text').textContent = t;
+      var status = document.getElementById('m-status');
+      var erg = document.getElementById('m-ergebnis');
+      var senden = form2.querySelector('button[type=submit]');
+      var zeigen = function (text) {
+        status.textContent = text; erg.hidden = false;
+        erg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      var felder2 = [['👤 Minecraft-Name', '`' + v('m-mcname') + '`', true], ['💬 Discord', '`' + v('m-dc') + '`', true]];
+      if (bew) {
+        felder2.push(['✅ Praktikum (1 Tag)', 'Absolviert', true], ['⏱️ Zeit pro Woche', v('b-zeit'), true], ['❓ Warum bei uns', v('b-warum'), false], ['🧰 Erfahrung', v('b-erfahrung'), false]);
+      } else {
+        felder2.push(['📅 Dauer', v('p-dauer'), true], ['🎯 Wunschbereich', v('p-bereich'), true], ['🚀 Gewünschter Start', v('p-start'), true], ['❓ Warum ein Praktikum', v('p-warum'), false]);
+      }
+      var hook = DISCORD_WEBHOOKS[m.kanal] || DISCORD_STANDARD;
+      if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
+      if (document.getElementById('m-website').value) return; // Spam-Falle
+      senden.disabled = true;
+      fetch(hook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(discordNachricht(m.kanal, m.titel, felder2, (bew ? 'Neue Bewerbung' : 'Neue Praktikumsanfrage') + ' von **' + v('m-mcname') + '**'))
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        zeigen((bew ? 'Deine Bewerbung' : 'Deine Anfrage') + ' wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+      }).catch(function () {
+        zeigen('Senden hat nicht geklappt. Kopiere den Text und schick ihn uns:');
+      }).then(function () {
+        setTimeout(function () { senden.disabled = false; }, 30000);
+      });
+    });
+
+    document.getElementById('m-kopieren').addEventListener('click', function () {
+      var pre = document.getElementById('m-text');
+      var fertig = function () {
+        var k = document.getElementById('m-kopiert');
+        k.hidden = false; setTimeout(function () { k.hidden = true; }, 2000);
+      };
+      var auswaehlen = function () {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        document.execCommand('copy'); fertig();
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
+      else auswaehlen();
+    });
+  </script>
+</body>
+</html>
