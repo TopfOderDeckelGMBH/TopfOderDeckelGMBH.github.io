@@ -86,11 +86,11 @@
     .figur { display: block; width: 100%; height: auto; overflow: visible; }
     .huepfen { animation: huepfen 2.4s ease-in-out infinite; }
     .schatten { transform-box: fill-box; transform-origin: center; animation: schatten 2.4s ease-in-out infinite; }
-    .winken { transform-box: fill-box; transform-origin: 50% 12%; animation: winken 2s ease-in-out infinite; }
+    .winken { transform-box: fill-box; transform-origin: 50% 12%; animation: winken 1.1s ease-in-out infinite; }
     .auge { transform-box: fill-box; transform-origin: 50% 50%; animation: blinzeln 4.6s infinite; }
     @keyframes huepfen { 50% { transform: translateY(-9px); } }
     @keyframes schatten { 50% { transform: scale(.88); opacity: .6; } }
-    @keyframes winken { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-36deg); } }
+    @keyframes winken { 0%, 100% { transform: rotate(-135deg); } 50% { transform: rotate(-166deg); } }
     @keyframes blinzeln { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
     .name { text-align: center; margin: 6px 0 0; font-size: .95rem; font-weight: 600; color: var(--grau); }
 
@@ -157,6 +157,12 @@
     #ergebnis pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 1rem; background: rgba(255, 255, 255, .9); border-radius: 14px; padding: 16px; margin: 0 0 14px; }
     .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
     #kopiert { color: var(--akzent); font-weight: 600; margin: 0; }
+    .tag { display: inline-block; font-size: .7rem; font-weight: 600; background: var(--gelb); color: #4a2a00; border-radius: 999px; padding: 2px 8px; margin-left: 6px; }
+    .bald { background: var(--gelb); color: #4a2a00; font-weight: 600; border-radius: 14px; padding: 12px 16px; margin: 0 0 20px; }
+    .eingabe:disabled { opacity: .55; cursor: not-allowed; }
+    button.pille:disabled { background: #b8b8c0; cursor: not-allowed; transform: none; }
+    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 8px; }
+    .hinweis { color: var(--grau); font-size: .9rem; margin: 8px 0 0; }
     .karten { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); text-align: left; }
     .karte { padding: 30px 28px; }
     .karte .icon { font-size: 2.2rem; line-height: 1; margin-bottom: 14px; }
@@ -223,7 +229,9 @@
           <rect x="-62" y="-214" width="124" height="13" rx="6.5" fill="#f0a800"/>
           <g class="auge"><rect x="-34" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="-29" cy="-171" r="2.4" fill="#fff"/></g>
           <g class="auge"><rect x="19" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="24" cy="-171" r="2.4" fill="#fff"/></g>
-          <rect x="-27" y="-147" width="54" height="9" rx="4.5" fill="#111"/>
+          <ellipse cx="-38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
+          <ellipse cx="38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
+          <path d="M-27 -149 Q0 -123 27 -149" fill="none" stroke="#111" stroke-width="8" stroke-linecap="round"/>
         </g>
       </svg>
       <p class="name">OderDeckel</p>
@@ -236,20 +244,20 @@
         <h2>Was wir anbieten.</h2>
         <p>Such dir aus, wobei wir dir helfen können.</p>
         <div class="schalter" role="tablist" aria-label="Angebote">
-          <button type="button" role="tab" aria-selected="true" data-modus="aufgabe" data-icon="🛠️" data-titel="Bauprojekt-Hilfe" data-text="Wir unterstützen dich bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block.">Bauprojekt-Hilfe</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="aufgabe" data-icon="🏰" data-titel="Bauwerke erweitern" data-text="Deine Base, Burg oder dein Haus soll größer werden? Wir bauen mit dir weiter.">Bauwerke erweitern</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="material" data-icon="⛏️" data-titel="Ressourcen sammeln" data-text="Dir fehlen Materialien? Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">Ressourcen sammeln</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="material" data-icon="🧱" data-titel="Blöcke &amp; Baumaterial" data-text="Verschiedene Blöcke und Baumaterialien für deine Bauprojekte.">Blöcke</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="material" data-icon="💎" data-titel="Items &amp; Ressourcen" data-text="Nützliche Materialien und ausgewählte Minecraft-Items.">Items</button>
+          <button type="button" role="tab" aria-selected="true" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="🛠️" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">Bauprojekte</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="material" data-kanal="material" data-icon="🧱" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">Blöcke, Items &amp; Ressourcen</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="aufgabe" data-kanal="redstone" data-icon="🔴" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">Redstone-Hilfe</button>
+          <button type="button" role="tab" aria-selected="false" data-modus="hitman" data-kanal="hitman" data-icon="🎯" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">Hitman <span class="tag">Bald</span></button>
         </div>
         <div id="detail" class="glas" role="tabpanel" aria-live="polite">
           <div class="icon">🛠️</div>
-          <h3>Bauprojekt-Hilfe</h3>
-          <p>Wir unterstützen dich bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block.</p>
+          <h3>Bauprojekte</h3>
+          <p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p>
         </div>
 
         <form id="anfrage" class="glas">
-          <h3>Deine Anfrage: <span id="anfrage-titel">Bauprojekt-Hilfe</span></h3>
+          <h3>Deine Anfrage: <span id="anfrage-titel">Bauprojekte</span></h3>
+          <p id="bald" class="bald" hidden>🔒 Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</p>
           <div class="feld">
             <label class="lbl" for="mcname">Dein Minecraft-Name</label>
             <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required>
@@ -269,6 +277,22 @@
               <button type="button" class="klein" id="mehr">+ Weitere Zeile</button>
             </div>
           </fieldset>
+
+          <fieldset id="feld-hitman" hidden disabled>
+            <div class="feld">
+              <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
+              <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
+            </div>
+          </fieldset>
+
+          <div class="feld">
+            <label class="lbl" for="preis">Deine Preisvorstellung (optional)</label>
+            <div class="preis">
+              <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag">
+              <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
+            </div>
+            <p class="hinweis">Schreib uns, was du dafür bezahlen möchtest. Wir melden uns mit einem Angebot.</p>
+          </div>
 
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
           <button type="submit" class="pille">Anfrage erstellen</button>
@@ -331,12 +355,20 @@
     // ---- Anfrage-Formular ----
     // Trage hier deine E-Mail-Adresse ein, dann erscheint der Button "Per E-Mail senden".
     var KONTAKT_EMAIL = '';
-    // Discord: Webhook-URL deines Kanals hier einfügen, dann kommen Anfragen direkt in Discord an.
-    var DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1569667931376320572/uk2-K4RnN9vdh7ACTNDnA32K02JCAUUnMR5Qd3jROqkiQZzM3TThJJU5QugEVVoqv9H0';
+    // Discord: pro Reiter ein eigener Kanal. Trage zwischen den Anführungszeichen die Webhook-URL des jeweiligen Kanals ein.
+    var DISCORD_WEBHOOKS = {
+      bauprojekte: '',
+      material: '',
+      redstone: '',
+      hitman: ''
+    };
+    // Reserve: Wird genommen, solange bei einem Reiter oben nichts eingetragen ist.
+    var DISCORD_STANDARD = 'https://discord.com/api/webhooks/1569667931376320572/uk2-K4RnN9vdh7ACTNDnA32K02JCAUUnMR5Qd3jROqkiQZzM3TThJJU5QugEVVoqv9H0';
 
     var form = document.getElementById('anfrage');
     var feldAufgabe = document.getElementById('feld-aufgabe');
     var feldMaterial = document.getElementById('feld-material');
+    var feldHitman = document.getElementById('feld-hitman');
     var zeilen = document.getElementById('zeilen');
     var ergebnis = document.getElementById('ergebnis');
     var aktuell = { titel: '', modus: 'aufgabe' };
@@ -344,10 +376,18 @@
     function modus(b) {
       aktuell.titel = b.dataset.titel;
       aktuell.modus = b.dataset.modus;
+      aktuell.kanal = b.dataset.kanal;
       document.getElementById('anfrage-titel').textContent = aktuell.titel;
-      var material = aktuell.modus === 'material';
-      feldAufgabe.hidden = material; feldAufgabe.disabled = material;
-      feldMaterial.hidden = !material; feldMaterial.disabled = !material;
+      var art = aktuell.modus;
+      var bald = art === 'hitman';
+      feldAufgabe.hidden = art !== 'aufgabe'; feldAufgabe.disabled = art !== 'aufgabe';
+      feldMaterial.hidden = art !== 'material'; feldMaterial.disabled = art !== 'material';
+      feldHitman.hidden = !bald; // bleibt gesperrt (Coming soon)
+      ['mcname', 'preis', 'einheit'].forEach(function (id) { document.getElementById(id).disabled = bald; });
+      var absenden = form.querySelector('button[type=submit]');
+      absenden.disabled = bald;
+      absenden.textContent = bald ? 'Bald verfügbar' : 'Anfrage erstellen';
+      document.getElementById('bald').hidden = !bald;
       ergebnis.hidden = true;
     }
 
@@ -368,6 +408,7 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (aktuell.modus === 'hitman') return;
       var t = 'Anfrage an die Topf Oder Deckel GmbH\n\nAngebot: ' + aktuell.titel +
               '\nMinecraft-Name: ' + document.getElementById('mcname').value.trim() + '\n\n';
       if (aktuell.modus === 'material') {
@@ -379,6 +420,12 @@
         });
       } else {
         t += 'Aufgabe:\n' + document.getElementById('aufgabe').value.trim() + '\n';
+      }
+      var preis = document.getElementById('preis').value;
+      if (preis) {
+        var einheit = document.getElementById('einheit').value;
+        if (einheit === 'Diamanten' && Number(preis) === 1) einheit = 'Diamant';
+        t += '\n\nPreisvorstellung: ' + preis + ' ' + einheit;
       }
       t = t.trim();
       document.getElementById('text').textContent = t;
@@ -395,10 +442,11 @@
         ergebnis.hidden = false;
         ergebnis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       };
-      if (!DISCORD_WEBHOOK) { zeigen('Deine Anfrage ist fertig. Kopiere sie und schick sie uns:'); return; }
+      var hook = DISCORD_WEBHOOKS[aktuell.kanal] || DISCORD_STANDARD;
+      if (!hook) { zeigen('Deine Anfrage ist fertig. Kopiere sie und schick sie uns:'); return; }
       if (document.getElementById('website').value) return; // Spam-Falle
       senden.disabled = true;
-      fetch(DISCORD_WEBHOOK, {
+      fetch(hook, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -413,7 +461,7 @@
       }).catch(function () {
         zeigen('Senden hat nicht geklappt. Kopiere die Anfrage und schick sie uns:');
       }).then(function () {
-        setTimeout(function () { senden.disabled = false; }, 30000);
+        setTimeout(function () { if (aktuell.modus !== 'hitman') senden.disabled = false; }, 30000);
       });
     });
 
