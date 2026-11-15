@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Geheimer Bereich – Topf Oder Deckel GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --akzent: #c01fd0; --text: #1d1d1f; --grau: #6e6e73; --gelb: #ffd23f; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { background: #f5f5f7; }
+    body {
+      margin: 0; color: var(--text); min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1.125rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
+    }
+    .hintergrund { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #f5f5f7; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: schweben 18s ease-in-out infinite alternate; }
+    .blob.a { width: 52vw; height: 52vw; left: -14vw; top: -14vw; background: rgba(217, 48, 228, .30); }
+    .blob.b { width: 56vw; height: 56vw; right: -16vw; top: 6vh; background: rgba(255, 90, 90, .26); animation-delay: -6s; }
+    .blob.c { width: 40vw; height: 40vw; left: 28vw; bottom: -14vw; background: rgba(255, 205, 70, .28); animation-delay: -11s; }
+    @keyframes schweben { to { transform: translate(4vw, 3vw) scale(1.08); } }
+
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(245, 245, 247, .72); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0, 0, 0, .08); }
+    .nav-innen { max-width: 980px; margin: 0 auto; height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; font-size: .85rem; }
+    .marke { font-weight: 600; letter-spacing: -.01em; }
+    nav a { color: var(--text); text-decoration: none; opacity: .8; }
+    nav a:hover { opacity: 1; }
+
+    main { max-width: 680px; margin: 0 auto; padding: 56px 20px 72px; text-align: center; }
+    .emoji { font-size: 4rem; line-height: 1; margin-bottom: 8px; animation: wackeln 3s ease-in-out infinite; }
+    @keyframes wackeln { 50% { transform: rotate(8deg) scale(1.06); } }
+    h1 {
+      font-size: clamp(2.4rem, 9vw, 4.4rem); font-weight: 700; line-height: 1.05; letter-spacing: -.04em; margin: 0 0 14px;
+      background: linear-gradient(90deg, #7b2ff7, #d930e4 50%, #ff5d9e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .lead { color: var(--grau); max-width: 36ch; margin: 0 auto 32px; font-size: 1.2rem; }
+
+    .glas { background: rgba(255, 255, 255, .66); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); border: 1px solid rgba(255, 255, 255, .8); border-radius: 32px; box-shadow: 0 10px 40px rgba(60, 30, 100, .10); }
+    .preiskarte { padding: 24px 20px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 18px; }
+    .chip { background: #fff; border-radius: 999px; padding: 10px 22px; box-shadow: 0 2px 10px rgba(60, 30, 100, .10); }
+    .gross { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; }
+    .oder { color: var(--grau); }
+    .preiskarte .hinweis { flex-basis: 100%; margin: 4px 0 0; }
+    .kartenchip { display: inline-block; background: var(--gelb); color: #4a2a00; font-weight: 600; font-size: .95rem; border-radius: 999px; padding: 6px 16px; margin: -14px 0 24px; }
+    #formular { padding: 32px 28px; text-align: left; animation: plop .5s cubic-bezier(.2, .9, .3, 1.15) both; }
+    @keyframes plop { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+    .feld { margin-bottom: 18px; }
+    .lbl { display: block; font-size: .9rem; font-weight: 600; margin: 0 0 6px; }
+    .eingabe { width: 100%; font: inherit; font-size: 1rem; color: var(--text); background: rgba(255, 255, 255, .9); border: 1px solid rgba(0, 0, 0, .14); border-radius: 14px; padding: 12px 14px; }
+    .eingabe:focus { outline: 3px solid rgba(192, 31, 208, .3); border-color: var(--akzent); }
+    .hinweis { color: var(--grau); font-size: .9rem; margin: 8px 0 0; }
+    .pille { display: inline-block; border: 0; font: inherit; font-weight: 500; font-size: 1.05rem; cursor: pointer; background: var(--akzent); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 999px; transition: transform .2s ease, background .2s ease; }
+    .pille:hover { background: #a519b3; transform: scale(1.03); }
+    .pille:disabled { background: #b8b8c0; cursor: not-allowed; transform: none; }
+    .pille:focus-visible, .eingabe:focus-visible { outline: 3px solid var(--akzent); outline-offset: 3px; }
+    .ergebnis { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(0, 0, 0, .1); }
+    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 1rem; background: rgba(255, 255, 255, .9); border-radius: 14px; padding: 16px; margin: 0 0 14px; }
+    .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .kopiert { color: var(--akzent); font-weight: 600; margin: 0; }
+    .zurueck { display: inline-block; margin-top: 28px; color: var(--akzent); text-decoration: none; }
+    .zurueck:hover { text-decoration: underline; }
+    .abmelden { display: block; margin-top: 10px; color: var(--grau); font-size: .85rem; }
+
+    /* ---------- Rätsel-Film ---------- */
+    .film { --ton: rgba(217, 48, 228, .22); padding: 22px 22px 28px; text-align: center; background-image: radial-gradient(circle at 50% 28%, var(--ton), transparent 62%); }
+    .punkte { display: inline-block; font-weight: 600; letter-spacing: 6px; color: var(--akzent); font-size: 1rem; }
+    .szene { position: relative; width: 100%; max-width: 420px; margin: 6px auto 0; display: flex; justify-content: center; }
+    .buehne { width: 200px; }
+    .requisit { position: absolute; top: 8%; right: 4%; font-size: 3.4rem; line-height: 1; animation: schweb 3.2s ease-in-out infinite; }
+    .requisit.rein { animation: rein .5s cubic-bezier(.2, .9, .3, 1.3) both, schweb 3.2s ease-in-out .5s infinite; }
+    @keyframes schweb { 50% { transform: translateY(-8px) rotate(6deg); } }
+    @keyframes rein { from { opacity: 0; transform: scale(.3) rotate(-30deg); } to { opacity: 1; transform: none; } }
+    .sprech { position: relative; background: #fff; border-radius: 22px; padding: 16px 18px; margin: 18px auto 16px; max-width: 520px; text-align: left; min-height: 6.6rem; white-space: pre-line; box-shadow: 0 4px 18px rgba(60, 30, 100, .12); cursor: default; }
+    .sprech::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; background: #fff; transform: translateX(-50%) rotate(45deg); border-radius: 3px; }
+    .rform { max-width: 520px; margin: 0 auto 16px; text-align: left; }
+    .rform .zeile { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+    .rfehler { color: #c0262d; font-size: .95rem; font-weight: 500; margin: 8px 0 0; min-height: 1.4em; }
+    .tippknopf { font: inherit; font-size: .95rem; font-weight: 500; color: var(--akzent); background: none; border: 0; padding: 4px 0; cursor: pointer; }
+    .tippknopf:hover { text-decoration: underline; }
+    .tipptext { background: rgba(255, 210, 63, .35); border-radius: 14px; padding: 10px 14px; margin: 8px 0 0; font-size: .95rem; }
+    .wackel { animation: wackel .45s ease; }
+    @keyframes wackel { 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
+
+    /* ---------- Figur ---------- */
+    .figur { display: block; width: 100%; height: auto; overflow: visible; }
+    .huepfen { animation: huepfen 2.4s ease-in-out infinite; }
+    .schatten { transform-box: fill-box; transform-origin: center; animation: schatten 2.4s ease-in-out infinite; }
+    .winken { transform-box: fill-box; transform-origin: 50% 12%; animation: winken 1.1s ease-in-out infinite; }
+    .auge { transform-box: fill-box; transform-origin: 50% 50%; animation: blinzeln 4.6s infinite; }
+    @keyframes huepfen { 50% { transform: translateY(-9px); } }
+    @keyframes schatten { 50% { transform: scale(.88); opacity: .6; } }
+    @keyframes winken { 0%, 100% { transform: rotate(-135deg); } 50% { transform: rotate(-166deg); } }
+    @keyframes blinzeln { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+
+    .schluessel { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 0 auto 16px; }
+    .schluessel .pille { background: linear-gradient(180deg, #ffd23f, #f0a800); color: #4a2a00; font-weight: 600; }
+    .schluessel .pille:hover { background: linear-gradient(180deg, #ffe06b, #ffb800); }
+    .schluessel .pille:disabled { opacity: .4; }
+    .karte { display: inline-block; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.15rem; font-weight: 700; letter-spacing: .05em; background: #fff; border: 2px dashed #f0a800; border-radius: 14px; padding: 8px 16px; user-select: all; }
+    .adminlayer { position: fixed; inset: 0; z-index: 50; background: rgba(20, 10, 35, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 16px; }
+    .adminbox { width: 100%; max-width: 660px; max-height: 92vh; display: flex; flex-direction: column; background: #14101f; color: #e8e0ff; border-radius: 22px; padding: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .92rem; text-align: left; }
+    .adminkopf { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .adminknoepfe { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .adminknoepfe button { font: inherit; font-size: .85rem; color: #e8e0ff; background: #2a2145; border: 1px solid #4a3d7a; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+    .adminknoepfe button:hover { background: #3b2d66; }
+    .adminlog { flex: 1; min-height: 160px; overflow: auto; white-space: pre-wrap; word-break: break-word; background: #0b0814; border-radius: 12px; padding: 12px; margin: 0 0 12px; color: #b9f6ca; }
+    .adminzeile { display: flex; gap: 8px; align-items: center; }
+    .adminzeile input { flex: 1; font: inherit; color: #fff; background: #0b0814; border: 1px solid #4a3d7a; border-radius: 10px; padding: 10px 12px; }
+    .adminzeile .pille { padding: 9px 16px; font-size: .9rem; }
+    .adminpw { max-width: 320px; margin: 12px auto 0; }
+    .adminpw .zeile { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+    /* ---------- Film ---------- */
+    .kino { position: fixed; inset: 0; z-index: 100; background: #050308; color: #e8dcc0; opacity: 0; transition: opacity 1.6s ease; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .kino.an { opacity: 1; }
+    .kinoinnen { width: min(720px, 100%); margin: 0 auto; padding: 18px 12px 48px; }
+    .titelkarte { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; font: italic 1.4rem/1.5 Georgia, "Times New Roman", serif; letter-spacing: .04em; color: #e8dcc0; pointer-events: none; transition: opacity 1.2s ease; }
+    .kino.raum .titelkarte { opacity: 0; }
+    .stage { position: relative; width: 100%; aspect-ratio: 720 / 420; container-type: inline-size; overflow: hidden; border-radius: 18px; box-shadow: 0 0 70px rgba(0, 0, 0, .9); opacity: 0; transition: opacity 1.8s ease; background: #120c08; }
+    .kino.raum .stage { opacity: 1; }
+    .stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .stage > svg.vorn { z-index: 4; }
+    .licht { position: absolute; inset: 0; z-index: 8; pointer-events: none; background: radial-gradient(circle at 92% 66%, rgba(255, 180, 80, .30), transparent 36%), radial-gradient(ellipse at 52% 58%, transparent 38%, rgba(0, 0, 0, .72) 100%); animation: flackern 3.4s ease-in-out infinite; }
+    @keyframes flackern { 0%, 100% { opacity: 1; } 18% { opacity: .86; } 22% { opacity: .98; } 55% { opacity: .9; } 70% { opacity: 1; } }
+    .flamme { transform-box: fill-box; transform-origin: 50% 100%; animation: flamme .45s ease-in-out infinite alternate; }
+    @keyframes flamme { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(.88, 1.12) rotate(3deg); } }
+    .kielg { transition: opacity .6s; opacity: 0; }
+    .stage.schreibt .kielg, .kino.sichtbar .kielg { opacity: 1; }
+    .stage.schreibt .kielx { animation: kritzeln .5s ease-in-out infinite alternate; }
+    @keyframes kritzeln { from { transform: translate(-16px, 0) rotate(-4deg); } to { transform: translate(14px, -2px) rotate(3deg); } }
+    .kofferg { opacity: 0; transition: opacity 1s ease; }
+    .stage.koffer .kofferg { opacity: 1; }
+    .schimmer { animation: schimmer 1.6s ease-in-out infinite alternate; }
+    @keyframes schimmer { from { opacity: .6; transform: translateY(0); } to { opacity: 1; transform: translateY(-3px); } }
+    .stage.schock { animation: schock .4s ease; }
+    @keyframes schock { 20% { transform: translate(-6px, 2px); } 40% { transform: translate(6px, -2px); } 60% { transform: translate(-4px, 1px); } 80% { transform: translate(3px, 0); } }
+
+    .figplatz { position: absolute; inset: 0; pointer-events: none; }
+    .figplatz .buehne { position: absolute; width: 26.4cqw; left: -28cqw; bottom: 6.9cqw; z-index: 5; }
+    .figplatz .schatten { display: none; }
+    .figplatz.geht .buehne { left: 20.8cqw; transition: left 3.4s linear; }
+    .figplatz.geht .huepfen { animation: lauf .46s ease-in-out infinite; }
+    .figplatz.hinter .buehne { left: 55.6cqw; bottom: 12.5cqw; z-index: 2; transition: left 1.4s ease-in-out, bottom 1.4s ease-in-out; }
+    .figplatz.sitzt .buehne { left: 55.6cqw; bottom: 6.9cqw; z-index: 2; transition: bottom .9s ease; }
+    .figplatz.sitzt .huepfen { animation: atmen 3.8s ease-in-out infinite; }
+    .figplatz.direkt .buehne { transition: none !important; }
+    @keyframes lauf { 50% { transform: translateY(-7px) rotate(1.5deg); } }
+    @keyframes atmen { 50% { transform: translateY(-3px); } }
+
+    .kinoui { margin-top: 18px; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity 1.2s ease, transform 1.2s ease; }
+    .kino.sichtbar .kinoui { opacity: 1; visibility: visible; transform: none; }
+    .kinoui .punkte { color: #ffd23f; display: block; text-align: center; margin-bottom: 10px; }
+    .brief { position: relative; max-width: 560px; margin: 0 auto 16px; padding: 26px 28px 30px; background: linear-gradient(160deg, #f4e6bd, #e5cf93); color: #2b1a0a; border-radius: 4px 10px 6px 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, .7), inset 0 0 40px rgba(120, 80, 20, .25); transform: rotate(-.6deg); font-family: "Caveat", "Segoe Script", "Bradley Hand", "Brush Script MT", cursive; font-size: 1.55rem; line-height: 1.3; white-space: pre-line; min-height: 9rem; text-align: left; cursor: default; }
+    .kiel { display: none; font-size: 1.1rem; }
+    .brief.tippt .kiel { display: inline-block; animation: kritzeln .4s ease-in-out infinite alternate; }
+    .brief .karte { background: rgba(255, 255, 255, .55); border-color: #8a5a10; }
+    .kino.rot .brief { background: linear-gradient(160deg, #e9c3b8, #cf958a); }
+    .kinoui .rform { color: #e8dcc0; }
+    .kinoui .lbl { color: #e8dcc0; }
+    .kinoui .rfehler { color: #ff9a9a; }
+    .kinoui .tippknopf { color: #ffd23f; }
+    .kinoui .tipptext { background: rgba(255, 210, 63, .16); color: #ffe9a8; }
+    .kinoui .schluessel, .kinoui #start { display: flex; margin-left: auto; margin-right: auto; }
+    .kinoui #start { width: fit-content; }
+    .kinoui #start[hidden], .kinoui .schluessel[hidden] { display: none !important; }
+    .skip, .kinozurueck { font: inherit; font-size: .9rem; color: #bfb39a; background: none; border: 0; cursor: pointer; text-decoration: none; }
+    .skip { position: fixed; top: 14px; right: 16px; z-index: 120; padding: 8px 12px; border-radius: 999px; background: rgba(255, 255, 255, .08); }
+    .skip:hover, .kinozurueck:hover { color: #fff; }
+    .kinozurueck { display: block; text-align: center; margin-top: 24px; }
+    .adminlayer { z-index: 200; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="hintergrund" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+
+  <nav>
+    <div class="nav-innen">
+      <span class="marke">Topf Oder Deckel</span>
+      <a href="index.html">‹ Zurück zur Startseite</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ================= Rätselschloss ================= -->
+    <section id="schloss">
+      <div class="emoji" aria-hidden="true">🔒</div>
+      <h1>Geheimer Bereich.</h1>
+      <p class="lead">Hier kommt nur rein, wer OderDeckels drei Rätsel löst. Die Belohnung: ein persönlicher Schlüssel.</p>
+      <noscript><p class="lead">Für das Rätsel braucht diese Seite JavaScript.</p></noscript>
+
+      <div id="film" class="film glas">
+        <span id="punkte" class="punkte" aria-label="Fortschritt">🔒 ○ ○ ○</span>
+        <div class="szene">
+          <div class="buehne"><svg class="figur" viewBox="-140 -262 280 282" role="img" aria-label="OderDeckel im Anzug mit Aktenkoffer und Bauarbeiterhelm">
+<defs>
+<linearGradient id="kopf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ee62f7"/><stop offset="1" stop-color="#c624d2"/></linearGradient>
+<linearGradient id="koerper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#df3cea"/><stop offset="1" stop-color="#b820c4"/></linearGradient>
+<linearGradient id="helm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe46b"/><stop offset="1" stop-color="#ffbf00"/></linearGradient>
+<linearGradient id="anzug" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3f5c"/><stop offset="1" stop-color="#1f2238"/></linearGradient>
+<filter id="weich"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<ellipse class="schatten" cx="0" cy="6" rx="62" ry="8" fill="#2b1040" opacity=".22" filter="url(#weich)"/>
+<g class="huepfen">
+<rect x="-38" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
+<rect x="6" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
+<rect x="-38" y="-64" width="32" height="50" rx="12" fill="url(#anzug)"/>
+<rect x="6" y="-64" width="32" height="50" rx="12" fill="url(#anzug)"/>
+<rect x="-42" y="-14" width="38" height="14" rx="7" fill="#15151f"/>
+<rect x="4" y="-14" width="38" height="14" rx="7" fill="#15151f"/>
+<rect x="-74" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/>
+<rect x="-74" y="-128" width="28" height="56" rx="13" fill="url(#anzug)"/>
+<rect x="-46" y="-134" width="92" height="84" rx="28" fill="url(#anzug)"/>
+<path d="M-17 -134 L0 -96 L17 -134 Z" fill="#fff"/>
+<path d="M-3.5 -122 L3.5 -122 L6 -104 L0 -92 L-6 -104 Z" fill="#d6203a"/>
+<path d="M-17 -134 L-3 -84 L-26 -86 Z M17 -134 L3 -84 L26 -86 Z" fill="#2b2f4a"/>
+<circle cx="-14" cy="-70" r="2.6" fill="#ffd23f"/><circle cx="14" cy="-70" r="2.6" fill="#ffd23f"/>
+<g><rect x="46" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/><rect x="46" y="-128" width="28" height="56" rx="13" fill="url(#anzug)"/></g>
+<g transform="translate(-60 -52)">
+<path d="M-14 6 Q-14 -12 0 -12 Q14 -12 14 6" fill="none" stroke="#2b1a0e" stroke-width="5" stroke-linecap="round"/>
+<rect x="-30" y="2" width="60" height="42" rx="8" fill="#6b4226"/>
+<rect x="-30" y="2" width="60" height="14" rx="7" fill="#7d4f2e"/>
+<rect x="-5" y="12" width="10" height="9" rx="2" fill="#ffd23f"/>
+<circle cx="0" cy="0" r="10" fill="url(#koerper)"/>
+</g>
+<rect x="-50" y="-222" width="100" height="94" rx="32" fill="url(#kopf)"/>
+<ellipse cx="-20" cy="-206" rx="22" ry="8" fill="#fff" opacity=".22"/>
+<path d="M-50 -208 C-50 -266 50 -266 50 -208 Z" fill="url(#helm)"/>
+<rect x="-9" y="-254" width="18" height="46" rx="9" fill="#f2b000"/>
+<ellipse cx="-26" cy="-232" rx="10" ry="5" fill="#fff" opacity=".4" transform="rotate(-25 -26 -232)"/>
+<rect x="-62" y="-214" width="124" height="13" rx="6.5" fill="#f0a800"/>
+<g class="auge"><rect x="-33" y="-172" width="14" height="14" rx="6" fill="#111"/><circle cx="-28" cy="-168" r="2.2" fill="#fff"/></g>
+<g class="auge"><rect x="19" y="-172" width="14" height="14" rx="6" fill="#111"/><circle cx="24" cy="-168" r="2.2" fill="#fff"/></g>
+<path d="M-40 -187 L-14 -183" stroke="#2a0a33" stroke-width="6" stroke-linecap="round"/><path d="M40 -187 L14 -183" stroke="#2a0a33" stroke-width="6" stroke-linecap="round"/>
+<path d="M-19 -140 Q0 -147 19 -140" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+</g>
+</svg></div>
+          <div id="requisit" class="requisit" aria-hidden="true">🎬</div>
+        </div>
+        <div id="sprech" class="sprech" aria-live="polite">Bist du bereit? OderDeckel wartet schon auf dich.</div>
+
+        <form id="rform" class="rform" hidden autocomplete="off">
+          <label class="lbl" id="rlabel" for="antwort">Deine Antwort</label>
+          <div class="zeile">
+            <input class="eingabe" id="antwort" maxlength="40" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+            <button type="submit" class="pille" id="rsenden">Antworten</button>
+          </div>
+          <p id="rfehler" class="rfehler" role="alert"></p>
+          <button type="button" class="tippknopf" id="tipp">💡 Tipp anzeigen</button>
+          <p id="tipptext" class="tipptext" hidden></p>
+        </form>
+
+        <div id="schluessel" class="schluessel" hidden>
+          <button type="button" class="pille" data-k="0">🔑 Schlüssel 1</button>
+          <button type="button" class="pille" data-k="1">🔑 Schlüssel 2</button>
+          <button type="button" class="pille" data-k="2">🔑 Schlüssel 3</button>
+        </div>
+
+        <button type="button" class="pille" id="start">▶ Film starten</button>
+      </div>
+    </section>
+
+    <!-- ================= Tresor (erst nach dem Rätsel) ================= -->
+    <section id="tresor" hidden>
+      <div class="emoji" aria-hidden="true">🕵️</div>
+      <h1>Geheimer Bereich.</h1>
+      <p class="lead">Kein Hitman-Auftrag nötig: Du kannst dich jederzeit freikaufen und bist danach vor Hitmans sicher.</p>
+      <span id="karte-chip" class="kartenchip"></span>
+
+      <div class="preiskarte glas">
+        <div class="chip"><span class="gross">💶 1 Euro</span></div>
+        <span class="oder">oder</span>
+        <div class="chip"><span class="gross">💎 178 Diamantblöcke</span></div>
+        <p class="hinweis">Der Wert in Diamantblöcken ist 1 Euro nach unserem Kurs: 16 Diamanten = 1 Cent, 1 Block = 9 Diamanten.</p>
+      </div>
+
+      <form id="formular" class="glas">
+        <div class="feld">
+          <label class="lbl" for="mcname">Dein Minecraft-Name</label>
+          <input class="eingabe" id="mcname" autocomplete="off" maxlength="32" required>
+        </div>
+        <div class="feld">
+          <label class="lbl" for="dcname">Dein Discord-Name (damit wir dich direkt erreichen)</label>
+          <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required>
+        </div>
+        <div class="feld">
+          <label class="lbl" for="zahlung">Wie möchtest du bezahlen?</label>
+          <select class="eingabe" id="zahlung">
+            <option value="1 Euro">1 Euro</option>
+            <option value="178 Diamantblöcke">178 Diamantblöcke</option>
+          </select>
+          <p class="hinweis">Wir melden uns bei dir und sprechen die Bezahlung ab. Bezahlt wird hier auf der Seite nichts.</p>
+        </div>
+
+        <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <button type="submit" class="pille">Jetzt freikaufen</button>
+
+        <div id="ergebnis" class="ergebnis" hidden>
+          <span class="lbl" id="status" aria-live="polite"></span>
+          <pre id="text"></pre>
+          <div class="aktionen">
+            <button type="button" class="pille" id="kopieren">Text kopieren</button>
+            <p id="kopiert" class="kopiert" hidden>Kopiert!</p>
+          </div>
+        </div>
+      </form>
+
+      <a class="abmelden" href="#" id="abmelden">Karte auf diesem Gerät abmelden</a>
+    </section>
+
+    <a class="zurueck" href="index.html">‹ Zurück zur Startseite</a>
+    <a class="abmelden" href="#" id="adminlink" aria-label="Admin">🔧</a>
+    <form id="adminpw" class="adminpw" hidden autocomplete="off">
+      <div class="zeile"><input class="eingabe" id="adminpwfeld" type="password" placeholder="Admin-Code" autocomplete="off"><button type="submit" class="pille">OK</button></div>
+      <p id="adminpwfehler" class="rfehler" role="alert"></p>
+    </form>
+  </main>
+
+  <div id="kino" class="kino" hidden role="dialog" aria-label="Film">
+    <button type="button" class="skip" id="kinoskip">Überspringen ›</button>
+    <div id="titelkarte" class="titelkarte" aria-live="polite"></div>
+    <div class="kinoinnen">
+      <div id="stage" class="stage">
+        <svg viewBox="0 0 720 420" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="wand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d2019"/><stop offset="1" stop-color="#1b120d"/></linearGradient>
+<linearGradient id="boden" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1f15"/><stop offset="1" stop-color="#1a110b"/></linearGradient>
+<linearGradient id="nacht" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e2e52"/><stop offset="1" stop-color="#0c1426"/></linearGradient>
+<radialGradient id="glut"><stop offset="0" stop-color="#ffd27a" stop-opacity=".9"/><stop offset="1" stop-color="#ff9a30" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="720" height="420" fill="url(#wand)"/>
+<rect y="236" width="720" height="100" fill="#21150e"/><rect y="234" width="720" height="4" fill="#3d2a1b"/>
+<rect y="330" width="720" height="90" fill="url(#boden)"/>
+<g stroke="#120a06" stroke-width="2" opacity=".7"><path d="M0 352H720M0 376H720M0 402H720"/><path d="M120 330V420M260 330V420M400 330V420M540 330V420M680 330V420"/></g>
+<rect x="0" y="96" width="76" height="238" fill="#0b0705"/><rect x="0" y="96" width="76" height="238" fill="none" stroke="#3d2a1b" stroke-width="5"/>
+<rect x="150" y="68" width="124" height="156" rx="4" fill="#3b2a1c"/>
+<rect x="158" y="76" width="108" height="140" fill="url(#nacht)"/>
+<circle cx="226" cy="116" r="15" fill="#eef2ff" opacity=".92"/><circle cx="232" cy="112" r="13" fill="#1e2e52" opacity=".55"/>
+<g fill="#fff" opacity=".7"><circle cx="180" cy="100" r="1.3"/><circle cx="196" cy="150" r="1"/><circle cx="250" cy="170" r="1.2"/><circle cx="174" cy="184" r="1"/></g>
+<path d="M212 76V216M158 146H266" stroke="#3b2a1c" stroke-width="6"/>
+<polygon points="158,216 266,216 340,330 120,330" fill="#a8c0ff" opacity=".06"/>
+<rect x="556" y="112" width="150" height="8" fill="#4a3120"/><rect x="556" y="178" width="150" height="8" fill="#4a3120"/>
+<g opacity=".85"><rect x="562" y="84" width="14" height="28" fill="#6a2430"/><rect x="578" y="90" width="12" height="22" fill="#24425f"/><rect x="592" y="82" width="16" height="30" fill="#3a5a30"/><rect x="610" y="88" width="12" height="24" fill="#7a5a20"/><rect x="624" y="84" width="14" height="28" fill="#4a2a55"/>
+<rect x="566" y="150" width="16" height="28" fill="#5a3a20"/><rect x="584" y="146" width="12" height="32" fill="#2c4a4a"/><rect x="598" y="152" width="18" height="26" fill="#6a2430"/><rect x="640" y="148" width="14" height="30" fill="#24425f"/></g>
+<rect x="440" y="238" width="96" height="102" rx="14" fill="#3a1f14"/><rect x="450" y="248" width="76" height="80" rx="10" fill="#4a2a1c"/>
+<ellipse cx="470" cy="384" rx="230" ry="26" fill="#4a1a1f" opacity=".45"/>
+</svg>
+        <div id="figplatz" class="figplatz"></div>
+        <svg class="vorn" viewBox="0 0 720 420" aria-hidden="true" focusable="false">
+<rect x="338" y="312" width="378" height="108" fill="#432915"/>
+<rect x="350" y="326" width="170" height="40" rx="3" fill="#53331c" stroke="#2c1a0d" stroke-width="2"/><circle cx="435" cy="346" r="4.5" fill="#d4a53a"/>
+<rect x="540" y="326" width="164" height="40" rx="3" fill="#53331c" stroke="#2c1a0d" stroke-width="2"/><circle cx="622" cy="346" r="4.5" fill="#d4a53a"/>
+<rect x="350" y="376" width="354" height="38" rx="3" fill="#4a2d18" stroke="#2c1a0d" stroke-width="2"/>
+<rect x="320" y="294" width="404" height="20" rx="3" fill="#80512d"/><rect x="320" y="294" width="404" height="4" rx="2" fill="#9a6a3e"/>
+<polygon points="440,292 558,292 568,281 452,281" fill="#efe0b8"/>
+<g transform="translate(606 280)"><rect x="0" y="-4" width="18" height="18" rx="5" fill="#0e0a12"/><rect x="5" y="-10" width="8" height="8" rx="2" fill="#0e0a12"/></g>
+<g class="kofferg"><g transform="translate(340 252)">
+<path d="M22 6 Q22 -8 36 -8 Q50 -8 50 6" fill="none" stroke="#2b1a0e" stroke-width="5" stroke-linecap="round"/>
+<rect x="0" y="4" width="72" height="38" rx="6" fill="#6b4226"/><rect x="0" y="4" width="72" height="13" rx="6" fill="#7d4f2e"/><rect x="30" y="12" width="12" height="9" rx="2" fill="#ffd23f"/>
+<g class="schimmer" fill="#ffd23f" stroke="#a87800" stroke-width="1"><g transform="translate(6 -14)"><circle cx="5" cy="5" r="5"/><rect x="9" y="3.5" width="14" height="3"/></g><g transform="translate(26 -22)"><circle cx="5" cy="5" r="5"/><rect x="9" y="3.5" width="14" height="3"/></g><g transform="translate(44 -14)"><circle cx="5" cy="5" r="5"/><rect x="9" y="3.5" width="14" height="3"/></g></g>
+</g></g>
+<g transform="translate(667 296)"><ellipse cx="0" cy="0" rx="16" ry="4.5" fill="#b08a3a"/><rect x="-7" y="-48" width="14" height="48" fill="#ece0c4"/><ellipse cx="0" cy="-48" rx="7" ry="2.4" fill="#fff6dc"/>
+<circle cx="0" cy="-62" r="30" fill="url(#glut)"/><path class="flamme" d="M0 -78 Q-7 -62 0 -52 Q7 -62 0 -78Z" fill="#ffb347"/><path class="flamme" d="M0 -68 Q-3 -60 0 -55 Q3 -60 0 -68Z" fill="#fff3c0"/></g>
+<g transform="translate(508 288)"><g class="kielx kielg"><path d="M0 0 L-22 -40" stroke="#3a2a1a" stroke-width="2.4" stroke-linecap="round"/><path d="M-22 -40 Q-44 -72 -26 -80 Q-16 -62 -8 -34Z" fill="#f2efe6" stroke="#b8b2a0" stroke-width="1"/></g></g>
+</svg>
+        <div class="licht"></div>
+      </div>
+      <div id="kinoui" class="kinoui">
+        <div id="kpunkte"></div>
+        <div id="brief" class="brief" aria-live="polite"><span id="ptext"></span><span id="kiel" class="kiel" aria-hidden="true">🪶</span></div>
+      </div>
+      <a class="kinozurueck" href="index.html">‹ Zurück zur Startseite</a>
+    </div>
+  </div>
+
+  <div id="admin" class="adminlayer" hidden role="dialog" aria-label="Admin-Konsole">
+    <div class="adminbox">
+      <div class="adminkopf"><strong>🛠️ Admin-Konsole</strong><button type="button" id="adminzu" class="tippknopf">Schließen ✕</button></div>
+      <div class="adminknoepfe">
+        <button type="button" data-cmd="status">Status</button>
+        <button type="button" data-cmd="reset">Rätsel zurücksetzen</button>
+        <button type="button" data-cmd="entbannen">Sperre aufheben</button>
+        <button type="button" data-cmd="karten">Karten anzeigen</button>
+        <button type="button" data-cmd="hitman an">Hitman für alle an</button>
+        <button type="button" data-cmd="hitman aus">Hitman für alle aus</button>
+        <button type="button" data-cmd="tresor 1">Tresor öffnen</button>
+      </div>
+      <pre id="adminlog" class="adminlog"></pre>
+      <form id="adminform" class="adminzeile" autocomplete="off"><span>&gt;</span><input id="adminbefehl" aria-label="Befehl" placeholder="hilfe" autocapitalize="off" spellcheck="false"><button type="submit" class="pille">Los</button></form>
+    </div>
+  </div>
+
+  <script>
+    // Discord: Webhook-URL des Kanals für Freikäufe. Solange hier nichts steht, wird der Standardkanal genommen.
+    var DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1569811241965199473/_4hz0kd13CgZ-1lFc9RZ8xSB91BmSDIsVur6w8UVNg1HnlGDnBlmScHGoHH8v4mwN0Da';
+    var DISCORD_STANDARD = '';
+    // Deine Discord-ID, damit dich der Bot mit @ markiert (Anleitung siehe index.html).
+    var DISCORD_USER_ID = '';
+
+    var $ = function (id) { return document.getElementById(id); };
+    var v = function (id) { return $(id).value.trim(); };
+
+    // =====================================================================
+    //  Rätselschloss
+    //  Die Antworten und Karten stehen nur als SHA-256-Prüfsummen in dieser Datei.
+    //  Das hält neugierige Besucher fern, ist aber KEIN echter Schutz (siehe Hinweis im Chat).
+    // =====================================================================
+    var SALT = 'tod-freikauf-2026:';
+    var RAETSEL_HASHES = [["cd8faa4c3e3e17b8278465bea852974114113fefb027799891662e7a25c9ec6a", "8f2c8744ca4a2d8df81943a6b6a37ed7f00ec3319eae611b270911d3b4826477", "2cec9bb2147d5731c5c7b24c25c3a4fc39b771013745d94c48bbca551b7877bb", "24fda9bbc58a6359ad13ecc6a13d0acd77ab684c4265bcd71b9c2820e9dcc600", "4c043f9f11f655c13b22abf723177d68873d827df8472e356b46ea9a82920f3f", "1022ed7ab7323268f41e0a6b6ee04a3fddc3cb7f25a5a9dea3dc5af4a0deec21", "19d87b6819f2c9b54ae10542532f26bca0e2bf9d46716cd69b870a1a80b493cb"], ["a621df9e93d096f88a7371996d30ca771292167978d0426816d25872a9bd710e", "58161d0fcede180f3706d1b571fef82040cfc6fc89cecb7498c7d6b6ef607cac", "fb6580320cd4583530b32383bc5eccc8756ce9653d7b286248110fefe3ca5dec", "594e3dc09b5b7f5991eeab45fdbdab7650b928feee3e38d919bfe985c98aef42", "b3fd4ee99d7553807e44063e11b7d236a9ea79459418688126766b4f92d31d33", "3c02d76de156e63e3d904b282fca1b7f6aa6803631cfe941a7e47ddd512e7d98", "ebb32804012ef169840f9763fa01ff7fce160dfb9539bbeaa1453be30e7c3b5e"], ["50e9c18fd55cee73429044a1f9a6db319680c38b1a01c726a3985b77c6c57014", "1e26deca386625577073c59fb232671f15b3b043173d77ae1021d099ba108b2f", "516a4cb842c2749d93efffdb6f6322fea4dfb1dea59e1011ba84a29973391833"]];
+    var KARTEN_HASHES = ["969b792ce79452eda28a37829b384cc7a23435b549e64ea17f9d4c79a33d3942", "f30ccd17050dd75c0ccdeb8c35378c5efd2b321e3877e22a94edd61bd2d20cd6", "b892242f5ddd679c8f1ec8e10da100bf283b401c13325ee075f3d61fab976bc2"];
+    var WRAPS = [["5d5c0a5e", "0c535d54", "58575a5e", "58045a5f", "0e515c5d", "5153545c", "5a555b5d"], ["43400b461b5e52520a50", "12445842435c58505355", "10145b114f0b00515f51", "474951431b0a59550e03", "10155a174d51575a5c50", "43475010185a00025953", "12120c451e0c55520d5d"], ["065507090059", "0604530a515e", "505454585659"]];
+    var CIPHER = ["29204f2c3671074839625461", "2d731865696e674e71580e70", "2c74153479023119637e2b72"];
+    var ADMIN_HASH = "01cdf0f68ac15b36ec1d472e36927a98552b12d7e6d0591e45d5918c60583b49";
+    var CIPHER_ADMIN = ["292218783627571562630664", "2d7c49653f3f6b1f74005f79", "2c774e627850361b6c7e7c77"];
+    var KARTE_NR = 0;
+
+    function sha256(s) {
+      var K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+      var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+      var rr = function (n, x) { return (x >>> n) | (x << (32 - n)); };
+      var b = [], i, o;
+      for (i = 0; i < s.length; i++) b.push(s.charCodeAt(i) & 255);   // nur ASCII (Eingaben werden vorher bereinigt)
+      var l = b.length * 8;
+      b.push(0x80);
+      while (b.length % 64 !== 56) b.push(0);
+      for (i = 7; i >= 0; i--) b.push(i > 3 ? 0 : (l >>> (i * 8)) & 255);
+      for (o = 0; o < b.length; o += 64) {
+        var w = [];
+        for (i = 0; i < 16; i++) w[i] = (b[o + 4 * i] << 24) | (b[o + 4 * i + 1] << 16) | (b[o + 4 * i + 2] << 8) | b[o + 4 * i + 3];
+        for (i = 16; i < 64; i++) {
+          var s0 = rr(7, w[i - 15]) ^ rr(18, w[i - 15]) ^ (w[i - 15] >>> 3);
+          var s1 = rr(17, w[i - 2]) ^ rr(19, w[i - 2]) ^ (w[i - 2] >>> 10);
+          w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+        }
+        var a = H[0], bb = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+        for (i = 0; i < 64; i++) {
+          var S1 = rr(6, e) ^ rr(11, e) ^ rr(25, e);
+          var ch = (e & f) ^ (~e & g);
+          var t1 = (h + S1 + ch + K[i] + w[i]) | 0;
+          var S0 = rr(2, a) ^ rr(13, a) ^ rr(22, a);
+          var mj = (a & bb) ^ (a & c) ^ (bb & c);
+          var t2 = (S0 + mj) | 0;
+          h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = bb; bb = a; a = (t1 + t2) | 0;
+        }
+        H[0] = (H[0] + a) | 0; H[1] = (H[1] + bb) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0;
+        H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+      }
+      return H.map(function (x) { return ('00000000' + (x >>> 0).toString(16)).slice(-8); }).join('');
+    }
+
+    function normWort(s) {
+      return s.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9]/g, '');
+    }
+    function normKarte(s) { return s.toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+    function kartenNr(s) { return KARTEN_HASHES.indexOf(sha256(SALT + 'karte:' + normKarte(s))) + 1; }   // 0 = unbekannt
+
+    var INTRO = 'Werter Besucher,\n\nhinter dieser Tür liegt unser geheimer Bereich. Wer ihn betreten will, muss drei Rätsel lösen. Wer sich dreimal irrt, dem bleibt die Tür einen ganzen Tag lang verschlossen.\n\nViel Glück,\nOderDeckel';
+    var BELOHNUNG = 'Hervorragend! Alle drei Rätsel gelöst. Als Belohnung liegen in meinem Aktenkoffer drei goldene Schlüssel, die persönlichen Freikauf-Karten. Such dir einen aus. Jeder darf nur einen nehmen!';
+    var RAETSEL = [
+      { text: 'Ich bin gelb und sitze auf dem Kopf. Fallen Steine von oben, bin ich dein bester Freund. Was bin ich?',
+        tipp: 'Schau dir OderDeckel genau an. Was trägt er auf dem Kopf?', ton: 'rgba(255, 210, 63, .38)',
+        ok: 'Richtig! Wer Steine über dem Kopf hat, braucht ihn. 🎉' },
+      { text: 'Mein Stiel ist aus Holz, mein Kopf aus Eisen. Ich gehe mit dir tief unter die Erde und hole dir Diamanten. Was bin ich?',
+        tipp: 'Damit baut man in Minecraft Erze ab.', ton: 'rgba(110, 150, 255, .32)',
+        ok: 'Genau! Damit kommt man an die Diamanten. ⛏️' },
+      { text: 'Ich bin kein Topf, aber ohne mich passt kein Topf richtig. Ich sitze immer genau oben drauf. Was bin ich?',
+        tipp: 'Denk an den Namen der Firma: Topf oder …', ton: 'rgba(217, 48, 228, .30)',
+        ok: 'Stimmt! Topf oder Deckel. 🎉' }
+    ];
+
+    var ruhig = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var stufe = -1;        // -1 Start, 0 Einleitung, 1-3 Rätsel, 4 Karte
+    var loesungen = 0, timer = null, canon = [];
+
+    var kinoAn = false, kinoTimer = [];
+    function sp() { return kinoAn ? $('ptext') : $('sprech'); }
+    function schreibt(an) {
+      if (!kinoAn) return;
+      $('brief').classList.toggle('tippt', an);
+      $('stage').classList.toggle('schreibt', an);
+    }
+    function tippen(text, fertig) {
+      var ziel = sp();
+      clearInterval(timer); timer = null;
+      ziel.textContent = '';
+      if (ruhig) { ziel.textContent = text; if (fertig) fertig(); return; }
+      var i = 0, noch = fertig;
+      var ende = function () {
+        clearInterval(timer); timer = null;
+        ziel.textContent = text;
+        schreibt(false);
+        if (noch) { var f = noch; noch = null; f(); }
+      };
+      schreibt(true);
+      timer = setInterval(function () { i++; ziel.textContent = text.slice(0, i); if (i >= text.length) ende(); }, kinoAn ? 30 : 22);
+      (kinoAn ? $('brief') : $('sprech')).onclick = function () { if (timer) ende(); };   // Klick überspringt die Schreibanimation
+    }
+
+    function punkte() {
+      var s = stufe >= 4 ? '🔓' : '🔒';
+      for (var i = 1; i <= 3; i++) s += ' ' + (i <= loesungen ? '●' : '○');
+      $('punkte').textContent = s;
+    }
+
+    function requisit(emoji) {
+      var r = $('requisit');
+      r.textContent = emoji;
+      r.classList.remove('rein'); void r.offsetWidth; r.classList.add('rein');
+    }
+
+    var TAG = 24 * 60 * 60 * 1000;
+    function lies(k) { try { return localStorage.getItem(k); } catch (x) { return null; } }
+    function schreib(k, w) { try { localStorage.setItem(k, w); } catch (x) {} }
+    function bannRest() { var b = parseInt(lies('freikauf_bann') || '0', 10); return b > Date.now() ? b - Date.now() : 0; }
+
+    function sperre() {
+      stufe = -2;
+      clearInterval(timer); timer = null;
+      $('rform').hidden = true; $('start').hidden = true; $('schluessel').hidden = true;
+      $('film').style.setProperty('--ton', 'rgba(220, 60, 60, .30)');
+      requisit('⛔');
+      var ms = bannRest(), h = Math.floor(ms / 3600000), m = Math.ceil((ms % 3600000) / 60000);
+      if (m === 60) { h++; m = 0; }
+      $('kino').classList.add('rot'); schreibt(false);
+      sp().textContent = 'Drei Fehler! Die Tür ist jetzt verschlossen. Komm in ' + h + ' Std. ' + m + ' Min. wieder und versuch es nochmal.';
+      $('punkte').textContent = '🔒 ○ ○ ○';
+    }
+
+    function zeigeFormular() {
+      $('rform').hidden = false;
+      $('antwort').value = '';
+      $('rfehler').textContent = '';
+      $('tipptext').hidden = true;
+      $('antwort').focus();
+    }
+
+    function geheZu(n) {
+      if (bannRest()) { sperre(); return; }
+      stufe = n;
+      $('rform').hidden = true;
+      $('start').hidden = true;
+      $('schluessel').hidden = true;
+      punkte();
+      if (n === 0) {
+        requisit('🎬');
+        tippen(INTRO, function () { $('start').textContent = 'Los geht’s →'; $('start').hidden = false; });
+      } else if (n <= 3) {
+        var r = RAETSEL[n - 1];
+        $('film').style.setProperty('--ton', r.ton);
+        requisit('❓');
+        tippen('Rätsel ' + n + ' von 3\n' + r.text, zeigeFormular);
+      } else {
+        $('film').style.setProperty('--ton', 'rgba(255, 210, 63, .45)');
+        requisit('💼');
+        if (kinoAn) $('stage').classList.add('koffer');
+        tippen(BELOHNUNG, function () { $('schluessel').hidden = false; });
+      }
+    }
+
+    function falsch() {
+      var f = $('rform');
+      f.classList.remove('wackel'); void f.offsetWidth; f.classList.add('wackel');
+      if (kinoAn) { var sg = $('stage'); sg.classList.remove('schock'); void sg.offsetWidth; sg.classList.add('schock'); }
+      var n = parseInt(lies('freikauf_fehler') || '0', 10) + 1;
+      if (n >= 3) {
+        schreib('freikauf_fehler', '0');
+        schreib('freikauf_bann', String(Date.now() + TAG));
+        sperre();
+        return;
+      }
+      schreib('freikauf_fehler', String(n));
+      var rest = 3 - n;
+      $('rfehler').textContent = 'Leider falsch. Noch ' + rest + (rest === 1 ? ' Versuch' : ' Versuche') + ', dann ist die Tür einen Tag zu.';
+    }
+
+    function entschluessle(j) {
+      var key = canon.join('|'), c = CIPHER[j], out = '';
+      var strom = sha256(SALT + 'k:' + key + ':' + j);
+      for (var i = 0; i < c.length / 2; i++) out += String.fromCharCode(parseInt(c.substr(i * 2, 2), 16) ^ strom.charCodeAt(i));
+      return out;
+    }
+
+    function oeffne() {
+      $('schloss').hidden = true;
+      $('kino').hidden = true; kinoAn = false; document.body.style.overflow = '';
+      $('tresor').hidden = false;
+      $('karte-chip').textContent = '🎫 Freikauf-Karte Nr. ' + KARTE_NR;
+      window.scrollTo(0, 0);
+    }
+
+    $('start').addEventListener('click', function () {
+      if (stufe === -1) { kinoStart(); return; }
+      if (stufe === 5) { oeffne(); return; }
+      geheZu(stufe + 1);
+    });
+
+    $('tipp').addEventListener('click', function () {
+      if (stufe < 1 || stufe > 3) return;
+      $('tipptext').textContent = '💡 ' + RAETSEL[stufe - 1].tipp;
+      $('tipptext').hidden = false;
+    });
+
+    $('rform').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (istAdmin($('antwort').value)) { $('antwort').value = ''; oeffneAdmin(); return; }
+      if (bannRest()) { sperre(); return; }
+      if (stufe < 1 || stufe > 3) return;
+      var w = normWort($('antwort').value);
+      var j = RAETSEL_HASHES[stufe - 1].indexOf(sha256(SALT + w));
+      if (j < 0) { falsch(); return; }
+      // richtige Antwort: den echten Lösungsbegriff entpacken (dient später als Schlüssel für die Karten)
+      var wr = WRAPS[stufe - 1][j], st = sha256(SALT + 'w:' + w), cw = '';
+      for (var i = 0; i < wr.length / 2; i++) cw += String.fromCharCode(parseInt(wr.substr(i * 2, 2), 16) ^ st.charCodeAt(i));
+      canon[stufe - 1] = cw;
+      loesungen = stufe; punkte();
+      $('rform').hidden = true;
+      requisit('✅');
+      var weiter = stufe + 1;
+      tippen(RAETSEL[stufe - 1].ok, function () { setTimeout(function () { geheZu(weiter); }, 900); });
+    });
+
+    var schl = $('schluessel').querySelectorAll('button');
+    Array.prototype.forEach.call(schl, function (btn) {
+      btn.addEventListener('click', function () {
+        var j = parseInt(btn.getAttribute('data-k'), 10);
+        var code = entschluessle(j);
+        var nr = kartenNr(code);
+        if (!nr) return;
+        KARTE_NR = nr;
+        schreib('freikauf_karte', normKarte(code));
+        $('schluessel').hidden = true;
+        stufe = 5;
+        requisit('🔓');
+        sp().innerHTML = '';
+        sp().appendChild(document.createTextNode('Du hast Schlüssel Nr. ' + nr + ' gewählt. Das ist deine persönliche Freikauf-Karte:\n'));
+        var k = document.createElement('span'); k.className = 'karte'; k.textContent = code;
+        sp().appendChild(k);
+        sp().appendChild(document.createTextNode('\nSie ist auf diesem Gerät gespeichert. Schreib sie dir trotzdem auf!'));
+        $('start').textContent = 'Tür öffnen →'; $('start').hidden = false;
+      });
+    });
+
+    $('abmelden').addEventListener('click', function (e) {
+      e.preventDefault();
+      try { localStorage.removeItem('freikauf_karte'); } catch (x) {}
+      location.reload();
+    });
+
+    // Wer schon eine gültige Karte eingegeben hat, kommt direkt in den Tresor.
+    try {
+      var gemerkt = localStorage.getItem('freikauf_karte');
+      if (gemerkt) {
+        var nr0 = kartenNr(gemerkt);
+        if (nr0) { KARTE_NR = nr0; oeffne(); } else { localStorage.removeItem('freikauf_karte'); }
+      }
+    } catch (x) {}
+
+
+    // =====================================================================
+    //  Admin-Konsole (Code steht nur als Prüfsumme in der Datei)
+    // =====================================================================
+    var adminKey = '', adminReload = false;
+    function istAdmin(w) { return sha256(SALT + 'admin:' + normWort(w)) === ADMIN_HASH; }
+    function alog(s) { var l = $('adminlog'); l.textContent += s + '\n'; l.scrollTop = l.scrollHeight; }
+    function adminKarte(j) {
+      var c = CIPHER_ADMIN[j], out = '', st = sha256(SALT + 'a:' + adminKey + ':' + j);
+      for (var i = 0; i < c.length / 2; i++) out += String.fromCharCode(parseInt(c.substr(i * 2, 2), 16) ^ st.charCodeAt(i));
+      return out;
+    }
+    function oeffneAdmin() {
+      adminKey = 'odd2010';
+      $('admin').hidden = false;
+      $('adminpw').hidden = true;
+      if (!$('adminlog').textContent) alog('Admin angemeldet. Tippe "hilfe" für alle Befehle.');
+      $('adminbefehl').focus();
+    }
+    var REPO = 'TopfOderDeckelGMBH/TopfOderDeckelGMBH.github.io';
+    function ghFehler(c) {
+      if (c === '401') return 'Token ungültig oder abgelaufen.';
+      if (c === '403' || c === '404') return 'Keine Berechtigung. Hat das Token "Contents: Read and write" für genau dieses Repository?';
+      return 'GitHub-Fehler ' + c + '.';
+    }
+    function ghSetzen(wert, fertig) {
+      var tok = lies('gh_token');
+      var url = 'https://api.github.com/repos/' + REPO + '/contents/status.json';
+      var kopf = { 'Authorization': 'Bearer ' + tok, 'Accept': 'application/vnd.github+json' };
+      fetch(url, { headers: kopf }).then(function (r) {
+        if (r.status === 404) return {};
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      }).then(function (alt) {
+        var body = { message: 'Hitman ' + (wert ? 'freigeschaltet' : 'gesperrt') + ' (Admin-Konsole)', content: btoa(JSON.stringify({ hitman: wert }) + '\n') };
+        if (alt && alt.sha) body.sha = alt.sha;
+        return fetch(url, { method: 'PUT', headers: { 'Authorization': kopf.Authorization, 'Accept': kopf.Accept, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      }).then(function (r) {
+        if (!r.ok) throw new Error(String(r.status));
+        fertig('');
+      }).catch(function (e) { fertig(ghFehler(String(e && e.message || e))); });
+    }
+    var REPO = 'TopfOderDeckelGMBH/TopfOderDeckelGMBH.github.io';
+    function ghFehler(c) {
+      if (c === '401') return 'Token ungültig oder abgelaufen.';
+      if (c === '403' || c === '404') return 'Keine Berechtigung. Hat das Token "Contents: Read and write" für genau dieses Repository?';
+      return 'GitHub-Fehler ' + c + '.';
+    }
+    function ghSetzen(wert, fertig) {
+      var tok = lies('gh_token');
+      var url = 'https://api.github.com/repos/' + REPO + '/contents/status.json';
+      var kopf = { 'Authorization': 'Bearer ' + tok, 'Accept': 'application/vnd.github+json' };
+      fetch(url, { headers: kopf }).then(function (r) {
+        if (r.status === 404) return {};
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      }).then(function (alt) {
+        var body = { message: 'Hitman ' + (wert ? 'freigeschaltet' : 'gesperrt') + ' (Admin-Konsole)', content: btoa(JSON.stringify({ hitman: wert }) + '\n') };
+        if (alt && alt.sha) body.sha = alt.sha;
+        return fetch(url, { method: 'PUT', headers: { 'Authorization': kopf.Authorization, 'Accept': kopf.Accept, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      }).then(function (r) {
+        if (!r.ok) throw new Error(String(r.status));
+        fertig('');
+      }).catch(function (e) { fertig(ghFehler(String(e && e.message || e))); });
+    }
+    function adminStatus() {
+      var rest = bannRest();
+      alog('Fehlversuche: ' + (lies('freikauf_fehler') || '0') + ' von 3');
+      alog('Sperre: ' + (rest ? 'ja, noch ' + Math.floor(Math.ceil(rest / 60000) / 60) + ' Std. ' + (Math.ceil(rest / 60000) % 60) + ' Min.' : 'nein'));
+      alog('Gespeicherte Karte: ' + (lies('freikauf_karte') ? 'ja (Nr. ' + kartenNr(lies('freikauf_karte')) + ')' : 'nein'));
+      alog('Hitman nur in diesem Browser: ' + (lies('hitman_frei') === '1' ? 'freigeschaltet' : 'gesperrt'));
+      alog('GitHub-Token: ' + (lies('gh_token') ? 'gespeichert' : 'fehlt (Befehl: token DEIN_TOKEN)'));
+      fetch('status.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { alog('Hitman für ALLE: ' + (j ? (j.hitman ? 'freigeschaltet' : 'gesperrt') : 'unbekannt (status.json noch nicht hochgeladen?)')); })
+        .catch(function () { alog('Hitman für ALLE: unbekannt (nur auf der echten Website abrufbar)'); });
+    }
+    function befehl(s) {
+      var teile = s.trim().split(/\s+/), c = teile[0].toLowerCase(), arg = (teile[1] || ''), argk = arg.toLowerCase();
+      alog('> ' + (c === 'token' && arg ? 'token ••••••••' : s.trim()));
+      if (c === 'hilfe' || c === 'help') {
+        alog('status          zeigt Fehlversuche, Sperre, Karte und Hitman-Stand\nreset           Rätsel, Sperre und gespeicherte Karte löschen\nentbannen       nur die Sperre aufheben\nkarten          die drei Freikauf-Karten anzeigen\nhitman an|aus   Hitman für ALLE Besucher frei- oder sperren\ntoken XYZ       GitHub-Token speichern (nur in diesem Browser)\ntoken loeschen  Token wieder entfernen\ntresor [1-3]    Geheimen Bereich direkt öffnen\nclear           Konsole leeren\nexit            Konsole schließen');
+      } else if (c === 'status') { adminStatus();
+      } else if (c === 'reset') {
+        ['freikauf_fehler', 'freikauf_bann', 'freikauf_karte'].forEach(function (k) { try { localStorage.removeItem(k); } catch (x) {} });
+        adminReload = true; alog('Zurückgesetzt. Beim Schließen lädt die Seite neu und die Rätsel beginnen von vorn.');
+      } else if (c === 'entbannen') {
+        try { localStorage.removeItem('freikauf_bann'); localStorage.removeItem('freikauf_fehler'); } catch (x) {}
+        adminReload = true; alog('Sperre aufgehoben.');
+      } else if (c === 'karten') {
+        for (var j = 0; j < 3; j++) alog('Karte ' + (j + 1) + ': ' + adminKarte(j));
+      } else if (c === 'token') {
+        if (!arg) { alog(lies('gh_token') ? 'Ein Token ist gespeichert.' : 'Kein Token. Benutzung: token DEIN_TOKEN'); }
+        else if (argk === 'loeschen') { try { localStorage.removeItem('gh_token'); } catch (x) {} alog('Token entfernt.'); }
+        else { schreib('gh_token', arg); alog('Token gespeichert. Es bleibt nur in diesem Browser. Teste mit: hitman an'); }
+      } else if (c === 'hitman') {
+        if (argk !== 'an' && argk !== 'aus') { alog('Benutzung: hitman an  oder  hitman aus'); return; }
+        var an = argk === 'an';
+        schreib('hitman_frei', an ? '1' : '0');
+        if (!lies('gh_token')) {
+          alog('Nur für DIESEN Browser ' + (an ? 'freigeschaltet' : 'gesperrt') + '. Für alle Besucher brauche ich ein GitHub-Token: token DEIN_TOKEN');
+          return;
+        }
+        alog('Speichere bei GitHub …');
+        ghSetzen(an, function (fehler) {
+          if (fehler) alog('Fehlgeschlagen: ' + fehler);
+          else alog('Gespeichert! Nach ca. 1 Minute ist Hitman für ALLE Besucher ' + (an ? 'FREIGESCHALTET' : 'wieder gesperrt') + '.');
+        });
+      } else if (c === 'tresor') {
+        var n = parseInt(arg || '1', 10);
+        if (!(n >= 1 && n <= 3)) { alog('Nummer 1 bis 3 angeben.'); return; }
+        KARTE_NR = n; schreib('freikauf_karte', normKarte(adminKarte(n - 1)));
+        $('admin').hidden = true; oeffne();
+      } else if (c === 'clear') { $('adminlog').textContent = '';
+      } else if (c === 'exit' || c === 'schliessen') { $('adminzu').click();
+      } else if (c) { alog('Unbekannter Befehl. Tippe "hilfe".'); }
+    }
+    $('adminform').addEventListener('submit', function (e) { e.preventDefault(); var b = $('adminbefehl'); if (b.value.trim()) befehl(b.value); b.value = ''; });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-cmd]'), function (b) { b.addEventListener('click', function () { befehl(b.getAttribute('data-cmd')); }); });
+    $('adminzu').addEventListener('click', function () { $('admin').hidden = true; if (adminReload) location.reload(); });
+    $('adminlink').addEventListener('click', function (e) { e.preventDefault(); $('adminpw').hidden = !$('adminpw').hidden; if (!$('adminpw').hidden) $('adminpwfeld').focus(); });
+    $('adminpw').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (istAdmin($('adminpwfeld').value)) { $('adminpwfeld').value = ''; $('adminpwfehler').textContent = ''; oeffneAdmin(); }
+      else { $('adminpwfehler').textContent = 'Falscher Code.'; }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('admin').hidden) $('adminzu').click(); });
+
+
+    // =====================================================================
+    //  Der Film: Raum, Spaziergang, Schreibtisch, Brief
+    // =====================================================================
+    function zeit(fn, ms) { kinoTimer.push(setTimeout(fn, ms)); }
+    function kinoEnde() {
+      kinoTimer.forEach(function (x) { clearTimeout(x); clearInterval(x); });
+      kinoTimer = [];
+      $('titelkarte').textContent = '';
+      var k = $('kino'), fp = $('figplatz');
+      k.classList.add('an', 'raum', 'sichtbar');
+      fp.className = 'figplatz direkt sitzt';
+      $('kinoskip').hidden = true;
+      geheZu(0);
+    }
+    function kinoStart() {
+      if (bannRest()) { sperre(); return; }
+      kinoAn = true;
+      var k = $('kino');
+      k.hidden = false;
+      document.body.style.overflow = 'hidden';
+      // Figur, Eingabefelder und Knöpfe ziehen in den Film um (kein doppeltes SVG nötig)
+      $('figplatz').appendChild(document.querySelector('.buehne'));
+      var ui = $('kinoui');
+      $('kpunkte').appendChild($('punkte'));
+      ui.appendChild($('rform')); ui.appendChild($('schluessel')); ui.appendChild($('start'));
+      $('start').hidden = true;
+      $('kinoskip').hidden = false;
+      $('kinoskip').onclick = kinoEnde;
+      void k.offsetWidth;
+      k.classList.add('an');
+      if (ruhig) { kinoEnde(); return; }
+      var fp = $('figplatz');
+      var tk = $('titelkarte'), titel = 'Tief unter der Erde, mitten in der Nacht …', n = 0;
+      zeit(function () {
+        var iv = setInterval(function () { n++; tk.textContent = titel.slice(0, n); if (n >= titel.length) clearInterval(iv); }, 48);
+        kinoTimer.push(iv);
+      }, 1800);
+      zeit(function () { k.classList.add('raum'); }, 5200);
+      zeit(function () { fp.classList.add('geht'); }, 6800);
+      zeit(function () { fp.classList.remove('geht'); fp.classList.add('hinter'); }, 10300);
+      zeit(function () { fp.classList.remove('hinter'); fp.classList.add('sitzt'); }, 11900);
+      zeit(function () { k.classList.add('sichtbar'); }, 13000);
+      zeit(function () { $('kinoskip').hidden = true; geheZu(0); }, 14200);
+    }
+
+    if (bannRest()) sperre();
+
+    // =====================================================================
+    //  Freikauf-Formular
+    // =====================================================================
+    var form = $('formular');
+    var ergebnis = $('ergebnis');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!KARTE_NR) return;
+      var t = 'Freikauf bei der Topf Oder Deckel GmbH\n\nFreikauf-Karte: Nr. ' + KARTE_NR + '\nMinecraft-Name: ' + v('mcname') + '\nDiscord: ' + v('dcname') + '\nBezahlung: ' + v('zahlung');
+      $('text').textContent = t;
+      var status = $('status');
+      var senden = form.querySelector('button[type=submit]');
+      var zeigen = function (text) {
+        status.textContent = text; ergebnis.hidden = false;
+        ergebnis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      var id = /^\d{15,25}$/.test(DISCORD_USER_ID) ? DISCORD_USER_ID : '';
+      var hook = DISCORD_WEBHOOK || DISCORD_STANDARD;
+      if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
+      if ($('website').value) return; // Spam-Falle
+      senden.disabled = true;
+      fetch(hook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: 'Freikauf-Bot',
+          allowed_mentions: id ? { users: [id] } : { parse: [] },
+          content: (id ? '<@' + id + '> ' : '') + '🕵️ Neuer Freikauf von **' + v('mcname') + '** (Karte Nr. ' + KARTE_NR + ')',
+          embeds: [{
+            title: '🕵️ Freikaufen',
+            color: 0xD930E4,
+            fields: [
+              { name: '👤 Minecraft-Name', value: '`' + v('mcname') + '`', inline: true },
+              { name: '💬 Discord', value: '`' + v('dcname') + '`', inline: true },
+              { name: '🎫 Freikauf-Karte', value: 'Nr. ' + KARTE_NR, inline: true },
+              { name: '💰 Bezahlung', value: v('zahlung'), inline: true }
+            ],
+            footer: { text: '⏳ Offen · Reagiere mit ✅, wenn erledigt' },
+            timestamp: new Date().toISOString()
+          }]
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        zeigen('Dein Freikauf wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+      }).catch(function () {
+        zeigen('Senden hat nicht geklappt. Kopiere den Text und schick ihn uns:');
+      }).then(function () {
+        setTimeout(function () { senden.disabled = false; }, 30000);
+      });
+    });
+
+    $('kopieren').addEventListener('click', function () {
+      var pre = $('text');
+      var fertig = function () {
+        var k = $('kopiert');
+        k.hidden = false; setTimeout(function () { k.hidden = true; }, 2000);
+      };
+      var auswaehlen = function () {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        document.execCommand('copy'); fertig();
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
+      else auswaehlen();
+    });
+  </script>
+</body>
+</html>
