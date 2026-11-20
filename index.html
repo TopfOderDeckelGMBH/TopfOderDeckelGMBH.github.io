@@ -4,474 +4,623 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Topf Oder Deckel GmbH – Dein Minecraft-Shop</title>
+  <meta name="description" content="Bauprojekte, Ressourcen, Redstone-Hilfe und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.">
+  <meta name="theme-color" content="#f4eee4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>document.documentElement.classList.add('js');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --akzent: #c01fd0;
-      --text: #1d1d1f;
-      --grau: #6e6e73;
-      --glas: rgba(255, 255, 255, 0.66);
+      --creme: #f4eee4;
+      --creme-2: #ebe3d6;
+      --tinte: #121212;
+      --tinte-2: #3a3a3a;
+      --grau: #6f6a62;
+      --orange: #ff5a1f;
+      --orange-2: #e04a12;
+      --gelb: #ffc83d;
+      --lila: #5b2be0;
+      --pink: #ff4fa3;
+      --weiss: #fffdf9;
+      --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+      --schrift: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
+      --ease: cubic-bezier(.22, 1, .36, 1);
     }
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html { scroll-behavior: smooth; background: #f5f5f7; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      font-size: 1.125rem;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
+    html { background: var(--creme); }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    body { margin: 0; color: var(--tinte); background: var(--creme); font-family: var(--schrift); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    svg { display: block; }
+    ::selection { background: var(--orange); color: #fff; }
+    :focus-visible { outline: 3px solid var(--lila); outline-offset: 3px; }
+    .huelle { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+    .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .display { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: -.01em; line-height: .86; }
+    .maske { display: block; overflow: hidden; padding: .16em 0 .04em; margin-top: -.16em; }
+    .maske > span { display: inline-block; will-change: transform; }
+
+    /* Körnung über allem für Druck-Look */
+    .korn { position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+    /* ---------- Navigation ---------- */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; mix-blend-mode: difference; color: #fff; pointer-events: none; }
+    .nav .huelle { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+    .nav a { pointer-events: auto; text-decoration: none; }
+    .marke { font-family: var(--display); font-size: 1.35rem; letter-spacing: .01em; text-transform: uppercase; }
+    .menue { display: flex; gap: 26px; font-weight: 500; font-size: .95rem; }
+    .menue a { position: relative; }
+    .menue a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
+    .menue a:hover::after { transform: scaleX(1); transform-origin: left; }
+    @media (max-width: 760px) { .menue a:not(:last-child) { display: none; } }
+
+    /* ---------- Knöpfe ---------- */
+    .knopf { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; cursor: pointer; text-decoration: none;
+      font: 600 1rem/1 var(--schrift); color: var(--weiss); background: var(--tinte); border: 0; border-radius: 999px; padding: 18px 26px; transition: transform .3s var(--ease); }
+    .knopf::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--orange); border-radius: inherit; transform: translateY(101%); transition: transform .5s var(--ease); }
+    .knopf:hover::before { transform: none; }
+    .knopf:active { transform: scale(.97); }
+    .knopf .pfeil { width: 30px; height: 30px; border-radius: 50%; background: var(--weiss); color: var(--tinte); display: grid; place-items: center; margin: -8px -14px -8px 0; transition: transform .4s var(--ease); }
+    .knopf .pfeil svg { width: 16px; height: 16px; }
+    .knopf:hover .pfeil { transform: rotate(-45deg); }
+    .knopf.hell { background: var(--weiss); color: var(--tinte); }
+    .knopf.hell::before { background: var(--gelb); }
+    .knopf.hell .pfeil { background: var(--tinte); color: var(--weiss); }
+    .knopf.klein { padding: 12px 18px; font-size: .9rem; }
+    .knopf:disabled { background: #cfc8bd; color: #8a847b; cursor: not-allowed; }
+    .knopf:disabled::before { display: none; }
+
+    /* ---------- Hero mit Topf ---------- */
+    .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; display: grid; place-items: center; }
+    .hero-buehne { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+    .riesig { position: absolute; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 2.2vw; pointer-events: none; z-index: 1; }
+    .riesig .wort { font-size: clamp(5rem, 19vw, 21rem); }
+    .riesig .topf { color: var(--tinte); }
+    .riesig .deckel { color: var(--orange); }
+    .oder { position: absolute; z-index: 1; top: 22%; left: 50%; transform: translateX(-50%); font-size: clamp(2.4rem, 6vw, 5.6rem); color: var(--lila); padding: 0 .2em; }
+    .topf-svg { position: relative; z-index: 2; width: min(42vw, 520px); margin-top: 6vh; filter: drop-shadow(0 40px 50px rgba(18, 18, 18, .22)); }
+    .hero-fuss { position: absolute; left: 0; right: 0; bottom: 34px; z-index: 4; }
+    .hero-fuss .huelle { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+    .hero-fuss p { max-width: 36ch; margin: 0; font-size: 1.05rem; color: var(--tinte-2); }
+    .scroll-hinweis { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--grau); }
+    .scroll-hinweis i { width: 1px; height: 38px; background: currentColor; transform-origin: top; animation: tropfen 1.8s var(--ease) infinite; }
+    @keyframes tropfen { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+    .dampf path { fill: none; stroke: var(--tinte); stroke-width: 6; stroke-linecap: round; opacity: 0; }
+    @media (max-width: 760px) {
+      .hero { height: auto; min-height: 0; padding: 120px 0 40px; display: block; }
+      .hero-buehne { height: auto; display: flex; flex-direction: column; align-items: center; }
+      .hero-buehne { position: relative; }
+      .riesig { position: static; width: 100%; padding: 0 16px; flex-direction: column; align-items: stretch; }
+      .riesig .wort { font-size: 30vw; }
+      .riesig .topf { align-self: flex-start; }
+      .riesig .deckel { align-self: flex-end; }
+      .oder { position: absolute; top: 20vw; left: 50%; transform: translateX(-50%) rotate(-6deg); font-size: 12vw; }
+      .topf-svg { width: 64vw; margin-top: 4px; }
+      .hero-fuss { position: static; margin-top: 26px; }
+      .hero-fuss .huelle { flex-direction: column; align-items: flex-start; }
+      .scroll-hinweis { display: none; }
     }
 
-    /* Weicher Farbverlauf-Hintergrund */
-    .hintergrund { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #f5f5f7; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: schweben 18s ease-in-out infinite alternate; }
-    .blob.a { width: 52vw; height: 52vw; left: -14vw; top: -14vw; background: rgba(217, 48, 228, .30); }
-    .blob.b { width: 56vw; height: 56vw; right: -16vw; top: 6vh; background: rgba(60, 170, 255, .34); animation-delay: -6s; }
-    .blob.c { width: 40vw; height: 40vw; left: 28vw; bottom: -14vw; background: rgba(255, 205, 70, .28); animation-delay: -11s; }
-    @keyframes schweben { to { transform: translate(4vw, 3vw) scale(1.08); } }
+    /* ---------- Laufband ---------- */
+    .band { background: var(--tinte); color: var(--creme); padding: 18px 0; overflow: hidden; transform: rotate(-2deg) scale(1.04); margin: 30px 0 0; position: relative; z-index: 5; }
+    .band .spur { display: flex; width: max-content; }
+    .band span { font-family: var(--display); text-transform: uppercase; font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1; padding-right: .5em; white-space: nowrap; }
+    .band span em { font-style: normal; color: var(--orange); }
+    .band span b { font-weight: 400; color: transparent; -webkit-text-stroke: 1.5px var(--creme); }
 
-    /* Navigation */
-    nav {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(245, 245, 247, .72);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0, 0, 0, .08);
-    }
-    .nav-innen { max-width: 980px; margin: 0 auto; height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; font-size: .85rem; }
-    .marke { font-weight: 600; letter-spacing: -.01em; }
-    .nav-links { display: flex; gap: 24px; }
-    nav a { color: var(--text); text-decoration: none; opacity: .8; }
-    nav a:hover { opacity: 1; }
+    /* ---------- Abschnitte allgemein ---------- */
+    section { scroll-margin-top: 80px; }
+    .marker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 22px; }
+    .marker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+    .titel { font-size: clamp(3.2rem, 9.5vw, 9rem); margin: 0; }
 
-    section { scroll-margin-top: 64px; }
-    .breit { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    /* ---------- Angebote (orange) ---------- */
+    .angebote-bereich { background: var(--orange); color: var(--tinte); padding: 140px 0 120px; margin-top: -30px; }
+    .angebote-kopf { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: end; margin-bottom: 64px; }
+    .angebote-kopf p:not(.marker) { margin: 0; font-size: 1.15rem; max-width: 38ch; color: #2b1206; }
+    .angebote-kopf .titel span.gelb { color: var(--gelb); }
+    @media (max-width: 860px) { .angebote-kopf { grid-template-columns: 1fr; } }
+    .liste { border-top: 2px solid var(--tinte); }
+    .angebot { position: relative; width: 100%; display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 24px; text-align: left; cursor: pointer;
+      font: inherit; color: inherit; background: none; border: 0; border-bottom: 2px solid var(--tinte); padding: 26px 8px; overflow: hidden; isolation: isolate; }
+    .angebot::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--tinte); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
+    .angebot:hover::before, .angebot[aria-selected="true"]::before { transform: scaleY(1); }
+    .angebot:hover, .angebot[aria-selected="true"] { color: var(--creme); }
+    .angebot .nr { font-family: var(--mono); font-size: .9rem; }
+    .angebot .name { font-family: var(--display); text-transform: uppercase; font-size: clamp(2.2rem, 6.4vw, 5.4rem); line-height: .9; transition: transform .55s var(--ease); }
+    .angebot:hover .name, .angebot[aria-selected="true"] .name { transform: translateX(18px); }
+    .angebot .name small { display: block; font-family: var(--schrift); text-transform: none; font-size: 1rem; line-height: 1.4; margin-top: 10px; max-width: 46ch; opacity: .8; }
+    .angebot .rund { width: 64px; height: 64px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; transition: transform .55s var(--ease), background .3s, color .3s; }
+    .angebot .rund svg { width: 26px; height: 26px; }
+    .angebot:hover .rund { transform: rotate(-45deg); }
+    .angebot[aria-selected="true"] .rund { background: var(--orange); color: var(--tinte); border-color: var(--orange); transform: rotate(90deg); }
+    .etikett { display: inline-block; vertical-align: middle; font-family: var(--mono); font-size: .8rem; letter-spacing: .04em; background: var(--gelb); color: var(--tinte); padding: 5px 10px; border-radius: 999px; margin-left: 12px; }
+    @media (max-width: 640px) { .angebot { grid-template-columns: 1fr auto; padding: 22px 4px; } .angebot .nr { display: none; } .angebot .rund { width: 48px; height: 48px; } }
 
-    /* Hero */
-    .hero { text-align: center; padding: 72px 20px 24px; }
-    h1 {
-      font-size: clamp(2.8rem, 10vw, 6.2rem);
-      font-weight: 700;
-      line-height: 1.03;
-      letter-spacing: -.04em;
-      margin: 0 auto 18px;
-      max-width: 11ch;
-      text-wrap: balance;
-      background: linear-gradient(90deg, #7b2ff7, #d930e4 50%, #ff5d9e);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; color: transparent;
-    }
-    .unter { font-size: clamp(1.3rem, 3.6vw, 1.9rem); font-weight: 600; letter-spacing: -.02em; color: var(--text); margin: 0 0 10px; }
-    .lead { color: var(--grau); max-width: 34ch; margin: 0 auto 28px; font-size: 1.2rem; }
-    .cta { display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; }
-    .pille {
-      display: inline-block; background: var(--akzent); color: #fff; text-decoration: none;
-      padding: 12px 24px; border-radius: 999px; font-weight: 500; font-size: 1.05rem;
-      transition: transform .2s ease, background .2s ease;
-    }
-    .pille:hover { background: #a519b3; transform: scale(1.03); }
-    .link { color: var(--akzent); text-decoration: none; font-size: 1.05rem; }
-    .link:hover { text-decoration: underline; }
-
-    /* Figur */
-    .buehne { position: relative; width: 330px; max-width: 90vw; margin: 34px auto 0; }
-    .buehne::before {
-      content: ""; position: absolute; left: 50%; top: 52%; width: 340px; height: 340px; transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(217, 48, 228, .32), rgba(217, 48, 228, 0) 68%); z-index: -1;
-    }
-    .helm { cursor: default; outline: none; }
-    .helm:focus-visible { outline: 3px solid var(--akzent); outline-offset: 4px; }
-    .figur { display: block; width: 100%; height: auto; overflow: visible; }
-    .huepfen { animation: huepfen 2.4s ease-in-out infinite; }
-    .schatten { transform-box: fill-box; transform-origin: center; animation: schatten 2.4s ease-in-out infinite; }
-    .winken { transform-box: fill-box; transform-origin: 50% 12%; animation: winken 1.1s ease-in-out infinite; }
-    .auge { transform-box: fill-box; transform-origin: 50% 50%; animation: blinzeln 4.6s infinite; }
-    @keyframes huepfen { 50% { transform: translateY(-9px); } }
-    @keyframes schatten { 50% { transform: scale(.88); opacity: .6; } }
-    @keyframes winken { 0%, 100% { transform: rotate(-135deg); } 50% { transform: rotate(-166deg); } }
-    @keyframes blinzeln { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-    .name { text-align: center; margin: 6px 0 0; font-size: .95rem; font-weight: 600; color: var(--grau); }
-
-    /* Abschnitte */
-    .abschnitt { padding: 96px 0 24px; text-align: center; }
-    h2 { font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; margin: 0 0 12px; }
-    .abschnitt > .breit > p { color: var(--grau); max-width: 40ch; margin: 0 auto 32px; }
-
-    /* Auswahl als Segment-Schalter */
-    .schalter {
-      display: flex; gap: 4px; width: fit-content; max-width: 100%; margin: 0 auto 20px;
-      padding: 4px; border-radius: 26px; background: rgba(0, 0, 0, .06); flex-wrap: wrap; justify-content: center;
-    }
-    .schalter::-webkit-scrollbar { display: none; }
-    .schalter button {
-      font: inherit; font-size: .95rem; font-weight: 500; white-space: nowrap;
-      color: var(--text); background: transparent; border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer;
-      transition: background .25s ease, box-shadow .25s ease;
-    }
-    .schalter button:hover { background: rgba(255, 255, 255, .5); }
-    .schalter button[aria-selected="true"] { background: #fff; box-shadow: 0 1px 6px rgba(0, 0, 0, .16); }
-    .schalter button:focus-visible { outline: 3px solid var(--akzent); outline-offset: 2px; }
-
-    .glas {
-      background: var(--glas);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      backdrop-filter: blur(24px) saturate(160%);
-      border: 1px solid rgba(255, 255, 255, .8);
-      border-radius: 32px;
-      box-shadow: 0 10px 40px rgba(60, 30, 100, .10);
-    }
-    .detail { padding: 44px 28px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .detail .icon { font-size: 3.6rem; line-height: 1; margin-bottom: 14px; }
-    .detail h3 { font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: -.02em; margin: 0 0 8px; }
-    .detail p { margin: 0; color: var(--grau); max-width: 36ch; font-size: 1.2rem; }
-    .detail.neu > * { animation: einblenden .4s ease both; }
-    @keyframes einblenden { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-
-    /* Anfrage-Formular */
-    .formular { margin-top: 16px; padding: 32px 28px; text-align: left; }
-    .formular h3 { font-size: 1.4rem; letter-spacing: -.02em; margin: 0 0 20px; }
+    /* Formular-Karte */
+    .formkarte { margin-top: 48px; background: var(--weiss); border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(43, 18, 6, .5); overflow: hidden; }
+    .detail { display: flex; gap: 18px; align-items: center; padding: 28px 32px; background: var(--tinte); color: var(--creme); }
+    .detail .symbol { width: 54px; height: 54px; border-radius: 16px; background: var(--orange); color: var(--tinte); display: grid; place-items: center; flex: none; }
+    .detail .symbol svg { width: 26px; height: 26px; }
+    .detail h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1; margin: 0 0 6px; }
+    .detail p { margin: 0; color: #cfc8bd; }
+    .formular { padding: 30px 32px 34px; }
     .formular fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
-    .feld { margin-bottom: 18px; }
-    .lbl { display: block; font-size: .9rem; font-weight: 600; margin: 0 0 6px; }
-    .eingabe {
-      width: 100%; font: inherit; font-size: 1rem; color: var(--text);
-      background: rgba(255, 255, 255, .9); border: 1px solid rgba(0, 0, 0, .14);
-      border-radius: 14px; padding: 12px 14px;
-    }
-    .eingabe:focus { outline: 3px solid rgba(192, 31, 208, .3); border-color: var(--akzent); }
-    textarea.eingabe { min-height: 130px; resize: vertical; }
-    .zeile { display: grid; grid-template-columns: 1fr 110px 42px; gap: 8px; margin-bottom: 8px; }
-    .weg { font: inherit; font-size: 1.3rem; line-height: 1; background: rgba(0, 0, 0, .06); border: 0; border-radius: 14px; cursor: pointer; color: var(--text); }
-    .weg:hover { background: rgba(0, 0, 0, .12); }
-    .klein {
-      display: inline-block; font: inherit; font-size: .95rem; font-weight: 500; color: var(--text); text-decoration: none;
-      background: rgba(0, 0, 0, .06); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer;
-    }
-    .klein:hover { background: rgba(0, 0, 0, .12); }
-    button.pille { border: 0; font: inherit; font-weight: 500; font-size: 1.05rem; cursor: pointer; }
-    .formular :focus-visible { outline: 3px solid var(--akzent); outline-offset: 2px; }
-    .ergebnis { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(0, 0, 0, .1); }
-    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 1rem; background: rgba(255, 255, 255, .9); border-radius: 14px; padding: 16px; margin: 0 0 14px; }
+    .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    @media (max-width: 640px) { .zwei { grid-template-columns: 1fr; } .formular, .detail { padding: 22px 18px; } }
+    .feld { margin-bottom: 20px; }
+    .lbl { display: block; font-family: var(--mono); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 8px; color: var(--tinte-2); }
+    .eingabe { width: 100%; font: inherit; font-size: 1.02rem; color: var(--tinte); background: transparent; border: 0; border-bottom: 2px solid #d8d0c3; border-radius: 0; padding: 10px 2px; transition: border-color .3s; }
+    .eingabe::placeholder { color: #aaa297; }
+    .eingabe:hover { border-color: #b8ae9f; }
+    .eingabe:focus { outline: none; border-color: var(--orange); }
+    .eingabe[aria-invalid="true"] { border-color: #e11d48; }
+    textarea.eingabe { min-height: 110px; resize: vertical; border: 2px solid #d8d0c3; border-radius: 14px; padding: 12px 14px; }
+    textarea.eingabe:focus { border-color: var(--orange); }
+    select.eingabe { appearance: none; cursor: pointer; padding-right: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
+    .eingabe:disabled { color: #aaa297; cursor: not-allowed; }
+    .zeile { display: grid; grid-template-columns: 1fr 120px 44px; gap: 12px; margin-bottom: 8px; align-items: end; }
+    .weg { height: 40px; font: inherit; background: var(--creme); color: var(--tinte); border: 0; border-radius: 12px; cursor: pointer; display: grid; place-items: center; transition: background .2s, color .2s; }
+    .weg:hover { background: var(--tinte); color: var(--creme); }
+    .weg svg { width: 16px; height: 16px; }
+    .textknopf { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-weight: 600; font-size: .9rem; color: var(--tinte); background: var(--creme); border: 0; border-radius: 999px; padding: 9px 16px; margin-top: 8px; cursor: pointer; transition: background .2s; }
+    .textknopf:hover { background: var(--gelb); }
+    .textknopf svg { width: 16px; height: 16px; }
+    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 18px; }
+    .hinweis { display: flex; gap: 8px; align-items: flex-start; color: var(--grau); font-size: .9rem; margin: 10px 0 0; }
+    .hinweis svg { width: 16px; height: 16px; margin-top: 3px; color: var(--orange); }
+    .meldetext { color: #e11d48; font-weight: 500; }
+    .bald { display: flex; gap: 10px; align-items: flex-start; background: #fff4d6; color: #6b4a00; border-radius: 14px; padding: 12px 14px; margin: 0 0 22px; font-size: .95rem; }
+    .bald svg { width: 18px; height: 18px; margin-top: 2px; }
+    .info { background: #efe9ff; color: #3b1a9e; }
+    .haken { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; color: var(--tinte-2); font-family: var(--schrift); text-transform: none; letter-spacing: 0; font-size: 1rem; }
+    .haken input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--orange); flex: none; cursor: pointer; }
+    .absenden { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 8px; }
+    .ergebnis { margin-top: 24px; padding: 20px; border-radius: 18px; background: var(--creme); }
+    .ergebnis .lbl { color: var(--tinte); }
+    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font-family: var(--mono); font-size: .84rem; line-height: 1.6; color: var(--tinte-2); background: var(--weiss); border-radius: 12px; padding: 14px; margin: 10px 0 14px; }
     .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    .kopiert { color: var(--akzent); font-weight: 600; margin: 0; }
-    .tag { display: inline-block; font-size: .7rem; font-weight: 600; background: var(--gelb); color: #4a2a00; border-radius: 999px; padding: 2px 8px; margin-left: 6px; }
-    .bald { background: var(--gelb); color: #4a2a00; font-weight: 600; border-radius: 14px; padding: 12px 16px; margin: 0 0 20px; }
-    .haken { display: flex; gap: 10px; align-items: flex-start; font-size: 1rem; cursor: pointer; }
-    .haken input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--akzent); flex: none; }
-    .eingabe:disabled { opacity: .55; cursor: not-allowed; }
-    button.pille:disabled { background: #b8b8c0; cursor: not-allowed; transform: none; }
-    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 8px; }
-    .hinweis { color: var(--grau); font-size: .9rem; margin: 8px 0 0; }
-    .karten { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); text-align: left; }
-    .karte { padding: 30px 28px; }
-    .karte .icon { font-size: 2.2rem; line-height: 1; margin-bottom: 14px; }
-    .karte h3 { font-size: 1.3rem; letter-spacing: -.015em; margin: 0 0 6px; }
-    .karte p { margin: 0; color: var(--grau); font-size: 1.05rem; }
+    .kopiert { color: #15803d; font-weight: 600; margin: 0; display: inline-flex; gap: 6px; align-items: center; }
+    .kopiert svg { width: 16px; height: 16px; }
+    .falle { position: absolute; left: -9999px; }
 
-    .schluss { text-align: center; padding: 110px 20px 70px; }
-    .schluss h2 { max-width: 14ch; margin: 0 auto 14px; text-wrap: balance; }
-    .schluss p { color: var(--grau); margin: 0 0 24px; }
-    footer { text-align: center; color: var(--grau); font-size: .8rem; padding: 22px 20px 34px; border-top: 1px solid rgba(0, 0, 0, .08); }
+    /* ---------- Kurs ---------- */
+    .kurs { padding: 150px 0 40px; text-align: center; }
+    .kurs .zahl { font-size: clamp(8rem, 30vw, 26rem); line-height: .8; margin: 0; display: inline-flex; align-items: flex-start; gap: .04em; }
+    .kurs .zahl sup { font-size: .22em; line-height: 1; margin-top: .25em; color: var(--orange); }
+    .kurs p { font-size: clamp(1.2rem, 2.4vw, 1.8rem); margin: 18px auto 0; max-width: 28ch; color: var(--tinte-2); }
+    .kurs p strong { color: var(--tinte); }
 
-    .js .zeigen { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); }
-    .js .zeigen.sichtbar { opacity: 1; transform: none; }
-    @media (max-width: 560px) { .nav-links { gap: 16px; } .hero { padding-top: 48px; } }
-    .ploppen { animation: plop .4s cubic-bezier(.2, .9, .3, 1.15) both; }
-    @keyframes plop { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+    /* ---------- Ablauf ---------- */
+    .ablauf { padding: 120px 0 140px; }
+    .ablauf-kopf { margin-bottom: 60px; }
+    .schritte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 2px solid var(--tinte); }
+    .schritt { padding: 34px 28px 10px 0; border-right: 2px solid var(--tinte); }
+    .schritt + .schritt { padding-left: 28px; }
+    .schritt:last-child { border-right: 0; }
+    .schritt .gross { font-family: var(--display); font-size: clamp(4.5rem, 9vw, 8rem); line-height: .9; color: transparent; -webkit-text-stroke: 2px var(--tinte); display: block; margin-bottom: 18px; transition: color .5s var(--ease); }
+    .schritt:hover .gross { color: var(--orange); -webkit-text-stroke-color: var(--orange); }
+    .schritt h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 2rem; line-height: 1; margin: 0 0 10px; }
+    .schritt p { margin: 0; color: var(--tinte-2); max-width: 30ch; }
+    @media (max-width: 820px) { .schritte { grid-template-columns: 1fr; } .schritt, .schritt + .schritt { padding: 28px 0; border-right: 0; border-bottom: 2px solid var(--tinte); } }
+
+    /* ---------- Warum (lila) ---------- */
+    .warum { background: var(--lila); color: var(--weiss); padding: 140px 0; border-radius: 40px 40px 0 0; }
+    .warum .titel { color: var(--weiss); }
+    .warum .titel .pink { color: var(--pink); }
+    .werte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px; }
+    .wert { background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .18); border-radius: 26px; padding: 30px; transition: transform .5s var(--ease), background .3s; }
+    .wert:hover { transform: translateY(-8px) rotate(-1deg); background: rgba(255, 255, 255, .14); }
+    .wert .symbol { width: 56px; height: 56px; border-radius: 18px; background: var(--gelb); color: var(--tinte); display: grid; place-items: center; margin-bottom: 26px; }
+    .wert:nth-child(2) .symbol { background: var(--pink); }
+    .wert:nth-child(3) .symbol { background: var(--orange); }
+    .wert .symbol svg { width: 26px; height: 26px; }
+    .wert h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 2rem; line-height: 1; margin: 0 0 10px; }
+    .wert p { margin: 0; color: #ddd4ff; }
+    @media (max-width: 860px) { .werte { grid-template-columns: 1fr; } }
+
+    /* ---------- Mitmachen (gelb) ---------- */
+    .mitmachen { background: var(--gelb); padding: 140px 0; }
+    .mitmachen .titel { margin-bottom: 18px; }
+    .mitmachen .unter { font-size: 1.15rem; max-width: 40ch; margin: 0 0 50px; color: #3d2e00; }
+    .wahl2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .karte2 { position: relative; text-align: left; font: inherit; color: var(--tinte); cursor: pointer; background: var(--weiss); border: 0; border-radius: 28px; padding: 32px; min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; gap: 30px; overflow: hidden; isolation: isolate;
+      transition: transform .5s var(--ease), color .4s; }
+    .karte2::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--tinte); clip-path: circle(0% at 90% 15%); transition: clip-path .7s var(--ease); }
+    .karte2:hover { transform: translateY(-6px); }
+    .karte2[aria-selected="true"] { color: var(--weiss); }
+    .karte2[aria-selected="true"]::before { clip-path: circle(150% at 90% 15%); }
+    .karte2 .kopfzeile { display: flex; justify-content: space-between; align-items: flex-start; }
+    .karte2 .symbol { width: 56px; height: 56px; border-radius: 18px; background: var(--gelb); color: var(--tinte); display: grid; place-items: center; }
+    .karte2 .symbol svg { width: 26px; height: 26px; }
+    .karte2 .rund { width: 48px; height: 48px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; transition: transform .5s var(--ease); }
+    .karte2 .rund svg { width: 20px; height: 20px; }
+    .karte2:hover .rund { transform: rotate(-45deg); }
+    .karte2 h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(2.6rem, 5vw, 4rem); line-height: .9; margin: 0 0 8px; }
+    .karte2 p { margin: 0; opacity: .75; max-width: 34ch; }
+    @media (max-width: 700px) { .wahl2 { grid-template-columns: 1fr; } }
+    .mitmachen .formkarte { box-shadow: 0 30px 60px -30px rgba(61, 46, 0, .5); }
+
+    /* ---------- Schluss + Fuß ---------- */
+    .schluss { background: var(--tinte); color: var(--creme); padding: 150px 0 0; overflow: hidden; }
+    .schluss .oben { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
+    .schluss .titel { color: var(--creme); }
+    .schluss .titel .orange { color: var(--orange); }
+    .schluss .rechts { max-width: 34ch; }
+    .schluss .rechts p { color: #b9b2a7; margin: 0 0 24px; }
+    .fussname { font-family: var(--display); text-transform: uppercase; font-size: 13.4vw; line-height: .8; white-space: nowrap; margin: 110px 0 0; color: var(--orange); text-align: center; letter-spacing: -.01em; transform: translateY(8%); }
+    .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 24px; font-size: .85rem; color: #8f887d; border-top: 1px solid #2a2a2a; position: relative; z-index: 2; background: var(--tinte); }
+    .geheim { color: inherit; text-decoration: none; cursor: text; }
+
+    .einfahren { animation: einfahren .55s var(--ease) both; }
+    @keyframes einfahren { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      * { animation: none !important; transition: none !important; }
-      .js .zeigen { opacity: 1; transform: none; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <div class="hintergrund" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+  <div class="korn" aria-hidden="true"></div>
 
-  <nav>
-    <div class="nav-innen">
-      <span class="marke">Topf Oder Deckel</span>
-      <div class="nav-links"><a href="#angebote">Angebote</a><a href="#warum">Warum wir</a><a href="#mitmachen">Mitmachen</a></div>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <h1>Topf Oder Deckel GmbH</h1>
-    <p class="unter">Dein Minecraft-Shop.</p>
-    <p class="lead">Blöcke, seltene Items und Hilfe bei deinem nächsten Bauprojekt. Zu fairen Preisen und ganz unkompliziert.</p>
-    <div class="cta"><a class="pille" href="#angebote">Angebote ansehen</a><a class="link" href="#warum">Warum wir ›</a></div>
-
-    <div class="buehne">
-      <svg class="figur" viewBox="-140 -262 280 282" role="img" aria-label="OderDeckel mit Bauarbeiterhelm und Spitzhacke">
-        <defs>
-          <linearGradient id="kopf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ee62f7"/><stop offset="1" stop-color="#c624d2"/></linearGradient>
-          <linearGradient id="koerper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#df3cea"/><stop offset="1" stop-color="#b820c4"/></linearGradient>
-          <linearGradient id="helm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe46b"/><stop offset="1" stop-color="#ffbf00"/></linearGradient>
-          <filter id="weich"><feGaussianBlur stdDeviation="6"/></filter>
-        </defs>
-        <ellipse class="schatten" cx="0" cy="6" rx="62" ry="8" fill="#2b1040" opacity=".22" filter="url(#weich)"/>
-        <g class="huepfen">
-          <rect x="-38" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
-          <rect x="6" y="-64" width="32" height="64" rx="14" fill="url(#koerper)"/>
-          <rect x="-74" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/>
-          <rect x="-46" y="-134" width="92" height="84" rx="28" fill="url(#koerper)"/>
-          <g class="winken"><rect x="46" y="-128" width="28" height="74" rx="14" fill="url(#koerper)"/></g>
-          <g transform="translate(-60 -62) rotate(-35)">
-            <rect x="-4.5" y="-86" width="9" height="102" rx="4.5" fill="#8a5a32"/>
-            <path d="M-36 -76 Q0 -110 36 -76 L30 -65 Q0 -90 -30 -65 Z" fill="#b4bfcc" stroke="#6b7686" stroke-width="2" stroke-linejoin="round"/>
-            <circle cx="0" cy="-82" r="4.5" fill="#7a8596"/>
-            <circle cx="0" cy="0" r="12" fill="url(#koerper)"/>
-          </g>
-          <rect x="-50" y="-222" width="100" height="94" rx="32" fill="url(#kopf)"/>
-          <ellipse cx="-20" cy="-206" rx="22" ry="8" fill="#fff" opacity=".22"/>
-          <a class="helm" href="freikaufen.html" aria-label="Geheimer Link"><path d="M-50 -208 C-50 -266 50 -266 50 -208 Z" fill="url(#helm)"/>
-          <rect x="-9" y="-254" width="18" height="46" rx="9" fill="#f2b000"/>
-          <ellipse cx="-26" cy="-232" rx="10" ry="5" fill="#fff" opacity=".4" transform="rotate(-25 -26 -232)"/>
-          <rect x="-62" y="-214" width="124" height="13" rx="6.5" fill="#f0a800"/></a>
-          <g class="auge"><rect x="-34" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="-29" cy="-171" r="2.4" fill="#fff"/></g>
-          <g class="auge"><rect x="19" y="-176" width="15" height="18" rx="7" fill="#111"/><circle cx="24" cy="-171" r="2.4" fill="#fff"/></g>
-          <ellipse cx="-38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
-          <ellipse cx="38" cy="-150" rx="8" ry="5" fill="#ff9ae8" opacity=".55"/>
-          <path d="M-27 -149 Q0 -123 27 -149" fill="none" stroke="#111" stroke-width="8" stroke-linecap="round"/>
-        </g>
-      </svg>
-      <p class="name">OderDeckel</p>
+  <header class="nav">
+    <div class="huelle">
+      <a class="marke" href="#start">Topf/Deckel</a>
+      <nav class="menue" aria-label="Hauptmenü">
+        <a href="#angebote">Angebote</a>
+        <a href="#ablauf">Ablauf</a>
+        <a href="#warum">Warum wir</a>
+        <a href="#mitmachen">Mitmachen</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section id="angebote" class="abschnitt">
-      <div class="breit zeigen">
-        <h2>Was wir anbieten.</h2>
-        <p>Such dir aus, wobei wir dir helfen können.</p>
-        <div class="schalter" role="tablist" aria-label="Angebote">
-          <button type="button" role="tab" aria-selected="true" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="🛠️" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">Bauprojekte</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="material" data-kanal="material" data-icon="🧱" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">Blöcke, Items &amp; Ressourcen</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="aufgabe" data-kanal="redstone" data-icon="🔴" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">Redstone-Hilfe</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="textur" data-kanal="textur" data-icon="🎨" data-titel="Textur-Ideen" data-text="Du hast eine Idee für eine eigene Textur? Sag uns, für welches Item, wie es heißen soll und was daraus werden soll.">Texturen</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="hitman" data-kanal="hitman" data-icon="🎯" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">Hitman <span class="tag">Bald</span></button>
-        </div>
-        <div id="detail" class="glas detail" role="tabpanel" aria-live="polite">
-          <div class="icon">🛠️</div>
-          <h3>Bauprojekte</h3>
-          <p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p>
-        </div>
+  <main id="start">
+    <section class="hero" aria-label="Topf Oder Deckel GmbH">
+      <div class="hero-buehne">
+        <h1 class="riesig display" aria-label="Topf Oder Deckel GmbH">
+          <span class="maske wort topf" aria-hidden="true"><span>Topf</span></span>
+          <span class="maske wort deckel" aria-hidden="true"><span>Deckel</span></span>
+        </h1>
+        <span class="oder display" aria-hidden="true">oder</span>
 
-        <form id="anfrage" class="glas formular" hidden>
-          <h3>Deine Anfrage: <span id="anfrage-titel">Bauprojekte</span></h3>
-          <p id="bald" class="bald" hidden>🔒 Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</p>
-          <div class="feld">
-            <label class="lbl" for="mcname">Dein Minecraft-Name</label>
-            <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required>
-          </div>
-          <div class="feld">
-            <label class="lbl" for="dcname">Dein Discord-Name (damit wir dich direkt erreichen)</label>
-            <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required>
-          </div>
-
-          <fieldset id="feld-aufgabe">
-            <div class="feld">
-              <label class="lbl" for="aufgabe">Was sollen wir für dich tun?</label>
-              <textarea class="eingabe" id="aufgabe" name="aufgabe" placeholder="Beschreibe deine Aufgabe, zum Beispiel: Ich möchte ein Haus aus Holz bauen, 20 mal 20 Blöcke groß." maxlength="1500" required></textarea>
-            </div>
-          </fieldset>
-
-          <fieldset id="feld-material" hidden disabled>
-            <div class="feld">
-              <span class="lbl">Was brauchst du?</span>
-              <div id="zeilen"></div>
-              <button type="button" class="klein" id="mehr">+ Weitere Zeile</button>
-              <p class="hinweis" id="dia-hinweis" hidden>💎 <strong>Diamanten kaufen:</strong> 8 Diamanten = 1 Cent</p>
-            </div>
-          </fieldset>
-
-          <fieldset id="feld-textur" hidden disabled>
-            <div class="feld">
-              <label class="lbl" for="t-item">Welches Item?</label>
-              <input class="eingabe" id="t-item" maxlength="60" placeholder="z. B. Diamantspitzhacke" list="bloecke" autocomplete="off" required>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="t-name">Wie soll es heißen?</label>
-              <input class="eingabe" id="t-name" maxlength="60" placeholder="z. B. Bohrhammer" autocomplete="off" required>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="t-idee">Was soll daraus werden?</label>
-              <textarea class="eingabe" id="t-idee" maxlength="1200" placeholder="Beschreibe, wie die Textur aussehen soll: Farben, Form, Vorbild ..." required></textarea>
-            </div>
-          </fieldset>
-
-          <fieldset id="feld-hitman" hidden disabled>
-            <div class="feld">
-              <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
-              <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
-            </div>
-          </fieldset>
-
-          <div class="feld" id="feld-preis">
-            <label class="lbl" for="preis">Deine Preisvorstellung (optional)</label>
-            <div class="preis">
-              <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag">
-              <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
-            </div>
-            <p class="hinweis"><strong>Kurs:</strong> 16 Diamanten = 1 Cent</p>
-            <p class="hinweis">Schreib uns, was du dafür bezahlen möchtest. Wir melden uns mit einem Angebot.</p>
-          </div>
-
-          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-          <button type="submit" class="pille">Anfrage erstellen</button>
-
-          <div id="ergebnis" class="ergebnis" hidden>
-            <span class="lbl" id="status" aria-live="polite"></span>
-            <pre id="text"></pre>
-            <div class="aktionen">
-              <button type="button" class="pille" id="kopieren">Anfrage kopieren</button>
-              <p id="kopiert" class="kopiert" hidden>Kopiert!</p>
-            </div>
-          </div>
-          <datalist id="bloecke">
-            <option value="Eichenholz"><option value="Birkenholz"><option value="Stein"><option value="Bruchstein"><option value="Ziegelsteine">
-            <option value="Glas"><option value="Sand"><option value="Erde"><option value="Eisenbarren"><option value="Goldbarren">
-            <option value="Diamant"><option value="Smaragd"><option value="Redstone"><option value="Lapislazuli"><option value="Obsidian"><option value="Kohle">
-          </datalist>
-        </form>
+        <svg class="topf-svg" viewBox="0 0 400 380" role="img" aria-label="Ein Topf, dessen Deckel sich hebt">
+          <defs>
+            <linearGradient id="g-koerper" x1="0" x2="1"><stop offset="0" stop-color="#2a2a2a"/><stop offset=".45" stop-color="#121212"/><stop offset="1" stop-color="#050505"/></linearGradient>
+            <linearGradient id="g-deckel" x1="0" x2="1"><stop offset="0" stop-color="#ff7a45"/><stop offset=".5" stop-color="#ff5a1f"/><stop offset="1" stop-color="#d9440f"/></linearGradient>
+            <linearGradient id="g-glanz" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          </defs>
+          <g class="dampf">
+            <path d="M160 150 C150 120 175 105 165 75 C158 55 170 40 168 28"/>
+            <path d="M200 140 C190 110 215 95 205 65 C198 45 210 30 208 18"/>
+            <path d="M240 150 C230 120 255 105 245 75 C238 55 250 40 248 28"/>
+          </g>
+          <!-- Topf -->
+          <g class="topf-koerper">
+            <path d="M58 196 h-26 a16 16 0 0 0 0 32 h26" fill="none" stroke="#121212" stroke-width="14" stroke-linecap="round"/>
+            <path d="M342 196 h26 a16 16 0 0 1 0 32 h-26" fill="none" stroke="#121212" stroke-width="14" stroke-linecap="round"/>
+            <path d="M56 186 h288 v110 c0 40 -32 64 -72 64 h-144 c-40 0 -72 -24 -72 -64 z" fill="url(#g-koerper)"/>
+            <rect x="56" y="232" width="288" height="26" fill="#ff5a1f"/>
+            <rect x="56" y="232" width="288" height="26" fill="url(#g-glanz)"/>
+            <path d="M84 196 v96 c0 22 12 38 30 46" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="10" stroke-linecap="round"/>
+            <rect x="46" y="176" width="308" height="18" rx="9" fill="#121212"/>
+            <text x="200" y="250" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="17" fill="#121212" letter-spacing="3">TOPF ODER DECKEL GMBH</text>
+          </g>
+          <!-- Deckel -->
+          <g class="deckel-g">
+            <ellipse cx="200" cy="176" rx="160" ry="22" fill="#b8360a"/>
+            <path d="M44 172 c10 -46 70 -70 156 -70 s146 24 156 70 z" fill="url(#g-deckel)"/>
+            <path d="M80 150 c22 -22 60 -34 104 -36" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="8" stroke-linecap="round"/>
+            <rect x="176" y="76" width="48" height="30" rx="12" fill="#121212"/>
+            <rect x="168" y="70" width="64" height="14" rx="7" fill="#ffc83d"/>
+          </g>
+        </svg>
       </div>
-    </section>
 
-    <section id="warum" class="abschnitt">
-      <div class="breit zeigen">
-        <h2>Warum Topf Oder Deckel?</h2>
-        <p>Qualität, faire Preise und zufriedene Kunden stehen bei uns im Mittelpunkt.</p>
-        <div class="karten">
-          <div class="karte glas"><div class="icon">💰</div><h3>Faire Preise</h3><p>Passende Angebote, die zu deinem Projekt passen.</p></div>
-          <div class="karte glas"><div class="icon">🤝</div><h3>Zuverlässiger Service</h3><p>Freundlicher Kontakt, klar und ehrlich.</p></div>
-          <div class="karte glas"><div class="icon">⚡</div><h3>Unkompliziert</h3><p>Der Handel mit Blöcken und Services so einfach wie möglich.</p></div>
+      <div class="hero-fuss">
+        <div class="huelle">
+          <p class="hero-text">Wir bauen, sammeln, verdrahten und gestalten für deine Minecraft-Welt. Fair bezahlt in Diamanten oder Cent.</p>
+          <a class="knopf hero-knopf" href="#angebote">Angebot wählen <span class="pfeil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></a>
+          <span class="scroll-hinweis" aria-hidden="true"><i></i>Scrollen</span>
         </div>
       </div>
     </section>
 
+    <div class="band" aria-hidden="true">
+      <div class="spur">
+        <span>Bauprojekte <em>✦</em> <b>Redstone</b> <em>✦</em> Ressourcen <em>✦</em> <b>Texturen</b> <em>✦</em> Farmen <em>✦</em> <b>Burgen</b> <em>✦</em></span>
+        <span>Bauprojekte <em>✦</em> <b>Redstone</b> <em>✦</em> Ressourcen <em>✦</em> <b>Texturen</b> <em>✦</em> Farmen <em>✦</em> <b>Burgen</b> <em>✦</em></span>
+      </div>
+    </div>
 
-    <section class="schluss zeigen">
-      <h2>Dein Minecraft. Deine Projekte. Unsere Unterstützung.</h2>
-      <p>Schau dich um und entdecke unsere Angebote!</p>
-      <a class="pille" href="#angebote">Zu den Angeboten</a>
-    </section>
-
-    <section id="mitmachen" class="abschnitt" style="padding-bottom:80px">
-      <div class="breit zeigen">
-        <h2>Werde Teil des Teams.</h2>
-        <p>Bewirb dich als Mitarbeiter oder mach ein Praktikum bei uns.</p>
-        <div class="schalter" role="tablist" aria-label="Mitmachen">
-          <button type="button" role="tab" aria-selected="false" data-modus="bewerbung" data-icon="💼" data-titel="Bewerbung als Mitarbeiter" data-text="Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.">Bewerbung</button>
-          <button type="button" role="tab" aria-selected="false" data-modus="praktikum" data-icon="🎓" data-titel="Praktikum" data-text="Du willst erst mal reinschnuppern? Mach ein Praktikum bei uns und lerne Bauen, Redstone und den Shop kennen.">Praktikum</button>
-        </div>
-        <div id="detail2" class="glas detail" role="tabpanel" aria-live="polite" hidden>
-          <div class="icon">💼</div>
-          <h3>Bewerbung als Mitarbeiter</h3>
-          <p>Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.</p>
+    <section id="angebote" class="angebote-bereich">
+      <div class="huelle">
+        <div class="angebote-kopf">
+          <div>
+            <p class="marker">Angebote / 05</p>
+            <h2 class="titel display"><span class="maske"><span>Was darf</span></span><span class="maske"><span class="gelb">es sein?</span></span></h2>
+          </div>
+          <p class="aufsteigen">Wähl eine Zeile aus. Darunter öffnet sich sofort das passende Formular, und deine Anfrage landet direkt bei uns auf Discord.</p>
         </div>
 
-        <form id="mitmachen-form" class="glas formular" hidden>
-          <h3><span id="m-prefix">Deine</span> <span id="m-titel">Bewerbung als Mitarbeiter</span></h3>
-          <div class="feld">
-            <label class="lbl" for="m-mcname">Dein Minecraft-Name</label>
-            <input class="eingabe" id="m-mcname" autocomplete="off" maxlength="32" required>
+        <div class="liste" id="angebote-liste" role="tablist" aria-label="Angebote">
+          <button type="button" class="angebot" role="tab" aria-selected="true" aria-controls="formkarte" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="hammer" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">
+            <span class="nr">(01)</span>
+            <span class="name">Bauprojekte<small>Base, Burg oder Haus: von der Idee bis zum letzten Block.</small></span>
+            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+          </button>
+          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="material" data-kanal="material" data-icon="box" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">
+            <span class="nr">(02)</span>
+            <span class="name">Ressourcen<small>Blöcke, Items und Baumaterial, gesammelt für dich.</small></span>
+            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+          </button>
+          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="aufgabe" data-kanal="redstone" data-icon="zap" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">
+            <span class="nr">(03)</span>
+            <span class="name">Redstone<small>Schaltungen, automatische Türen, Farmen und Maschinen.</small></span>
+            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+          </button>
+          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="textur" data-kanal="textur" data-icon="palette" data-titel="Textur-Ideen" data-text="Du hast eine Idee für eine eigene Textur? Sag uns, für welches Item, wie es heißen soll und was daraus werden soll.">
+            <span class="nr">(04)</span>
+            <span class="name">Texturen<small>Deine Idee für ein Item: Name, Aussehen, Vorbild.</small></span>
+            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+          </button>
+          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="hitman" data-kanal="hitman" data-icon="crosshair" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">
+            <span class="nr">(05)</span>
+            <span class="name">Hitman<span class="etikett">Bald</span><small>Aufträge in Minecraft: Ziel nennen, Preis vorschlagen.</small></span>
+            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+          </button>
+        </div>
+
+        <div class="formkarte" id="formkarte">
+          <div id="detail" class="detail" role="tabpanel" aria-live="polite">
+            <div class="symbol" data-icon-slot="hammer"></div>
+            <div><h3>Bauprojekte</h3><p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p></div>
           </div>
-          <div class="feld">
-            <label class="lbl" for="m-dc">Dein Discord-Name (damit wir dich direkt erreichen)</label>
-            <input class="eingabe" id="m-dc" maxlength="40" autocomplete="off" required>
-          </div>
 
-          <fieldset id="feld-bewerbung">
-            <p class="bald">ℹ️ Vor deiner Bewerbung musst du ein <strong>1-tägiges Praktikum</strong> bei uns gemacht haben. Nach deiner Bewerbung musst du noch eine <strong>halbstündige Ausbildung</strong> machen.</p>
-            <div class="feld">
-              <label class="haken"><input type="checkbox" id="b-praktikum" required> Ich habe bereits ein 1-tägiges Praktikum bei euch gemacht.</label>
+          <form id="anfrage" class="formular" novalidate>
+            <p class="lbl" style="margin-bottom:20px">Deine Anfrage: <strong id="anfrage-titel">Bauprojekte</strong></p>
+            <p id="bald" class="bald" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</span></p>
+            <div class="zwei">
+              <div class="feld">
+                <label class="lbl" for="mcname">Minecraft-Name</label>
+                <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required placeholder="z. B. Steve">
+              </div>
+              <div class="feld">
+                <label class="lbl" for="dcname">Discord-Name</label>
+                <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required placeholder="damit wir dich erreichen">
+              </div>
             </div>
-            <div class="feld">
-              <label class="lbl" for="b-warum">Warum möchtest du bei uns mitarbeiten?</label>
-              <textarea class="eingabe" id="b-warum" maxlength="1200" required></textarea>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="b-erfahrung">Deine Erfahrung in Minecraft (Bauen, Redstone, Handel ...)</label>
-              <textarea class="eingabe" id="b-erfahrung" maxlength="1200" required></textarea>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="b-zeit">Wie viel Zeit hast du pro Woche?</label>
-              <input class="eingabe" id="b-zeit" maxlength="60" placeholder="z. B. 5 Stunden" required>
-            </div>
-          </fieldset>
 
-          <fieldset id="feld-praktikum" hidden disabled>
-            <div class="feld">
-              <label class="lbl" for="p-dauer">Dauer des Praktikums</label>
-              <select class="eingabe" id="p-dauer"><option>1 Tag</option><option>2 Tage</option><option>3 Tage</option></select>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="p-bereich">Wunschbereich</label>
-              <select class="eingabe" id="p-bereich"><option>Bauen</option><option>Redstone</option><option>Ressourcen &amp; Shop</option><option>Egal, ich lasse mich überraschen</option></select>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="p-start">Gewünschter Start</label>
-              <input class="eingabe" id="p-start" maxlength="60" placeholder="z. B. nächste Woche oder 20.11." required>
-            </div>
-            <div class="feld">
-              <label class="lbl" for="p-warum">Warum möchtest du ein Praktikum machen?</label>
-              <textarea class="eingabe" id="p-warum" maxlength="1200" required></textarea>
-            </div>
-          </fieldset>
+            <fieldset id="feld-aufgabe">
+              <div class="feld">
+                <label class="lbl" for="aufgabe">Was sollen wir für dich tun?</label>
+                <textarea class="eingabe" id="aufgabe" name="aufgabe" placeholder="Zum Beispiel: Ein Haus aus Holz, 20 mal 20 Blöcke groß." maxlength="1500" required></textarea>
+              </div>
+            </fieldset>
 
-          <input type="text" id="m-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-          <button type="submit" class="pille">Bewerbung abschicken</button>
+            <fieldset id="feld-material" hidden disabled>
+              <div class="feld">
+                <span class="lbl" id="material-lbl">Was brauchst du?</span>
+                <div id="zeilen" role="group" aria-labelledby="material-lbl"></div>
+                <button type="button" class="textknopf" id="mehr"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Weitere Zeile</button>
+                <p class="hinweis" id="dia-hinweis" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span><strong>Diamanten kaufen:</strong> <span data-kurs-text></span></span></p>
+              </div>
+            </fieldset>
 
-          <div id="m-ergebnis" class="ergebnis" hidden>
-            <span class="lbl" id="m-status" aria-live="polite"></span>
-            <pre id="m-text"></pre>
-            <div class="aktionen">
-              <button type="button" class="pille" id="m-kopieren">Text kopieren</button>
-              <p id="m-kopiert" class="kopiert" hidden>Kopiert!</p>
+            <fieldset id="feld-textur" hidden disabled>
+              <div class="zwei">
+                <div class="feld">
+                  <label class="lbl" for="t-item">Welches Item?</label>
+                  <input class="eingabe" id="t-item" maxlength="60" placeholder="z. B. Diamantspitzhacke" list="bloecke" autocomplete="off" required>
+                </div>
+                <div class="feld">
+                  <label class="lbl" for="t-name">Wie soll es heißen?</label>
+                  <input class="eingabe" id="t-name" maxlength="60" placeholder="z. B. Bohrhammer" autocomplete="off" required>
+                </div>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="t-idee">Was soll daraus werden?</label>
+                <textarea class="eingabe" id="t-idee" maxlength="1200" placeholder="Farben, Form, Vorbild ..." required></textarea>
+              </div>
+            </fieldset>
+
+            <fieldset id="feld-hitman" hidden disabled>
+              <div class="feld">
+                <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
+                <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
+              </div>
+            </fieldset>
+
+            <div class="feld" id="feld-preis">
+              <label class="lbl" for="preis">Preisvorstellung (optional)</label>
+              <div class="preis">
+                <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag" inputmode="numeric">
+                <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
+              </div>
+              <p class="hinweis"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span>Kurs: <span data-kurs-text></span>. Wir melden uns mit einem Angebot.</span></p>
             </div>
-          </div>
-        </form>
+
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
+            <div class="absenden">
+              <button type="submit" class="knopf">Anfrage erstellen</button>
+              <p id="fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
+            </div>
+
+            <div id="ergebnis" class="ergebnis" hidden>
+              <span class="lbl" id="status" aria-live="polite"></span>
+              <pre id="text"></pre>
+              <div class="aktionen">
+                <button type="button" class="knopf hell klein" id="kopieren">Kopieren</button>
+                <p id="kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
+              </div>
+            </div>
+            <datalist id="bloecke">
+              <option value="Eichenholz"><option value="Birkenholz"><option value="Stein"><option value="Bruchstein"><option value="Ziegelsteine">
+              <option value="Glas"><option value="Sand"><option value="Erde"><option value="Eisenbarren"><option value="Goldbarren">
+              <option value="Diamant"><option value="Smaragd"><option value="Redstone"><option value="Lapislazuli"><option value="Obsidian"><option value="Kohle">
+            </datalist>
+          </form>
+        </div>
       </div>
     </section>
 
+    <section class="kurs" aria-label="Unser Kurs">
+      <div class="huelle">
+        <p class="marker" style="display:flex;justify-content:center;margin-bottom:48px">Fester Kurs</p>
+        <h2 class="zahl display"><span class="zaehler" data-ziel="16">16</span><sup>◆</sup></h2>
+        <p><strong>Diamanten = 1 Cent.</strong> Ein fester, transparenter Kurs für alle Angebote. Du weißt immer vorher, woran du bist.</p>
+      </div>
+    </section>
+
+    <section id="ablauf" class="ablauf">
+      <div class="huelle">
+        <div class="ablauf-kopf">
+          <p class="marker">Ablauf</p>
+          <h2 class="titel display"><span class="maske"><span>Drei Schritte.</span></span><span class="maske"><span>Fertig.</span></span></h2>
+        </div>
+        <div class="schritte">
+          <div class="schritt"><span class="gross">01</span><h3>Angebot wählen</h3><p>Bauprojekt, Ressourcen, Redstone oder Textur: Klick auf die passende Zeile.</p></div>
+          <div class="schritt"><span class="gross">02</span><h3>Formular ausfüllen</h3><p>Minecraft-Name, Discord-Name und was du brauchst. Dazu optional dein Preis.</p></div>
+          <div class="schritt"><span class="gross">03</span><h3>Wir melden uns</h3><p>Deine Anfrage landet direkt bei uns auf Discord. Wir schicken dir ein Angebot.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="warum" class="warum">
+      <div class="huelle">
+        <p class="marker">Warum wir</p>
+        <h2 class="titel display"><span class="maske"><span>Faire Preise.</span></span><span class="maske"><span class="pink">Echte Hilfe.</span></span></h2>
+        <div class="werte">
+          <div class="wert"><div class="symbol" data-icon-slot="coins"></div><h3>Faire Preise</h3><p>Passende Angebote, die zu deinem Projekt passen.</p></div>
+          <div class="wert"><div class="symbol" data-icon-slot="handshake"></div><h3>Zuverlässig</h3><p>Freundlicher Kontakt, klar und ehrlich.</p></div>
+          <div class="wert"><div class="symbol" data-icon-slot="zap"></div><h3>Unkompliziert</h3><p>Handel mit Blöcken und Services so einfach wie möglich.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mitmachen" class="mitmachen">
+      <div class="huelle">
+        <p class="marker">Mitmachen</p>
+        <h2 class="titel display"><span class="maske"><span>Werde Teil</span></span><span class="maske"><span>des Teams.</span></span></h2>
+        <p class="unter">Bewirb dich als Mitarbeiter oder schnupper erst mal mit einem Praktikum rein.</p>
+        <div class="wahl2" role="tablist" aria-label="Mitmachen">
+          <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" data-modus="bewerbung" data-icon="briefcase" data-titel="Bewerbung als Mitarbeiter" data-text="Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.">
+            <span class="kopfzeile"><span class="symbol" data-icon-slot="briefcase"></span><span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
+            <span><h3>Bewerbung</h3><p>Als Mitarbeiter fest ins Team. Voraussetzung: ein Praktikumstag vorher.</p></span>
+          </button>
+          <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" tabindex="-1" data-modus="praktikum" data-icon="graduation" data-titel="Praktikum" data-text="Du willst erst mal reinschnuppern? Mach ein Praktikum bei uns und lerne Bauen, Redstone und den Shop kennen.">
+            <span class="kopfzeile"><span class="symbol" data-icon-slot="graduation"></span><span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
+            <span><h3>Praktikum</h3><p>Erst mal reinschnuppern: Bauen, Redstone und den Shop kennenlernen.</p></span>
+          </button>
+        </div>
+
+        <div class="formkarte" id="formkarte2" hidden>
+          <div id="detail2" class="detail" role="tabpanel" aria-live="polite"></div>
+          <form id="mitmachen-form" class="formular" novalidate>
+            <p class="lbl" style="margin-bottom:20px"><span id="m-prefix">Deine</span> <strong id="m-titel">Bewerbung als Mitarbeiter</strong></p>
+            <div class="zwei">
+              <div class="feld">
+                <label class="lbl" for="m-mcname">Minecraft-Name</label>
+                <input class="eingabe" id="m-mcname" autocomplete="off" maxlength="32" required>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="m-dc">Discord-Name</label>
+                <input class="eingabe" id="m-dc" maxlength="40" autocomplete="off" required placeholder="damit wir dich erreichen">
+              </div>
+            </div>
+
+            <fieldset id="feld-bewerbung">
+              <p class="bald info"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Vor deiner Bewerbung musst du ein <strong>1-tägiges Praktikum</strong> bei uns gemacht haben. Danach folgt noch eine <strong>halbstündige Ausbildung</strong>.</span></p>
+              <div class="feld">
+                <label class="haken"><input type="checkbox" id="b-praktikum" required> Ich habe bereits ein 1-tägiges Praktikum bei euch gemacht.</label>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="b-warum">Warum möchtest du bei uns mitarbeiten?</label>
+                <textarea class="eingabe" id="b-warum" maxlength="1200" required></textarea>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="b-erfahrung">Deine Erfahrung in Minecraft (Bauen, Redstone, Handel ...)</label>
+                <textarea class="eingabe" id="b-erfahrung" maxlength="1200" required></textarea>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="b-zeit">Wie viel Zeit hast du pro Woche?</label>
+                <input class="eingabe" id="b-zeit" maxlength="60" placeholder="z. B. 5 Stunden" required>
+              </div>
+            </fieldset>
+
+            <fieldset id="feld-praktikum" hidden disabled>
+              <div class="zwei">
+                <div class="feld">
+                  <label class="lbl" for="p-dauer">Dauer des Praktikums</label>
+                  <select class="eingabe" id="p-dauer"><option>1 Tag</option><option>2 Tage</option><option>3 Tage</option></select>
+                </div>
+                <div class="feld">
+                  <label class="lbl" for="p-bereich">Wunschbereich</label>
+                  <select class="eingabe" id="p-bereich"><option>Bauen</option><option>Redstone</option><option>Ressourcen &amp; Shop</option><option>Egal, ich lasse mich überraschen</option></select>
+                </div>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="p-start">Gewünschter Start</label>
+                <input class="eingabe" id="p-start" maxlength="60" placeholder="z. B. nächste Woche oder 20.11." required>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="p-warum">Warum möchtest du ein Praktikum machen?</label>
+                <textarea class="eingabe" id="p-warum" maxlength="1200" required></textarea>
+              </div>
+            </fieldset>
+
+            <input type="text" id="m-website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
+            <div class="absenden">
+              <button type="submit" class="knopf">Bewerbung abschicken</button>
+              <p id="m-fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
+            </div>
+
+            <div id="m-ergebnis" class="ergebnis" hidden>
+              <span class="lbl" id="m-status" aria-live="polite"></span>
+              <pre id="m-text"></pre>
+              <div class="aktionen">
+                <button type="button" class="knopf hell klein" id="m-kopieren">Kopieren</button>
+                <p id="m-kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="schluss" aria-label="Los geht's">
+      <div class="huelle oben">
+        <h2 class="titel display"><span class="maske"><span>Bereit für</span></span><span class="maske"><span class="orange">dein Projekt?</span></span></h2>
+        <div class="rechts">
+          <p>Schick uns deine erste Anfrage. Wir melden uns auf Discord mit einem fairen Angebot.</p>
+          <a class="knopf hell" href="#angebote">Jetzt anfragen <span class="pfeil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></a>
+        </div>
+      </div>
+      <p class="fussname" aria-hidden="true">Topf oder Deckel</p>
+    </section>
   </main>
 
-  <footer>© 2026 Topf Oder Deckel GmbH</footer>
+  <footer class="fusszeile">
+    <span><a class="geheim" href="freikaufen.html" aria-label="Geheimer Link">©</a> 2026 Topf Oder Deckel GmbH</span>
+    <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
+  </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script>
-    var tabs = document.querySelectorAll('#angebote .schalter button');
-    var detail = document.getElementById('detail');
-    tabs.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var f = document.getElementById('anfrage');
-        if (b.getAttribute('aria-selected') === 'true' && !f.hidden) { // erneuter Klick klappt das Formular zu
-          f.hidden = true;
-          return;
-        }
-        tabs.forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
-        b.setAttribute('aria-selected', 'true');
-        detail.innerHTML = '<div class="icon">' + b.dataset.icon + '</div><h3>' + b.dataset.titel + '</h3><p>' + b.dataset.text + '</p>';
-        detail.classList.remove('neu'); void detail.offsetWidth; detail.classList.add('neu');
-        modus(b);
-        f.hidden = false;
-        f.classList.remove('ploppen'); void f.offsetWidth; f.classList.add('ploppen');
-        f.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-    var beobachter = new IntersectionObserver(function (eintraege) {
-      eintraege.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('sichtbar'); beobachter.unobserve(e.target); } });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.zeigen').forEach(function (el) { beobachter.observe(el); });
+    // =====================================================================
+    //  Einstellungen
+    // =====================================================================
+    // Diamanten-Kurs: Wie viele Diamanten sind 1 Cent? Nur HIER ändern, die ganze Seite passt sich an.
+    var KURS_DIAMANTEN_PRO_CENT = 16;
+    var KURS_TEXT = KURS_DIAMANTEN_PRO_CENT + ' Diamanten = 1 Cent';
 
-    // ---- Anfrage-Formular ----
-    // Discord: pro Reiter ein eigener Bot in einem eigenen Kanal.
-    // Trage zwischen den Anführungszeichen die Webhook-URL des jeweiligen Kanals ein.
+    // Discord: pro Reiter ein eigener Bot in einem eigenen Kanal (Webhook-URL des jeweiligen Kanals).
     var DISCORD_WEBHOOKS = {
       bauprojekte: 'https://discord.com/api/webhooks/1569667931376320572/uk2-K4RnN9vdh7ACTNDnA32K02JCAUUnMR5Qd3jROqkiQZzM3TThJJU5QugEVVoqv9H0',
       material: 'https://discord.com/api/webhooks/1569809957543747645/roc5jIhIEqPfcq9T_k5zXbC7h8iQQRHubiFoC1j5an8Xya1QnxPNgwbxnvkjQLOqhw4o',
@@ -491,27 +640,93 @@
       bewerbung: 'Bewerbungs-Bot',
       praktikum: 'Praktikums-Bot'
     };
-
     // Deine Discord-ID, damit dich der Bot bei jeder neuen Nachricht mit @ markiert.
     // So findest du sie: Discord > Einstellungen > Erweitert > Entwicklermodus einschalten,
-    // dann rechtsklick auf dein Profil > "Nutzer-ID kopieren". Eine Zahl wie 123456789012345678.
+    // dann Rechtsklick auf dein Profil > "Nutzer-ID kopieren". Eine Zahl wie 123456789012345678.
     var DISCORD_USER_ID = '';
+    // Reserve: Wird genommen, solange bei einem Reiter oben nichts eingetragen ist.
+    var DISCORD_STANDARD = '';
 
-    // Aussehen pro Reiter: Emoji und Farbe des Streifens in Discord.
+    // Aussehen pro Reiter in Discord: Emoji und Farbe des Streifens.
     var KANAL_STIL = {
-      bauprojekte: { emoji: '🛠️', farbe: 0xF5A623 },
-      material:    { emoji: '🧱', farbe: 0x8B5A2B },
-      redstone:    { emoji: '🔴', farbe: 0xE03131 },
-      hitman:      { emoji: '🎯', farbe: 0x343A40 },
-      textur:      { emoji: '🎨', farbe: 0x9C36B5 },
-      bewerbung:   { emoji: '💼', farbe: 0x1C7ED6 },
-      praktikum:   { emoji: '🎓', farbe: 0x37B24D }
+      bauprojekte: { emoji: '🛠️', farbe: 0xFF5A1F },
+      material:    { emoji: '🧱', farbe: 0xFFC83D },
+      redstone:    { emoji: '🔴', farbe: 0xE11D48 },
+      hitman:      { emoji: '🎯', farbe: 0x121212 },
+      textur:      { emoji: '🎨', farbe: 0xFF4FA3 },
+      bewerbung:   { emoji: '💼', farbe: 0x5B2BE0 },
+      praktikum:   { emoji: '🎓', farbe: 0x16A34A }
     };
 
+    // =====================================================================
+    //  Symbole
+    // =====================================================================
+    var ICONS = {
+      hammer: '<path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/>',
+      box: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+      zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+      palette: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/>',
+      crosshair: '<circle cx="12" cy="12" r="10"/><path d="M22 12h-4"/><path d="M6 12H2"/><path d="M12 6V2"/><path d="M12 22v-4"/>',
+      briefcase: '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
+      graduation: '<path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+      coins: '<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>',
+      handshake: '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
+      x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'
+    };
+    function icon(name) { return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>'; }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-icon-slot]'), function (el) { el.innerHTML = icon(el.getAttribute('data-icon-slot')); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-kurs-text]'), function (el) { el.textContent = KURS_TEXT; });
+    Array.prototype.forEach.call(document.querySelectorAll('.zaehler'), function (el) { el.setAttribute('data-ziel', KURS_DIAMANTEN_PRO_CENT); el.textContent = KURS_DIAMANTEN_PRO_CENT; });
+
+    var $ = function (id) { return document.getElementById(id); };
+    var RUHIG = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    function zeigeDetail(ziel, b) {
+      ziel.innerHTML = '<div class="symbol">' + icon(b.dataset.icon) + '</div><div><h3></h3><p></p></div>';
+      ziel.querySelector('h3').textContent = b.dataset.titel;
+      ziel.querySelector('p').textContent = b.dataset.text;
+      ziel.classList.remove('einfahren'); void ziel.offsetWidth; ziel.classList.add('einfahren');
+    }
+
+    function pfeiltasten(liste) {
+      liste.forEach(function (b, i) {
+        b.addEventListener('keydown', function (e) {
+          var n = null;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % liste.length;
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + liste.length) % liste.length;
+          if (e.key === 'Home') n = 0;
+          if (e.key === 'End') n = liste.length - 1;
+          if (n === null) return;
+          e.preventDefault(); liste[n].focus(); liste[n].click();
+        });
+      });
+    }
+
+    // Prüft Pflichtfelder selbst (eigene, gut lesbare Fehlermeldung)
+    function pruefe(form, meldung) {
+      var felder = form.querySelectorAll('input, textarea, select'), erstes = null;
+      Array.prototype.forEach.call(felder, function (f) {
+        if (f.disabled || f.closest('fieldset[disabled]') || f.type === 'hidden' || f.classList.contains('falle')) return;
+        var ok = f.checkValidity();
+        f.setAttribute('aria-invalid', ok ? 'false' : 'true');
+        if (!ok && !erstes) erstes = f;
+      });
+      if (erstes) {
+        var lbl = (erstes.labels && erstes.labels[0]) || form.querySelector('label[for="' + erstes.id + '"]');
+        var name = lbl ? lbl.textContent.trim() : (erstes.getAttribute('aria-label') || 'Eingabe');
+        meldung.textContent = erstes.type === 'checkbox' ? 'Bitte bestätige: ' + name : 'Bitte prüfe das Feld: ' + name + '.';
+        meldung.hidden = false;
+        erstes.focus();
+        return false;
+      }
+      meldung.hidden = true;
+      return true;
+    }
+    document.addEventListener('input', function (e) { if (e.target.getAttribute && e.target.getAttribute('aria-invalid') === 'true' && e.target.checkValidity()) e.target.setAttribute('aria-invalid', 'false'); });
+
     // Baut die Discord-Nachricht: Ping, Titel, übersichtliche Felder und Hinweis zum Abhaken.
-    // felder: Liste aus [Name, Wert, nebeneinander?]
     function discordNachricht(kanal, titel, felder, kopfzeile) {
-      var st = KANAL_STIL[kanal] || { emoji: '🔔', farbe: 0xD930E4 };
+      var st = KANAL_STIL[kanal] || { emoji: '🔔', farbe: 0xFF5A1F };
       var id = /^\d{15,25}$/.test(DISCORD_USER_ID) ? DISCORD_USER_ID : '';
       return {
         username: BOT_NAMEN[kanal] || 'Topf Oder Deckel Shop',
@@ -529,47 +744,78 @@
       };
     }
 
-    // Reserve: Wird genommen, solange bei einem Reiter oben nichts eingetragen ist.
-    var DISCORD_STANDARD = '';
+    function kopierKnopf(knopfId, textId, okId) {
+      $(knopfId).addEventListener('click', function () {
+        var pre = $(textId);
+        var fertig = function () { var k = $(okId); k.hidden = false; setTimeout(function () { k.hidden = true; }, 2000); };
+        var auswaehlen = function () {
+          var r = document.createRange(); r.selectNodeContents(pre);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          document.execCommand('copy'); fertig();
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
+        else auswaehlen();
+      });
+    }
 
-    var form = document.getElementById('anfrage');
-    var feldAufgabe = document.getElementById('feld-aufgabe');
-    var feldMaterial = document.getElementById('feld-material');
+    function hinScrollen(el) {
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -90 });
+      else el.scrollIntoView({ behavior: RUHIG ? 'auto' : 'smooth', block: 'start' });
+    }
+
+    // =====================================================================
+    //  Angebote + Anfrage-Formular
+    // =====================================================================
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('#angebote-liste .angebot'));
+    var detail = $('detail'), formkarte = $('formkarte');
+    var form = $('anfrage');
+    var feldAufgabe = $('feld-aufgabe'), feldMaterial = $('feld-material'), feldHitman = $('feld-hitman'), feldTextur = $('feld-textur');
+    var zeilen = $('zeilen'), ergebnis = $('ergebnis');
+    var aktuell = { titel: '', modus: 'aufgabe', kanal: 'bauprojekte' };
     var HITMAN_FREI = false;
     try { HITMAN_FREI = localStorage.getItem('hitman_frei') === '1'; } catch (x) {}
-    var feldHitman = document.getElementById('feld-hitman');
-    var feldTextur = document.getElementById('feld-textur');
-    var zeilen = document.getElementById('zeilen');
-    var ergebnis = document.getElementById('ergebnis');
-    var aktuell = { titel: '', modus: 'aufgabe' };
+
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (b.getAttribute('aria-selected') !== 'true') {
+          tabs.forEach(function (x) { x.setAttribute('aria-selected', 'false'); x.tabIndex = -1; });
+          b.setAttribute('aria-selected', 'true'); b.tabIndex = 0;
+          zeigeDetail(detail, b);
+          modus(b);
+          form.classList.remove('einfahren'); void form.offsetWidth; form.classList.add('einfahren');
+        }
+        hinScrollen(formkarte);
+      });
+    });
+    pfeiltasten(tabs);
 
     function modus(b) {
       aktuell.titel = b.dataset.titel;
       aktuell.modus = b.dataset.modus;
       aktuell.kanal = b.dataset.kanal;
-      document.getElementById('anfrage-titel').textContent = aktuell.titel;
       var art = aktuell.modus;
       var bald = art === 'hitman' && !HITMAN_FREI;
+      if (art === 'hitman' && HITMAN_FREI) aktuell.titel = 'Hitman';
+      $('anfrage-titel').textContent = aktuell.titel;
       feldAufgabe.hidden = art !== 'aufgabe'; feldAufgabe.disabled = art !== 'aufgabe';
       feldMaterial.hidden = art !== 'material'; feldMaterial.disabled = art !== 'material';
-      feldHitman.hidden = art !== 'hitman';
-      feldHitman.disabled = art !== 'hitman' || bald;
-      document.getElementById('ziel').required = art === 'hitman' && !bald;
-      if (art === 'hitman' && HITMAN_FREI) aktuell.titel = 'Hitman';
+      feldHitman.hidden = art !== 'hitman'; feldHitman.disabled = art !== 'hitman' || bald;
+      $('ziel').required = art === 'hitman' && !bald;
       var tex = art === 'textur';
       feldTextur.hidden = !tex; feldTextur.disabled = !tex;
-      document.getElementById('feld-preis').hidden = tex;
-      ['mcname', 'dcname', 'preis', 'einheit'].forEach(function (id) { document.getElementById(id).disabled = bald; });
+      $('feld-preis').hidden = tex;
+      ['mcname', 'dcname', 'preis', 'einheit'].forEach(function (id) { $(id).disabled = bald; });
       var absenden = form.querySelector('button[type=submit]');
       absenden.disabled = bald;
       absenden.textContent = bald ? 'Bald verfügbar' : (tex ? 'Idee abschicken' : 'Anfrage erstellen');
-      document.getElementById('bald').hidden = !bald;
+      $('bald').hidden = !bald;
+      $('fehlermeldung').hidden = true;
       ergebnis.hidden = true;
     }
 
     function pruefeDia() {
       var dia = Array.prototype.some.call(zeilen.querySelectorAll('[name=item]'), function (i) { return /diamant/i.test(i.value); });
-      document.getElementById('dia-hinweis').hidden = !dia;
+      $('dia-hinweis').hidden = !dia;
       return dia;
     }
     zeilen.addEventListener('input', pruefeDia);
@@ -577,21 +823,23 @@
     function neueZeile() {
       var z = document.createElement('div');
       z.className = 'zeile';
+      var nr = zeilen.children.length + 1;
       z.innerHTML =
-        '<input class="eingabe" name="item" list="bloecke" maxlength="60" placeholder="Block oder Item, z. B. Eichenholz" aria-label="Block oder Item" required>' +
-        '<input class="eingabe" name="anzahl" type="number" min="1" max="100000" step="1" placeholder="Anzahl" aria-label="Anzahl" required>' +
-        '<button type="button" class="weg" aria-label="Zeile entfernen">×</button>';
+        '<input class="eingabe" name="item" list="bloecke" maxlength="60" placeholder="Block oder Item, z. B. Eichenholz" aria-label="Block oder Item ' + nr + '" required>' +
+        '<input class="eingabe" name="anzahl" type="number" min="1" max="100000" step="1" placeholder="Anzahl" inputmode="numeric" aria-label="Anzahl ' + nr + '" required>' +
+        '<button type="button" class="weg" aria-label="Zeile ' + nr + ' entfernen">' + icon('x') + '</button>';
       z.querySelector('.weg').addEventListener('click', function () { if (zeilen.children.length > 1) { z.remove(); pruefeDia(); } });
       zeilen.appendChild(z);
     }
     neueZeile();
-    document.getElementById('mehr').addEventListener('click', neueZeile);
+    $('mehr').addEventListener('click', function () { neueZeile(); zeilen.lastChild.querySelector('input').focus(); });
     modus(tabs[0]);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (aktuell.modus === 'hitman' && !HITMAN_FREI) return;
-      var v = function (id) { return document.getElementById(id).value.trim(); };
+      if (!pruefe(form, $('fehlermeldung'))) return;
+      var v = function (id) { return $(id).value.trim(); };
       var t = 'Anfrage an die Topf Oder Deckel GmbH\n\nAngebot: ' + aktuell.titel +
               '\nMinecraft-Name: ' + v('mcname') + '\nDiscord: ' + v('dcname') + '\n\n';
       var liste = '';
@@ -602,34 +850,34 @@
           var anzahl = z.querySelector('[name=anzahl]').value;
           if (item && anzahl) { t += '- ' + anzahl + '× ' + item + '\n'; liste += '• ' + anzahl + '× ' + item + '\n'; }
         });
-        if (pruefeDia()) t += '\nDiamanten-Kurs: 8 Diamanten = 1 Cent\n';
+        if (pruefeDia()) t += '\nDiamanten-Kurs: ' + KURS_TEXT + '\n';
       } else if (aktuell.modus === 'hitman') {
         t += 'Ziel: ' + v('ziel') + '\n';
       } else if (aktuell.modus === 'textur') {
         t += 'Item: ' + v('t-item') + '\nName: ' + v('t-name') + '\n\nIdee:\n' + v('t-idee') + '\n';
       } else {
-        t += 'Aufgabe:\n' + document.getElementById('aufgabe').value.trim() + '\n';
+        t += 'Aufgabe:\n' + v('aufgabe') + '\n';
       }
-      var preis = aktuell.modus === 'textur' ? '' : document.getElementById('preis').value;
-      var einheit = document.getElementById('einheit').value;
+      var preis = aktuell.modus === 'textur' ? '' : $('preis').value;
+      var einheit = $('einheit').value;
       if (preis) {
         if (einheit === 'Diamanten' && Number(preis) === 1) einheit = 'Diamant';
         t += '\n\nPreisvorstellung: ' + preis + ' ' + einheit;
       }
-      t = t.trim();
-      document.getElementById('text').textContent = t;
-      var name = document.getElementById('mcname').value.trim();
-      var status = document.getElementById('status');
+      t = t.replace(/\n{3,}/g, '\n\n').trim();
+      $('text').textContent = t;
+      var name = v('mcname');
+      var status = $('status');
       var senden = form.querySelector('button[type=submit]');
       var zeigen = function (text) {
         status.textContent = text;
         ergebnis.hidden = false;
-        ergebnis.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        ergebnis.classList.remove('einfahren'); void ergebnis.offsetWidth; ergebnis.classList.add('einfahren');
       };
       var felder = [['👤 Minecraft-Name', '`' + name + '`', true], ['💬 Discord', '`' + v('dcname') + '`', true]];
       if (aktuell.modus === 'material') {
         felder.push(['📦 Bestellung', liste, false]);
-        if (pruefeDia()) felder.push(['💎 Diamanten-Kurs', '8 Diamanten = 1 Cent', true]);
+        if (pruefeDia()) felder.push(['💎 Diamanten-Kurs', KURS_TEXT, true]);
       } else if (aktuell.modus === 'hitman') {
         felder.push(['🎯 Ziel', '`' + v('ziel') + '`', true]);
       } else if (aktuell.modus === 'textur') {
@@ -640,7 +888,7 @@
       if (preis) felder.push(['💰 Preisvorstellung', preis + ' ' + einheit, true]);
       var hook = DISCORD_WEBHOOKS[aktuell.kanal] || DISCORD_STANDARD;
       if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
-      if (document.getElementById('website').value) return; // Spam-Falle
+      if ($('website').value) return; // Spam-Falle
       senden.disabled = true;
       fetch(hook, {
         method: 'POST',
@@ -648,78 +896,62 @@
         body: JSON.stringify(discordNachricht(aktuell.kanal, 'Anfrage: ' + aktuell.titel, felder, 'Neue Anfrage von **' + name + '**'))
       }).then(function (r) {
         if (!r.ok) throw new Error(r.status);
-        zeigen('Deine Anfrage wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+        zeigen('Gesendet! Wir melden uns bei dir auf Discord. Hier eine Kopie:');
       }).catch(function () {
         zeigen('Senden hat nicht geklappt. Kopiere die Anfrage und schick sie uns:');
       }).then(function () {
         setTimeout(function () { if (aktuell.modus !== 'hitman' || HITMAN_FREI) senden.disabled = false; }, 30000);
       });
     });
+    kopierKnopf('kopieren', 'text', 'kopiert');
 
-    document.getElementById('kopieren').addEventListener('click', function () {
-      var pre = document.getElementById('text');
-      var fertig = function () {
-        var k = document.getElementById('kopiert');
-        k.hidden = false;
-        setTimeout(function () { k.hidden = true; }, 2000);
-      };
-      var auswaehlen = function () {
-        var r = document.createRange(); r.selectNodeContents(pre);
-        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-        document.execCommand('copy'); fertig();
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
-      else auswaehlen();
-    });
-
-    // ---- Bewerbung und Praktikum (Bereich ganz unten) ----
-    var tabs2 = document.querySelectorAll('#mitmachen .schalter button');
-    var detail2 = document.getElementById('detail2');
-    var form2 = document.getElementById('mitmachen-form');
+    // =====================================================================
+    //  Bewerbung und Praktikum
+    // =====================================================================
+    var tabs2 = Array.prototype.slice.call(document.querySelectorAll('#mitmachen .karte2'));
+    var detail2 = $('detail2'), form2 = $('mitmachen-form'), formkarte2 = $('formkarte2');
     var m = { modus: 'bewerbung', kanal: 'bewerbung', titel: 'Bewerbung als Mitarbeiter' };
 
     function wechsel2(b) {
       if (b.getAttribute('aria-selected') === 'true') {
         tabs2.forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
-        detail2.hidden = true; form2.hidden = true;
+        formkarte2.hidden = true;
+        if (window.ScrollTrigger) ScrollTrigger.refresh();
         return;
       }
       m.modus = b.dataset.modus; m.kanal = b.dataset.modus; m.titel = b.dataset.titel;
       var bew = m.modus === 'bewerbung';
-      var fb = document.getElementById('feld-bewerbung'), fp = document.getElementById('feld-praktikum');
+      var fb = $('feld-bewerbung'), fp = $('feld-praktikum');
       fb.hidden = !bew; fb.disabled = !bew;
       fp.hidden = bew; fp.disabled = bew;
-      document.getElementById('m-prefix').textContent = bew ? 'Deine' : 'Dein';
-      document.getElementById('m-titel').textContent = m.titel;
+      $('m-prefix').textContent = bew ? 'Deine' : 'Dein';
+      $('m-titel').textContent = m.titel;
       form2.querySelector('button[type=submit]').textContent = bew ? 'Bewerbung abschicken' : 'Praktikumsanfrage abschicken';
-      document.getElementById('m-ergebnis').hidden = true;
-      tabs2.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
-      detail2.innerHTML = '<div class="icon">' + b.dataset.icon + '</div><h3>' + b.dataset.titel + '</h3><p>' + b.dataset.text + '</p>';
-      detail2.hidden = false; form2.hidden = false;
-      [detail2, form2].forEach(function (el) { el.classList.remove('ploppen'); void el.offsetWidth; el.classList.add('ploppen'); });
-      detail2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      $('m-ergebnis').hidden = true; $('m-fehlermeldung').hidden = true;
+      tabs2.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); x.tabIndex = x === b ? 0 : -1; });
+      zeigeDetail(detail2, b);
+      formkarte2.hidden = false;
+      form2.classList.remove('einfahren'); void form2.offsetWidth; form2.classList.add('einfahren');
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
     }
     tabs2.forEach(function (b) { b.addEventListener('click', function () { wechsel2(b); }); });
+    pfeiltasten(tabs2);
 
     form2.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = function (id) { return document.getElementById(id).value.trim(); };
+      if (!pruefe(form2, $('m-fehlermeldung'))) return;
+      var v = function (id) { return $(id).value.trim(); };
       var bew = m.modus === 'bewerbung';
       var t = (bew ? 'Bewerbung als Mitarbeiter' : 'Praktikumsanfrage') + ' bei der Topf Oder Deckel GmbH\n\n' +
-              'Minecraft-Name: ' + v('m-mcname') + '\n' + 'Discord: ' + v('m-dc') + '\n' + '\n';
+              'Minecraft-Name: ' + v('m-mcname') + '\nDiscord: ' + v('m-dc') + '\n\n';
       if (bew) {
         t += 'Praktikum (1 Tag) absolviert: ja\n\nWarum bei uns:\n' + v('b-warum') + '\n\nErfahrung:\n' + v('b-erfahrung') + '\n\nZeit pro Woche: ' + v('b-zeit');
       } else {
         t += 'Dauer: ' + v('p-dauer') + '\nWunschbereich: ' + v('p-bereich') + '\nGewünschter Start: ' + v('p-start') + '\n\nWarum ein Praktikum:\n' + v('p-warum');
       }
-      document.getElementById('m-text').textContent = t;
-      var status = document.getElementById('m-status');
-      var erg = document.getElementById('m-ergebnis');
-      var senden = form2.querySelector('button[type=submit]');
-      var zeigen = function (text) {
-        status.textContent = text; erg.hidden = false;
-        erg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      };
+      $('m-text').textContent = t;
+      var status = $('m-status'), erg = $('m-ergebnis'), senden = form2.querySelector('button[type=submit]');
+      var zeigen = function (text) { status.textContent = text; erg.hidden = false; erg.classList.remove('einfahren'); void erg.offsetWidth; erg.classList.add('einfahren'); };
       var felder2 = [['👤 Minecraft-Name', '`' + v('m-mcname') + '`', true], ['💬 Discord', '`' + v('m-dc') + '`', true]];
       if (bew) {
         felder2.push(['✅ Praktikum (1 Tag)', 'Absolviert', true], ['⏱️ Zeit pro Woche', v('b-zeit'), true], ['❓ Warum bei uns', v('b-warum'), false], ['🧰 Erfahrung', v('b-erfahrung'), false]);
@@ -728,7 +960,7 @@
       }
       var hook = DISCORD_WEBHOOKS[m.kanal] || DISCORD_STANDARD;
       if (!hook) { zeigen('Fertig! Kopiere den Text und schick ihn uns:'); return; }
-      if (document.getElementById('m-website').value) return; // Spam-Falle
+      if ($('m-website').value) return; // Spam-Falle
       senden.disabled = true;
       fetch(hook, {
         method: 'POST',
@@ -736,66 +968,137 @@
         body: JSON.stringify(discordNachricht(m.kanal, m.titel, felder2, (bew ? 'Neue Bewerbung' : 'Neue Praktikumsanfrage') + ' von **' + v('m-mcname') + '**'))
       }).then(function (r) {
         if (!r.ok) throw new Error(r.status);
-        zeigen((bew ? 'Deine Bewerbung' : 'Deine Anfrage') + ' wurde gesendet. Wir melden uns bei dir! Hier eine Kopie:');
+        zeigen((bew ? 'Deine Bewerbung' : 'Deine Anfrage') + ' ist bei uns angekommen. Hier eine Kopie:');
       }).catch(function () {
         zeigen('Senden hat nicht geklappt. Kopiere den Text und schick ihn uns:');
       }).then(function () {
         setTimeout(function () { senden.disabled = false; }, 30000);
       });
     });
+    kopierKnopf('m-kopieren', 'm-text', 'm-kopiert');
 
-    document.getElementById('m-kopieren').addEventListener('click', function () {
-      var pre = document.getElementById('m-text');
-      var fertig = function () {
-        var k = document.getElementById('m-kopiert');
-        k.hidden = false; setTimeout(function () { k.hidden = true; }, 2000);
-      };
-      var auswaehlen = function () {
-        var r = document.createRange(); r.selectNodeContents(pre);
-        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-        document.execCommand('copy'); fertig();
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(fertig, auswaehlen);
-      else auswaehlen();
+    // =====================================================================
+    //  Hitman freischalten: lokal (Admin-Konsole) oder für alle über status.json
+    // =====================================================================
+    function hitmanFreischalten() {
+      HITMAN_FREI = true;
+      var hb = document.querySelector('[data-modus=hitman]');
+      hb.dataset.titel = 'Hitman';
+      hb.dataset.text = 'Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
+      var tag = hb.querySelector('.etikett'); if (tag) tag.textContent = 'Neu';
+      if (hb.getAttribute('aria-selected') === 'true') { zeigeDetail(detail, hb); modus(hb); }
+    }
+    if (HITMAN_FREI) hitmanFreischalten();
+    try {
+      fetch('status.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { if (j && j.hitman === true && !HITMAN_FREI) hitmanFreischalten(); })
+        .catch(function () {});
+    } catch (x) {}
+
+    // =====================================================================
+    //  Animationen: GSAP + ScrollTrigger + Lenis
+    //  Ohne Bibliotheken oder bei "weniger Bewegung" bleibt alles sichtbar und benutzbar.
+    // =====================================================================
+    window.addEventListener('DOMContentLoaded', function () {
+      if (!window.gsap || RUHIG) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      if (window.Lenis) {
+        var lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+        window.__lenis = lenis;
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+        gsap.ticker.lagSmoothing(0);
+        Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
+          a.addEventListener('click', function (e) {
+            var ziel = document.querySelector(a.getAttribute('href'));
+            if (!ziel) return;
+            e.preventDefault(); lenis.scrollTo(ziel, { offset: a.getAttribute('href') === '#start' ? 0 : -20 });
+          });
+        });
+      }
+
+      var mm = gsap.matchMedia();
+
+      // ---- Start: Wörter fahren aus der Maske, Topf fällt rein ----
+      var intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
+      intro.from('.riesig .maske > span', { yPercent: 110, duration: 1.3, stagger: .12 })
+        .from('.topf-koerper', { y: 120, opacity: 0, duration: 1.2 }, .25)
+        .from('.deckel-g', { y: -160, rotation: -25, transformOrigin: '50% 100%', opacity: 0, duration: 1.3, ease: 'back.out(1.6)' }, .45)
+        .from('.oder', { scale: 0, rotation: -12, duration: .9, ease: 'back.out(2)' }, .9)
+        .from('.hero-fuss .huelle > *', { y: 30, opacity: 0, duration: .9, stagger: .1 }, .8)
+        .from('.nav', { y: -40, opacity: 0, duration: .9 }, .4);
+      setTimeout(function () { if (intro.progress() < 1) intro.progress(1); }, 4000); // Sicherheitsnetz
+
+      // ---- Desktop: Hero bleibt stehen, Deckel hebt sich, Wörter fahren auseinander ----
+      mm.add('(min-width: 761px)', function () {
+        gsap.set('.dampf path', { strokeDasharray: 220, strokeDashoffset: 220 });
+        var tl = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120%', scrub: 1, pin: true } });
+        tl.to('.deckel-g', { y: -150, rotation: -14, transformOrigin: '50% 100%', ease: 'power2.out' }, 0)
+          .to('.dampf path', { opacity: .85, strokeDashoffset: 0, stagger: .08 }, .1)
+          .to('.riesig .topf', { xPercent: -12, ease: 'none' }, 0)
+          .to('.riesig .deckel', { xPercent: 12, ease: 'none' }, 0)
+          .to('.oder', { scale: 1.6, y: -30, ease: 'none' }, 0)
+          .to('.topf-svg', { scale: .92, y: 30, ease: 'none' }, 0)
+          .to('.hero-fuss', { opacity: 0, y: 40, ease: 'none' }, 0);
+      });
+      // ---- Handy: Topf wackelt leicht, Dampf steigt einmal auf ----
+      mm.add('(max-width: 760px)', function () {
+        gsap.set('.dampf path', { strokeDasharray: 220, strokeDashoffset: 220 });
+        gsap.to('.dampf path', { opacity: .85, strokeDashoffset: 0, duration: 1.6, stagger: .15, delay: 1.6, ease: 'power2.out' });
+        gsap.to('.deckel-g', { y: -40, rotation: -6, transformOrigin: '50% 100%', duration: 1.4, delay: 1.8, yoyo: true, repeat: -1, repeatDelay: 1.2, ease: 'sine.inOut' });
+      });
+
+      // ---- Laufband: läuft immer, beim Scrollen schneller und mit Richtung ----
+      var spur = document.querySelector('.band .spur');
+      var lauf = gsap.to(spur, { xPercent: -50, duration: 22, ease: 'none', repeat: -1 });
+      ScrollTrigger.create({ trigger: '.band', start: 'top bottom', end: 'bottom top', onUpdate: function (s) {
+        var tempo = gsap.utils.clamp(-4, 4, s.getVelocity() / 300);
+        gsap.to(lauf, { timeScale: tempo === 0 ? 1 : (tempo > 0 ? 1 + tempo : -1 + tempo), duration: .3, overwrite: true, onComplete: function () { gsap.to(lauf, { timeScale: s.direction < 0 ? -1 : 1, duration: 1 }); } });
+      } });
+
+      // ---- Überschriften fahren aus der Maske ----
+      gsap.utils.toArray('.titel').forEach(function (t) {
+        gsap.from(t.querySelectorAll('.maske > span'), { yPercent: 110, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
+      });
+      gsap.utils.toArray('.marker, .aufsteigen, .unter').forEach(function (el) {
+        gsap.from(el, { y: 24, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+      });
+
+      // ---- Angebote: Zeilen schieben sich nacheinander herein ----
+      gsap.from('.angebot', { y: 60, opacity: 0, duration: 1, stagger: .08, ease: 'expo.out', scrollTrigger: { trigger: '.liste', start: 'top 85%', once: true } });
+      gsap.from('.formkarte#formkarte', { y: 80, opacity: 0, rotation: 1.5, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '#formkarte', start: 'top 92%', once: true } });
+
+      // ---- Kurs: riesige Zahl zählt hoch und wächst ----
+      Array.prototype.forEach.call(document.querySelectorAll('.zaehler'), function (z) {
+        var ziel = Number(z.getAttribute('data-ziel')) || 0, obj = { n: 0 };
+        z.textContent = '0';
+        gsap.to(obj, { n: ziel, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: z, start: 'top 85%', once: true }, onUpdate: function () { z.textContent = Math.round(obj.n); } });
+      });
+      gsap.fromTo('.kurs .zahl', { scale: .7 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.kurs', start: 'top bottom', end: 'center center', scrub: true } });
+
+      // ---- Ablauf ----
+      gsap.from('.schritt', { y: 70, opacity: 0, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '.schritte', start: 'top 85%', once: true } });
+
+      // ---- Warum: Fläche schiebt sich hoch, Karten fächern auf ----
+      gsap.from('.warum', { borderRadius: '120px 120px 0 0', ease: 'none', scrollTrigger: { trigger: '.warum', start: 'top bottom', end: 'top 30%', scrub: true } });
+      gsap.from('.wert', { y: 90, rotation: function (i) { return [-6, 3, 7][i]; }, opacity: 0, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.werte', start: 'top 85%', once: true } });
+
+      // ---- Mitmachen ----
+      gsap.from('.karte2', { y: 70, opacity: 0, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '.wahl2', start: 'top 88%', once: true } });
+
+      // ---- Schluss: riesiger Name fährt von unten hoch ----
+      gsap.from('.fussname', { yPercent: 60, ease: 'none', scrollTrigger: { trigger: '.schluss', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+
+      // ---- Magnetische Knöpfe (nur mit Maus) ----
+      if (window.matchMedia('(pointer: fine)').matches) {
+        Array.prototype.forEach.call(document.querySelectorAll('.knopf:not(.klein)'), function (b) {
+          var xTo = gsap.quickTo(b, 'x', { duration: .6, ease: 'elastic.out(1, .4)' }), yTo = gsap.quickTo(b, 'y', { duration: .6, ease: 'elastic.out(1, .4)' });
+          b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .3); yTo((e.clientY - r.top - r.height / 2) * .4); });
+          b.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
+        });
+      }
     });
-  
-    // Hitman freischalten: lokal (Admin-Konsole) oder für alle über status.json im Repository
-    function hitmanFreischalten() {
-      HITMAN_FREI = true;
-      var hb = document.querySelector('[data-modus=hitman]');
-      hb.dataset.titel = 'Hitman';
-      hb.dataset.text = 'Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
-      var tag = hb.querySelector('.tag'); if (tag) tag.textContent = 'Neu';
-      if (hb.getAttribute('aria-selected') === 'true') {
-        detail.innerHTML = '<div class="icon">' + hb.dataset.icon + '</div><h3>' + hb.dataset.titel + '</h3><p>' + hb.dataset.text + '</p>';
-        modus(hb);
-      }
-    }
-    if (HITMAN_FREI) hitmanFreischalten();
-    try {
-      fetch('status.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { if (j && j.hitman === true && !HITMAN_FREI) hitmanFreischalten(); })
-        .catch(function () {});
-    } catch (x) {}
-
-    // Hitman freischalten: lokal (Admin-Konsole) oder für alle über status.json im Repository
-    function hitmanFreischalten() {
-      HITMAN_FREI = true;
-      var hb = document.querySelector('[data-modus=hitman]');
-      hb.dataset.titel = 'Hitman';
-      hb.dataset.text = 'Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
-      var tag = hb.querySelector('.tag'); if (tag) tag.textContent = 'Neu';
-      if (hb.getAttribute('aria-selected') === 'true') {
-        detail.innerHTML = '<div class="icon">' + hb.dataset.icon + '</div><h3>' + hb.dataset.titel + '</h3><p>' + hb.dataset.text + '</p>';
-        modus(hb);
-      }
-    }
-    if (HITMAN_FREI) hitmanFreischalten();
-    try {
-      fetch('status.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { if (j && j.hitman === true && !HITMAN_FREI) hitmanFreischalten(); })
-        .catch(function () {});
-    } catch (x) {}
-</script>
+  </script>
 </body>
 </html>
