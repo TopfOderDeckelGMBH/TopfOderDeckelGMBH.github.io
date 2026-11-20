@@ -254,7 +254,10 @@
     .schluss .rechts p { color: #b9b2a7; margin: 0 0 24px; }
     .fussname { font-family: var(--display); text-transform: uppercase; font-size: 13.4vw; line-height: .8; white-space: nowrap; margin: 110px 0 0; color: var(--orange); text-align: center; letter-spacing: -.01em; transform: translateY(8%); }
     .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 24px; font-size: .85rem; color: #8f887d; border-top: 1px solid #2a2a2a; position: relative; z-index: 2; background: var(--tinte); }
-    .geheim { color: inherit; text-decoration: none; cursor: text; }
+    /* Der Topfdeckel ist der geheime Knopf: kein Hand-Zeiger, nur ein kurzes Aufglühen beim Drüberfahren */
+    .deckel-link { cursor: default; outline: none; }
+    .deckel-g { transition: filter .4s var(--ease); }
+    .deckel-link:hover .deckel-g, .deckel-link:focus-visible .deckel-g { filter: brightness(1.12) drop-shadow(0 0 10px rgba(255, 200, 61, .7)); }
 
     .einfahren { animation: einfahren .55s var(--ease) both; }
     @keyframes einfahren { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -310,7 +313,8 @@
             <rect x="46" y="176" width="308" height="18" rx="9" fill="#121212"/>
             <text x="200" y="250" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="17" fill="#121212" letter-spacing="3">TOPF ODER DECKEL GMBH</text>
           </g>
-          <!-- Deckel -->
+          <!-- Deckel = geheimer Eingang zum Freikauf-Bereich -->
+          <a class="deckel-link" href="freikaufen.html" aria-label="Geheimer Bereich">
           <g class="deckel-g">
             <ellipse cx="200" cy="176" rx="160" ry="22" fill="#b8360a"/>
             <path d="M44 172 c10 -46 70 -70 156 -70 s146 24 156 70 z" fill="url(#g-deckel)"/>
@@ -318,6 +322,7 @@
             <rect x="176" y="76" width="48" height="30" rx="12" fill="#121212"/>
             <rect x="168" y="70" width="64" height="14" rx="7" fill="#ffc83d"/>
           </g>
+          </a>
         </svg>
       </div>
 
@@ -605,7 +610,7 @@
   </main>
 
   <footer class="fusszeile">
-    <span><a class="geheim" href="freikaufen.html" aria-label="Geheimer Link">©</a> 2026 Topf Oder Deckel GmbH</span>
+    <span>© 2026 Topf Oder Deckel GmbH</span>
     <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
   </footer>
 
