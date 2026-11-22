@@ -3,620 +3,611 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Topf Oder Deckel GmbH – Dein Minecraft-Shop</title>
+  <title>Topf Oder Deckel GmbH – Bauen, Sammeln, Verdrahten</title>
   <meta name="description" content="Bauprojekte, Ressourcen, Redstone-Hilfe und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.">
-  <meta name="theme-color" content="#f4eee4">
+  <meta name="theme-color" content="#07070a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --creme: #f4eee4;
-      --creme-2: #ebe3d6;
-      --tinte: #121212;
-      --tinte-2: #3a3a3a;
-      --grau: #6f6a62;
-      --orange: #ff5a1f;
-      --orange-2: #e04a12;
-      --gelb: #ffc83d;
-      --lila: #5b2be0;
-      --pink: #ff4fa3;
-      --weiss: #fffdf9;
-      --display: "Anton", "Impact", "Arial Narrow", sans-serif;
-      --schrift: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-      --mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
-      --ease: cubic-bezier(.22, 1, .36, 1);
+      --bg: #07070a; --bg-2: #0e0e13; --bg-3: #15151c; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .12);
+      --a1: #a594ff; --a2: #ff9ec4; --a3: #ffd59a;
+      --iri: linear-gradient(100deg, var(--a1) 0%, var(--a2) 48%, var(--a3) 100%);
+      --sans: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif;
+      --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+      /* Namen, die die Formular-Schublade benutzt */
+      --nacht: var(--bg); --tinte: var(--ink); --linie: var(--line); --panel-2: var(--bg-3); --akzent: var(--a1); --warm: var(--a3); --rot: #ff7a7a; --gruen: #7ee2a8;
     }
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html { background: var(--creme); }
+    html { background: var(--bg); color-scheme: dark; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
-    body { margin: 0; color: var(--tinte); background: var(--creme); font-family: var(--schrift); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    a { color: inherit; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body.laedt { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+    :focus-visible { outline: 1.5px solid var(--a1); outline-offset: 3px; border-radius: 6px; }
     svg { display: block; }
-    ::selection { background: var(--orange); color: #fff; }
-    :focus-visible { outline: 3px solid var(--lila); outline-offset: 3px; }
-    .huelle { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
-    .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-    .display { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: -.01em; line-height: .86; }
-    .maske { display: block; overflow: hidden; padding: .16em 0 .04em; margin-top: -.16em; }
-    .maske > span { display: inline-block; will-change: transform; }
+    .ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .huelle { max-width: 1320px; margin: 0 auto; padding: 0 clamp(18px, 3vw, 40px); }
+    .serif { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.01em; }
+    .iri { background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+    .klein { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--mute); }
+    .zeile-m { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+    .zeile-m > span { display: inline-block; will-change: transform; }
 
-    /* Körnung über allem für Druck-Look */
-    .korn { position: fixed; inset: -50%; z-index: 100; pointer-events: none; opacity: .07;
+    .korn { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .06;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-    /* ---------- Navigation ---------- */
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60; mix-blend-mode: difference; color: #fff; pointer-events: none; }
-    .nav .huelle { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-    .nav a { pointer-events: auto; text-decoration: none; }
-    .marke { font-family: var(--display); font-size: 1.35rem; letter-spacing: .01em; text-transform: uppercase; }
-    .menue { display: flex; gap: 26px; font-weight: 500; font-size: .95rem; }
-    .menue a { position: relative; }
-    .menue a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
-    .menue a:hover::after { transform: scaleX(1); transform-origin: left; }
-    @media (max-width: 760px) { .menue a:not(:last-child) { display: none; } }
+    /* ---------- Eigener Mauszeiger ---------- */
+    .zeiger, .zeiger-ring { position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none; border-radius: 50%; transform: translate(-50%, -50%); }
+    .zeiger { width: 6px; height: 6px; background: var(--ink); }
+    .zeiger-ring { width: 38px; height: 38px; border: 1px solid rgba(242, 239, 233, .45); transition: width .35s var(--ease), height .35s var(--ease), background-color .35s, border-color .35s; }
+    .zeiger-ring.gross { width: 74px; height: 74px; background: rgba(242, 239, 233, .08); border-color: transparent; }
+    @media (hover: none), (pointer: coarse) { .zeiger, .zeiger-ring { display: none; } }
 
-    /* ---------- Knöpfe ---------- */
-    .knopf { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; cursor: pointer; text-decoration: none;
-      font: 600 1rem/1 var(--schrift); color: var(--weiss); background: var(--tinte); border: 0; border-radius: 999px; padding: 18px 26px; transition: transform .3s var(--ease); }
-    .knopf::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--orange); border-radius: inherit; transform: translateY(101%); transition: transform .5s var(--ease); }
+    /* ---------- Vorspann ---------- */
+    .vorspann { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: flex; flex-direction: column; justify-content: space-between; padding: clamp(18px, 3vw, 40px); }
+    .v-oben { display: flex; justify-content: space-between; }
+    .v-zahl { font-family: var(--serif); font-style: italic; font-size: clamp(110px, 22vw, 340px); line-height: .8; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    .v-unten { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
+    .v-balken { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--iri); transform-origin: left; transform: scaleX(0); }
+
+    /* ---------- Navigation ---------- */
+    .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 60; pointer-events: none; }
+    .nav .huelle { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav a, .nav button { pointer-events: auto; }
+    .marke { font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; display: inline-flex; align-items: center; gap: 10px; }
+    .marke i { width: 22px; height: 22px; border-radius: 50%; background: var(--iri); box-shadow: 0 0 18px rgba(165, 148, 255, .5); }
+    .pille-nav { display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(21, 21, 28, .55); border: 1px solid var(--line); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+    .pille-nav a { padding: 9px 16px; border-radius: 999px; font-size: .9rem; font-weight: 500; color: var(--mute); transition: color .25s, background-color .25s; }
+    .pille-nav a:hover { color: var(--ink); background: rgba(242, 239, 233, .07); }
+    @media (max-width: 860px) { .pille-nav { display: none; } }
+
+    .knopf { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; white-space: nowrap; font-weight: 600; font-size: .95rem; color: var(--bg); background: var(--ink); border-radius: 999px; padding: 15px 24px; transition: transform .25s var(--ease); }
+    .knopf::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--iri); transform: translateY(101%); transition: transform .5s var(--ease); }
     .knopf:hover::before { transform: none; }
     .knopf:active { transform: scale(.97); }
-    .knopf .pfeil { width: 30px; height: 30px; border-radius: 50%; background: var(--weiss); color: var(--tinte); display: grid; place-items: center; margin: -8px -14px -8px 0; transition: transform .4s var(--ease); }
-    .knopf .pfeil svg { width: 16px; height: 16px; }
-    .knopf:hover .pfeil { transform: rotate(-45deg); }
-    .knopf.hell { background: var(--weiss); color: var(--tinte); }
-    .knopf.hell::before { background: var(--gelb); }
-    .knopf.hell .pfeil { background: var(--tinte); color: var(--weiss); }
-    .knopf.klein { padding: 12px 18px; font-size: .9rem; }
-    .knopf:disabled { background: #cfc8bd; color: #8a847b; cursor: not-allowed; }
+    .knopf .pf { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); color: var(--ink); display: grid; place-items: center; margin: -6px -12px -6px 0; transition: transform .4s var(--ease); }
+    .knopf .pf svg { width: 14px; height: 14px; }
+    .knopf:hover .pf { transform: rotate(-45deg); }
+    .knopf.klein { padding: 10px 16px; font-size: .85rem; text-transform: none; letter-spacing: 0; color: var(--bg); }
+    .knopf:disabled { background: #2a2a33; color: #6f6d76; cursor: not-allowed; }
     .knopf:disabled::before { display: none; }
+    .knopf.glas { color: var(--ink); background: rgba(242, 239, 233, .06); border: 1px solid var(--line); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .knopf.glas:hover { color: var(--bg); }
 
-    /* ---------- Hero mit Topf ---------- */
-    .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; display: grid; place-items: center; }
-    .hero-buehne { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
-    .riesig { position: absolute; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 2.2vw; pointer-events: none; z-index: 1; }
-    .riesig .wort { font-size: clamp(5rem, 19vw, 21rem); }
-    .riesig .topf { color: var(--tinte); }
-    .riesig .deckel { color: var(--orange); }
-    .oder { position: absolute; z-index: 1; top: 22%; left: 50%; transform: translateX(-50%); font-size: clamp(2.4rem, 6vw, 5.6rem); color: var(--lila); padding: 0 .2em; }
-    .topf-svg { position: relative; z-index: 2; width: min(42vw, 520px); margin-top: 6vh; filter: drop-shadow(0 40px 50px rgba(18, 18, 18, .22)); }
-    .hero-fuss { position: absolute; left: 0; right: 0; bottom: 34px; z-index: 4; }
+    /* ---------- Hero ---------- */
+    .hero { position: relative; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; }
+    .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+    .hero-glut { position: absolute; left: 50%; top: 52%; width: 70vmin; height: 70vmin; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(165, 148, 255, .28), rgba(255, 158, 196, .12) 40%, transparent 70%); filter: blur(30px); z-index: 0; }
+    .hero-titel { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; pointer-events: none; mix-blend-mode: difference; }
+    .hero-titel h1 { margin: 0; font-weight: 600; font-size: clamp(64px, 13.5vw, 230px); line-height: .84; letter-spacing: -.055em; }
+    .hero-titel h1 .serif { font-weight: 400; letter-spacing: -.03em; }
+    .hero-fuss { position: absolute; left: 0; right: 0; bottom: clamp(20px, 4vh, 40px); z-index: 3; }
     .hero-fuss .huelle { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
-    .hero-fuss p { max-width: 36ch; margin: 0; font-size: 1.05rem; color: var(--tinte-2); }
-    .scroll-hinweis { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--grau); }
-    .scroll-hinweis i { width: 1px; height: 38px; background: currentColor; transform-origin: top; animation: tropfen 1.8s var(--ease) infinite; }
-    @keyframes tropfen { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
-    .dampf path { fill: none; stroke: var(--tinte); stroke-width: 6; stroke-linecap: round; opacity: 0; }
+    .hero-fuss p { margin: 0; max-width: 34ch; color: var(--mute); font-size: 1rem; }
+    .hero-fuss p b { color: var(--ink); font-weight: 600; }
+    .runter { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; }
+    .runter i { width: 1px; height: 42px; background: linear-gradient(var(--ink), transparent); animation: tropf 2s var(--ease) infinite; transform-origin: top; }
+    @keyframes tropf { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
     @media (max-width: 760px) {
-      .hero { height: auto; min-height: 0; padding: 120px 0 40px; display: block; }
-      .hero-buehne { height: auto; display: flex; flex-direction: column; align-items: center; }
-      .hero-buehne { position: relative; }
-      .riesig { position: static; width: 100%; padding: 0 16px; flex-direction: column; align-items: stretch; }
-      .riesig .wort { font-size: 30vw; }
-      .riesig .topf { align-self: flex-start; }
-      .riesig .deckel { align-self: flex-end; }
-      .oder { position: absolute; top: 20vw; left: 50%; transform: translateX(-50%) rotate(-6deg); font-size: 12vw; }
-      .topf-svg { width: 64vw; margin-top: 4px; }
-      .hero-fuss { position: static; margin-top: 26px; }
       .hero-fuss .huelle { flex-direction: column; align-items: flex-start; }
-      .scroll-hinweis { display: none; }
+      .runter { display: none; }
     }
 
     /* ---------- Laufband ---------- */
-    .band { background: var(--tinte); color: var(--creme); padding: 18px 0; overflow: hidden; transform: rotate(-2deg) scale(1.04); margin: 30px 0 0; position: relative; z-index: 5; }
-    .band .spur { display: flex; width: max-content; }
-    .band span { font-family: var(--display); text-transform: uppercase; font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1; padding-right: .5em; white-space: nowrap; }
-    .band span em { font-style: normal; color: var(--orange); }
-    .band span b { font-weight: 400; color: transparent; -webkit-text-stroke: 1.5px var(--creme); }
+    .band { padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
+    .spur { display: flex; width: max-content; }
+    .spur span { font-size: clamp(42px, 7vw, 110px); font-weight: 600; letter-spacing: -.04em; line-height: 1; padding-right: .45em; white-space: nowrap; }
+    .spur .serif { font-weight: 400; }
+    .spur .hohl { color: transparent; -webkit-text-stroke: 1.2px rgba(242, 239, 233, .55); }
+    .spur .stern { display: inline-block; width: .5em; height: .5em; margin: 0 .25em; vertical-align: .12em; border-radius: 50%; background: var(--iri); }
 
-    /* ---------- Abschnitte allgemein ---------- */
-    section { scroll-margin-top: 80px; }
-    .marker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 22px; }
-    .marker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-    .titel { font-size: clamp(3.2rem, 9.5vw, 9rem); margin: 0; }
+    /* ---------- Aussage, Wort für Wort ---------- */
+    .aussage { padding: clamp(110px, 18vh, 200px) 0; }
+    .aussage p { margin: 0; max-width: 22ch; font-size: clamp(34px, 5.4vw, 92px); line-height: 1.02; letter-spacing: -.04em; font-weight: 500; }
+    .aussage .w { opacity: .14; transition: opacity .2s; }
+    .aussage .serif { font-weight: 400; }
+    .aussage .klein { display: block; margin-bottom: 28px; }
 
-    /* ---------- Angebote (orange) ---------- */
-    .angebote-bereich { background: var(--orange); color: var(--tinte); padding: 140px 0 120px; margin-top: -30px; }
-    .angebote-kopf { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: end; margin-bottom: 64px; }
-    .angebote-kopf p:not(.marker) { margin: 0; font-size: 1.15rem; max-width: 38ch; color: #2b1206; }
-    .angebote-kopf .titel span.gelb { color: var(--gelb); }
-    @media (max-width: 860px) { .angebote-kopf { grid-template-columns: 1fr; } }
-    .liste { border-top: 2px solid var(--tinte); }
-    .angebot { position: relative; width: 100%; display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 24px; text-align: left; cursor: pointer;
-      font: inherit; color: inherit; background: none; border: 0; border-bottom: 2px solid var(--tinte); padding: 26px 8px; overflow: hidden; isolation: isolate; }
-    .angebot::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--tinte); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
-    .angebot:hover::before, .angebot[aria-selected="true"]::before { transform: scaleY(1); }
-    .angebot:hover, .angebot[aria-selected="true"] { color: var(--creme); }
-    .angebot .nr { font-family: var(--mono); font-size: .9rem; }
-    .angebot .name { font-family: var(--display); text-transform: uppercase; font-size: clamp(2.2rem, 6.4vw, 5.4rem); line-height: .9; transition: transform .55s var(--ease); }
-    .angebot:hover .name, .angebot[aria-selected="true"] .name { transform: translateX(18px); }
-    .angebot .name small { display: block; font-family: var(--schrift); text-transform: none; font-size: 1rem; line-height: 1.4; margin-top: 10px; max-width: 46ch; opacity: .8; }
-    .angebot .rund { width: 64px; height: 64px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; transition: transform .55s var(--ease), background .3s, color .3s; }
-    .angebot .rund svg { width: 26px; height: 26px; }
-    .angebot:hover .rund { transform: rotate(-45deg); }
-    .angebot[aria-selected="true"] .rund { background: var(--orange); color: var(--tinte); border-color: var(--orange); transform: rotate(90deg); }
-    .etikett { display: inline-block; vertical-align: middle; font-family: var(--mono); font-size: .8rem; letter-spacing: .04em; background: var(--gelb); color: var(--tinte); padding: 5px 10px; border-radius: 999px; margin-left: 12px; }
-    @media (max-width: 640px) { .angebot { grid-template-columns: 1fr auto; padding: 22px 4px; } .angebot .nr { display: none; } .angebot .rund { width: 48px; height: 48px; } }
-
-    /* Formular-Karte */
-    .formkarte { margin-top: 48px; background: var(--weiss); border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(43, 18, 6, .5); overflow: hidden; }
-    .detail { display: flex; gap: 18px; align-items: center; padding: 28px 32px; background: var(--tinte); color: var(--creme); }
-    .detail .symbol { width: 54px; height: 54px; border-radius: 16px; background: var(--orange); color: var(--tinte); display: grid; place-items: center; flex: none; }
-    .detail .symbol svg { width: 26px; height: 26px; }
-    .detail h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1; margin: 0 0 6px; }
-    .detail p { margin: 0; color: #cfc8bd; }
-    .formular { padding: 30px 32px 34px; }
-    .formular fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
-    .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
-    @media (max-width: 640px) { .zwei { grid-template-columns: 1fr; } .formular, .detail { padding: 22px 18px; } }
-    .feld { margin-bottom: 20px; }
-    .lbl { display: block; font-family: var(--mono); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 8px; color: var(--tinte-2); }
-    .eingabe { width: 100%; font: inherit; font-size: 1.02rem; color: var(--tinte); background: transparent; border: 0; border-bottom: 2px solid #d8d0c3; border-radius: 0; padding: 10px 2px; transition: border-color .3s; }
-    .eingabe::placeholder { color: #aaa297; }
-    .eingabe:hover { border-color: #b8ae9f; }
-    .eingabe:focus { outline: none; border-color: var(--orange); }
-    .eingabe[aria-invalid="true"] { border-color: #e11d48; }
-    textarea.eingabe { min-height: 110px; resize: vertical; border: 2px solid #d8d0c3; border-radius: 14px; padding: 12px 14px; }
-    textarea.eingabe:focus { border-color: var(--orange); }
-    select.eingabe { appearance: none; cursor: pointer; padding-right: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
-    .eingabe:disabled { color: #aaa297; cursor: not-allowed; }
-    .zeile { display: grid; grid-template-columns: 1fr 120px 44px; gap: 12px; margin-bottom: 8px; align-items: end; }
-    .weg { height: 40px; font: inherit; background: var(--creme); color: var(--tinte); border: 0; border-radius: 12px; cursor: pointer; display: grid; place-items: center; transition: background .2s, color .2s; }
-    .weg:hover { background: var(--tinte); color: var(--creme); }
-    .weg svg { width: 16px; height: 16px; }
-    .textknopf { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-weight: 600; font-size: .9rem; color: var(--tinte); background: var(--creme); border: 0; border-radius: 999px; padding: 9px 16px; margin-top: 8px; cursor: pointer; transition: background .2s; }
-    .textknopf:hover { background: var(--gelb); }
-    .textknopf svg { width: 16px; height: 16px; }
-    .preis { display: grid; grid-template-columns: 1fr 160px; gap: 18px; }
-    .hinweis { display: flex; gap: 8px; align-items: flex-start; color: var(--grau); font-size: .9rem; margin: 10px 0 0; }
-    .hinweis svg { width: 16px; height: 16px; margin-top: 3px; color: var(--orange); }
-    .meldetext { color: #e11d48; font-weight: 500; }
-    .bald { display: flex; gap: 10px; align-items: flex-start; background: #fff4d6; color: #6b4a00; border-radius: 14px; padding: 12px 14px; margin: 0 0 22px; font-size: .95rem; }
-    .bald svg { width: 18px; height: 18px; margin-top: 2px; }
-    .info { background: #efe9ff; color: #3b1a9e; }
-    .haken { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; color: var(--tinte-2); font-family: var(--schrift); text-transform: none; letter-spacing: 0; font-size: 1rem; }
-    .haken input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--orange); flex: none; cursor: pointer; }
-    .absenden { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 8px; }
-    .ergebnis { margin-top: 24px; padding: 20px; border-radius: 18px; background: var(--creme); }
-    .ergebnis .lbl { color: var(--tinte); }
-    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font-family: var(--mono); font-size: .84rem; line-height: 1.6; color: var(--tinte-2); background: var(--weiss); border-radius: 12px; padding: 14px; margin: 10px 0 14px; }
-    .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    .kopiert { color: #15803d; font-weight: 600; margin: 0; display: inline-flex; gap: 6px; align-items: center; }
-    .kopiert svg { width: 16px; height: 16px; }
-    .falle { position: absolute; left: -9999px; }
+    /* ---------- Angebote: gestapelte Karten ---------- */
+    .abschnitt-kopf { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; margin-bottom: 50px; flex-wrap: wrap; }
+    .abschnitt-kopf h2 { margin: 0; font-size: clamp(46px, 7vw, 120px); line-height: .9; letter-spacing: -.05em; font-weight: 600; }
+    .abschnitt-kopf p { margin: 0; max-width: 36ch; color: var(--mute); }
+    .stapel { position: relative; padding-bottom: 8vh; }
+    .karte { position: sticky; top: 12vh; min-height: 74vh; margin-bottom: 4vh; border-radius: 32px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-2); display: grid; grid-template-columns: 1.15fr .85fr; transform-origin: 50% 0; isolation: isolate; }
+    .karte::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 80% at 85% 15%, var(--glut, rgba(165, 148, 255, .35)), transparent 60%); }
+    .karte-l { padding: clamp(26px, 4vw, 56px); display: flex; flex-direction: column; justify-content: space-between; gap: 30px; }
+    .karte-nr { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3vw, 44px); color: var(--mute); }
+    .karte h3 { margin: 0; font-size: clamp(54px, 8.6vw, 150px); line-height: .86; letter-spacing: -.055em; font-weight: 600; }
+    .karte h3 .serif { font-weight: 400; }
+    .karte-r { padding: clamp(26px, 4vw, 56px); display: flex; flex-direction: column; justify-content: flex-end; gap: 26px; border-left: 1px solid var(--line); background: rgba(7, 7, 10, .35); }
+    .karte-r p { margin: 0; color: #c7c3cc; font-size: 1.08rem; max-width: 40ch; }
+    .liste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .liste li { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+    .liste li span { color: var(--mute); }
+    .abzeichen { display: inline-block; vertical-align: middle; font-family: var(--sans); font-style: normal; font-size: .14em; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: 1px solid currentColor; border-radius: 999px; padding: .35em .9em; margin-left: .4em; color: var(--a3); }
+    @media (max-width: 860px) {
+      .karte { grid-template-columns: 1fr; top: 9vh; min-height: 0; }
+      .karte-r { border-left: 0; border-top: 1px solid var(--line); }
+    }
 
     /* ---------- Kurs ---------- */
-    .kurs { padding: 150px 0 40px; text-align: center; }
-    .kurs .zahl { font-size: clamp(8rem, 30vw, 26rem); line-height: .8; margin: 0; display: inline-flex; align-items: flex-start; gap: .04em; }
-    .kurs .zahl sup { font-size: .22em; line-height: 1; margin-top: .25em; color: var(--orange); }
-    .kurs p { font-size: clamp(1.2rem, 2.4vw, 1.8rem); margin: 18px auto 0; max-width: 28ch; color: var(--tinte-2); }
-    .kurs p strong { color: var(--tinte); }
+    .kurs { padding: clamp(110px, 16vh, 180px) 0; text-align: center; }
+    .kurs .zahl { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(170px, 34vw, 520px); line-height: .78; letter-spacing: -.05em; }
+    .kurs p { margin: 20px auto 0; font-size: clamp(20px, 2.4vw, 34px); letter-spacing: -.02em; max-width: 24ch; color: var(--mute); }
+    .kurs p b { color: var(--ink); font-weight: 600; }
 
     /* ---------- Ablauf ---------- */
-    .ablauf { padding: 120px 0 140px; }
-    .ablauf-kopf { margin-bottom: 60px; }
-    .schritte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 2px solid var(--tinte); }
-    .schritt { padding: 34px 28px 10px 0; border-right: 2px solid var(--tinte); }
-    .schritt + .schritt { padding-left: 28px; }
-    .schritt:last-child { border-right: 0; }
-    .schritt .gross { font-family: var(--display); font-size: clamp(4.5rem, 9vw, 8rem); line-height: .9; color: transparent; -webkit-text-stroke: 2px var(--tinte); display: block; margin-bottom: 18px; transition: color .5s var(--ease); }
-    .schritt:hover .gross { color: var(--orange); -webkit-text-stroke-color: var(--orange); }
-    .schritt h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 2rem; line-height: 1; margin: 0 0 10px; }
-    .schritt p { margin: 0; color: var(--tinte-2); max-width: 30ch; }
-    @media (max-width: 820px) { .schritte { grid-template-columns: 1fr; } .schritt, .schritt + .schritt { padding: 28px 0; border-right: 0; border-bottom: 2px solid var(--tinte); } }
+    .ablauf { padding: 40px 0 clamp(110px, 16vh, 180px); }
+    .schritte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .schritt { position: relative; padding: 30px 0 0; }
+    .schritt::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); }
+    .schritt .fuell { position: absolute; left: 0; top: 0; height: 1px; width: 100%; background: var(--iri); transform: scaleX(0); transform-origin: left; }
+    .schritt .serif { font-size: clamp(48px, 5vw, 80px); line-height: 1; display: block; margin-bottom: 18px; }
+    .schritt h3 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: -.02em; font-weight: 600; }
+    .schritt p { margin: 0; color: var(--mute); max-width: 32ch; }
+    @media (max-width: 760px) { .schritte { grid-template-columns: 1fr; gap: 34px; } }
 
-    /* ---------- Warum (lila) ---------- */
-    .warum { background: var(--lila); color: var(--weiss); padding: 140px 0; border-radius: 40px 40px 0 0; }
-    .warum .titel { color: var(--weiss); }
-    .warum .titel .pink { color: var(--pink); }
-    .werte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 70px; }
-    .wert { background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .18); border-radius: 26px; padding: 30px; transition: transform .5s var(--ease), background .3s; }
-    .wert:hover { transform: translateY(-8px) rotate(-1deg); background: rgba(255, 255, 255, .14); }
-    .wert .symbol { width: 56px; height: 56px; border-radius: 18px; background: var(--gelb); color: var(--tinte); display: grid; place-items: center; margin-bottom: 26px; }
-    .wert:nth-child(2) .symbol { background: var(--pink); }
-    .wert:nth-child(3) .symbol { background: var(--orange); }
-    .wert .symbol svg { width: 26px; height: 26px; }
-    .wert h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 2rem; line-height: 1; margin: 0 0 10px; }
-    .wert p { margin: 0; color: #ddd4ff; }
-    @media (max-width: 860px) { .werte { grid-template-columns: 1fr; } }
+    /* ---------- Mitmachen: Karten mit Lichtkegel unter der Maus ---------- */
+    .mitmachen { padding: 0 0 clamp(110px, 16vh, 180px); }
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .licht-karte { position: relative; overflow: hidden; text-align: left; border-radius: 28px; border: 1px solid var(--line); background: var(--bg-2); padding: clamp(26px, 3.4vw, 46px); min-height: 340px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; transition: border-color .3s, transform .5s var(--ease); }
+    .licht-karte::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(165, 148, 255, .2), transparent 60%); opacity: 0; transition: opacity .3s; }
+    .licht-karte:hover { border-color: rgba(242, 239, 233, .25); transform: translateY(-4px); }
+    .licht-karte:hover::before { opacity: 1; }
+    .licht-karte > * { position: relative; }
+    .licht-karte h3 { margin: 0; font-size: clamp(40px, 5vw, 76px); line-height: .9; letter-spacing: -.045em; font-weight: 600; }
+    .licht-karte p { margin: 10px 0 0; color: var(--mute); max-width: 38ch; }
+    .licht-karte .kreis { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: transform .5s var(--ease), background-color .3s, color .3s; }
+    .licht-karte:hover .kreis { transform: rotate(-45deg); background: var(--ink); color: var(--bg); }
+    .licht-karte .oben { display: flex; justify-content: space-between; align-items: flex-start; }
+    @media (max-width: 760px) { .duo { grid-template-columns: 1fr; } }
 
-    /* ---------- Mitmachen (gelb) ---------- */
-    .mitmachen { background: var(--gelb); padding: 140px 0; }
-    .mitmachen .titel { margin-bottom: 18px; }
-    .mitmachen .unter { font-size: 1.15rem; max-width: 40ch; margin: 0 0 50px; color: #3d2e00; }
-    .wahl2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .karte2 { position: relative; text-align: left; font: inherit; color: var(--tinte); cursor: pointer; background: var(--weiss); border: 0; border-radius: 28px; padding: 32px; min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; gap: 30px; overflow: hidden; isolation: isolate;
-      transition: transform .5s var(--ease), color .4s; }
-    .karte2::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--tinte); clip-path: circle(0% at 90% 15%); transition: clip-path .7s var(--ease); }
-    .karte2:hover { transform: translateY(-6px); }
-    .karte2[aria-selected="true"] { color: var(--weiss); }
-    .karte2[aria-selected="true"]::before { clip-path: circle(150% at 90% 15%); }
-    .karte2 .kopfzeile { display: flex; justify-content: space-between; align-items: flex-start; }
-    .karte2 .symbol { width: 56px; height: 56px; border-radius: 18px; background: var(--gelb); color: var(--tinte); display: grid; place-items: center; }
-    .karte2 .symbol svg { width: 26px; height: 26px; }
-    .karte2 .rund { width: 48px; height: 48px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; transition: transform .5s var(--ease); }
-    .karte2 .rund svg { width: 20px; height: 20px; }
-    .karte2:hover .rund { transform: rotate(-45deg); }
-    .karte2 h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(2.6rem, 5vw, 4rem); line-height: .9; margin: 0 0 8px; }
-    .karte2 p { margin: 0; opacity: .75; max-width: 34ch; }
-    @media (max-width: 700px) { .wahl2 { grid-template-columns: 1fr; } }
-    .mitmachen .formkarte { box-shadow: 0 30px 60px -30px rgba(61, 46, 0, .5); }
+    /* ---------- Schluss ---------- */
+    .schluss { padding: clamp(110px, 16vh, 180px) 0 0; border-top: 1px solid var(--line); overflow: hidden; }
+    .schluss-reihe { display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
+    .schluss h2 { margin: 0; font-size: clamp(56px, 9vw, 160px); line-height: .88; letter-spacing: -.055em; font-weight: 600; }
+    .schluss h2 .serif { font-weight: 400; }
+    .magnet { width: clamp(150px, 15vw, 210px); aspect-ratio: 1; border-radius: 50%; background: var(--iri); color: var(--bg); display: grid; place-items: center; text-align: center; font-weight: 600; font-size: 1.05rem; box-shadow: 0 30px 80px -20px rgba(255, 158, 196, .45); }
+    .magnet span { display: inline-flex; align-items: center; gap: 8px; }
+    .wortmarke { margin: clamp(80px, 12vh, 140px) 0 0; font-size: 13.4vw; line-height: .8; letter-spacing: -.06em; font-weight: 700; white-space: nowrap; text-align: center; background: linear-gradient(180deg, rgba(242, 239, 233, .9), rgba(242, 239, 233, .05)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; transform: translateY(12%); }
+    .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 22px clamp(18px, 3vw, 40px); border-top: 1px solid var(--line); font-size: .85rem; color: var(--mute); position: relative; background: var(--bg); }
+    .fusszeile nav { display: flex; gap: 22px; }
+    .fusszeile nav a:hover { color: var(--ink); }
+    .geheim { color: inherit; cursor: text; }
 
-    /* ---------- Schluss + Fuß ---------- */
-    .schluss { background: var(--tinte); color: var(--creme); padding: 150px 0 0; overflow: hidden; }
-    .schluss .oben { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
-    .schluss .titel { color: var(--creme); }
-    .schluss .titel .orange { color: var(--orange); }
-    .schluss .rechts { max-width: 34ch; }
-    .schluss .rechts p { color: #b9b2a7; margin: 0 0 24px; }
-    .fussname { font-family: var(--display); text-transform: uppercase; font-size: 13.4vw; line-height: .8; white-space: nowrap; margin: 110px 0 0; color: var(--orange); text-align: center; letter-spacing: -.01em; transform: translateY(8%); }
-    .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 24px; font-size: .85rem; color: #8f887d; border-top: 1px solid #2a2a2a; position: relative; z-index: 2; background: var(--tinte); }
-    /* Der Topfdeckel ist der geheime Knopf: kein Hand-Zeiger, nur ein kurzes Aufglühen beim Drüberfahren */
-    .deckel-link { cursor: default; outline: none; }
-    .deckel-g { transition: filter .4s var(--ease); }
-    .deckel-link:hover .deckel-g, .deckel-link:focus-visible .deckel-g { filter: brightness(1.12) drop-shadow(0 0 10px rgba(255, 200, 61, .7)); }
-
+    /* Formular-Schublade (aus dem gemeinsamen Baustein) */
+        /* ---------- Schublade mit Formularen ---------- */
+    .schleier { position: fixed; inset: 0; z-index: 40; background: rgba(2, 3, 8, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
+    .schleier.offen { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
+    .schublade { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(620px, 100vw); background: #0b0d15; box-shadow: -30px 0 70px -30px rgba(0, 0, 0, .8), inset 1px 0 0 var(--linie); overflow-y: auto; overscroll-behavior: contain; transform: translateX(104%); visibility: hidden; transition: transform .6s var(--ease), visibility 0s linear .6s; }
+    .schublade.offen { transform: none; visibility: visible; transition: transform .6s var(--ease); }
+    .sch-kopf { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 28px; background: rgba(11, 13, 21, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linie); }
+    .sch-kopf h2 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: 2rem; line-height: 1; }
+    .sch-innen { padding: 24px 28px 48px; }
+    @media (max-width: 560px) { .sch-kopf, .sch-innen { padding-left: 18px; padding-right: 18px; } }
+    .reiter { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+    .angebot, .karte2 { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; box-shadow: 0 0 0 1px var(--linie); font-size: .9rem; font-weight: 500; color: var(--mute); transition: background-color .25s, color .25s, box-shadow .25s; }
+    .angebot:hover, .karte2:hover { color: var(--tinte); box-shadow: 0 0 0 1px rgba(236, 233, 226, .35); }
+    .angebot[aria-selected="true"], .karte2[aria-selected="true"] { background: var(--tinte); color: var(--nacht); box-shadow: none; }
+    .angebot .etikett { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--warm); }
+    .angebot[aria-selected="true"] .etikett { color: #b45309; }
+    .detail { display: flex; gap: 16px; align-items: flex-start; padding: 18px; border-radius: 14px; background: var(--panel-2); margin: 0 0 22px; }
+    .detail .symbol { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; flex: none; background: rgba(201, 212, 255, .12); color: var(--akzent); }
+    .detail h3 { margin: 0 0 4px; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; line-height: 1.1; }
+    .detail p { margin: 0; color: var(--mute); font-size: .95rem; }
+    .formular fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    @media (max-width: 560px) { .zwei { grid-template-columns: 1fr; } }
+    .feld { margin-bottom: 20px; }
+    .lbl { display: block; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; margin: 0 0 8px; color: var(--mute); }
+    .eingabe { width: 100%; font: inherit; font-size: 1rem; color: var(--tinte); background: transparent; border: 0; border-bottom: 1px solid rgba(236, 233, 226, .25); border-radius: 0; padding: 10px 2px; transition: border-color .3s; }
+    .eingabe::placeholder { color: #5f5e69; }
+    .eingabe:hover { border-color: rgba(236, 233, 226, .45); }
+    .eingabe:focus { outline: none; border-color: var(--akzent); }
+    .eingabe[aria-invalid="true"] { border-color: var(--rot); }
+    textarea.eingabe { min-height: 110px; resize: vertical; border: 1px solid rgba(236, 233, 226, .2); border-radius: 12px; padding: 12px 14px; }
+    select.eingabe { appearance: none; cursor: pointer; padding-right: 28px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ece9e2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
+    select.eingabe option { background: #0b0d15; color: var(--tinte); }
+    .eingabe:disabled { opacity: .45; cursor: not-allowed; }
+    .zeile { display: grid; grid-template-columns: 1fr 110px 40px; gap: 12px; margin-bottom: 8px; align-items: end; }
+    .weg { height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--panel-2); transition: background .2s; }
+    .weg:hover { background: #262a3b; }
+    .weg svg { width: 16px; height: 16px; }
+    .textknopf { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .88rem; padding: 9px 14px; border-radius: 999px; box-shadow: 0 0 0 1px var(--linie); margin-top: 8px; transition: background .2s; }
+    .textknopf:hover { background: var(--panel-2); }
+    .textknopf svg { width: 16px; height: 16px; }
+    .preis { display: grid; grid-template-columns: 1fr 150px; gap: 18px; }
+    .hinweis { display: flex; gap: 8px; align-items: flex-start; color: var(--mute); font-size: .88rem; margin: 10px 0 0; }
+    .hinweis svg { width: 15px; height: 15px; margin-top: 3px; color: var(--akzent); }
+    .meldetext { color: var(--rot); font-weight: 500; }
+    .bald { display: flex; gap: 10px; align-items: flex-start; background: rgba(255, 179, 122, .1); color: #ffd3ad; border-radius: 12px; padding: 12px 14px; margin: 0 0 22px; font-size: .94rem; }
+    .bald svg { width: 18px; height: 18px; margin-top: 2px; }
+    .info { background: rgba(201, 212, 255, .1); color: #d9e0ff; }
+    .haken { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; color: var(--tinte); font-size: .98rem; }
+    .haken input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--akzent); flex: none; cursor: pointer; }
+    .absenden { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 8px; }
+    .ergebnis { margin-top: 24px; padding: 18px; border-radius: 14px; background: var(--panel-2); }
+    .ergebnis .lbl { color: var(--tinte); text-transform: none; letter-spacing: 0; font-size: .95rem; }
+    .ergebnis pre { white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.6; color: var(--mute); background: #070910; border-radius: 10px; padding: 14px; margin: 10px 0 14px; }
+    .aktionen { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .kopiert { color: var(--gruen); font-weight: 600; margin: 0; display: inline-flex; gap: 6px; align-items: center; }
+    .kopiert svg { width: 16px; height: 16px; }
+    .falle { position: absolute; left: -9999px; }
     .einfahren { animation: einfahren .55s var(--ease) both; }
     @keyframes einfahren { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
+
+    .sch-kopf h2 { font-family: var(--serif); font-style: italic; }
+    .detail h3 { font-family: var(--serif); font-style: italic; }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
+      .aussage .w { opacity: 1; }
     }
   </style>
 </head>
-<body>
+<body class="laedt">
   <div class="korn" aria-hidden="true"></div>
+  <div class="zeiger" aria-hidden="true"></div>
+  <div class="zeiger-ring" aria-hidden="true"></div>
+
+  <div class="vorspann" id="vorspann" aria-hidden="true">
+    <div class="v-oben klein"><span>Topf Oder Deckel GmbH</span><span>Wird geladen</span></div>
+    <div class="v-unten"><span class="v-zahl" id="vzahl">0</span><span class="klein">Bauen · Sammeln · Verdrahten</span></div>
+    <i class="v-balken" id="vbalken"></i>
+  </div>
 
   <header class="nav">
     <div class="huelle">
-      <a class="marke" href="#start">Topf/Deckel</a>
-      <nav class="menue" aria-label="Hauptmenü">
+      <a class="marke" href="#start" data-zeiger><i aria-hidden="true"></i>Topf Oder Deckel</a>
+      <nav class="pille-nav" aria-label="Hauptmenü">
         <a href="#angebote">Angebote</a>
+        <a href="#kurs">Kurs</a>
         <a href="#ablauf">Ablauf</a>
-        <a href="#warum">Warum wir</a>
         <a href="#mitmachen">Mitmachen</a>
       </nav>
+      <button type="button" class="knopf klein" data-schublade="anfrage" data-zeiger>Anfragen</button>
     </div>
   </header>
 
   <main id="start">
-    <section class="hero" aria-label="Topf Oder Deckel GmbH">
-      <div class="hero-buehne">
-        <h1 class="riesig display" aria-label="Topf Oder Deckel GmbH">
-          <span class="maske wort topf" aria-hidden="true"><span>Topf</span></span>
-          <span class="maske wort deckel" aria-hidden="true"><span>Deckel</span></span>
+    <section class="hero" id="hero" aria-label="Topf Oder Deckel GmbH">
+      <div class="hero-glut" aria-hidden="true"></div>
+      <canvas id="leinwand" aria-hidden="true"></canvas>
+      <div class="hero-titel">
+        <h1 aria-label="Wir bauen deine Welt.">
+          <span class="zeile-m" aria-hidden="true"><span>Wir bauen</span></span>
+          <span class="zeile-m" aria-hidden="true"><span><span class="serif">deine</span> Welt.</span></span>
         </h1>
-        <span class="oder display" aria-hidden="true">oder</span>
-
-        <svg class="topf-svg" viewBox="0 0 400 380" role="img" aria-label="Ein Topf, dessen Deckel sich hebt">
-          <defs>
-            <linearGradient id="g-koerper" x1="0" x2="1"><stop offset="0" stop-color="#2a2a2a"/><stop offset=".45" stop-color="#121212"/><stop offset="1" stop-color="#050505"/></linearGradient>
-            <linearGradient id="g-deckel" x1="0" x2="1"><stop offset="0" stop-color="#ff7a45"/><stop offset=".5" stop-color="#ff5a1f"/><stop offset="1" stop-color="#d9440f"/></linearGradient>
-            <linearGradient id="g-glanz" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          </defs>
-          <g class="dampf">
-            <path d="M160 150 C150 120 175 105 165 75 C158 55 170 40 168 28"/>
-            <path d="M200 140 C190 110 215 95 205 65 C198 45 210 30 208 18"/>
-            <path d="M240 150 C230 120 255 105 245 75 C238 55 250 40 248 28"/>
-          </g>
-          <!-- Topf -->
-          <g class="topf-koerper">
-            <path d="M58 196 h-26 a16 16 0 0 0 0 32 h26" fill="none" stroke="#121212" stroke-width="14" stroke-linecap="round"/>
-            <path d="M342 196 h26 a16 16 0 0 1 0 32 h-26" fill="none" stroke="#121212" stroke-width="14" stroke-linecap="round"/>
-            <path d="M56 186 h288 v110 c0 40 -32 64 -72 64 h-144 c-40 0 -72 -24 -72 -64 z" fill="url(#g-koerper)"/>
-            <rect x="56" y="232" width="288" height="26" fill="#ff5a1f"/>
-            <rect x="56" y="232" width="288" height="26" fill="url(#g-glanz)"/>
-            <path d="M84 196 v96 c0 22 12 38 30 46" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="10" stroke-linecap="round"/>
-            <rect x="46" y="176" width="308" height="18" rx="9" fill="#121212"/>
-            <text x="200" y="250" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="17" fill="#121212" letter-spacing="3">TOPF ODER DECKEL GMBH</text>
-          </g>
-          <!-- Deckel = geheimer Eingang zum Freikauf-Bereich -->
-          <a class="deckel-link" href="freikaufen.html" aria-label="Geheimer Bereich">
-          <g class="deckel-g">
-            <ellipse cx="200" cy="176" rx="160" ry="22" fill="#b8360a"/>
-            <path d="M44 172 c10 -46 70 -70 156 -70 s146 24 156 70 z" fill="url(#g-deckel)"/>
-            <path d="M80 150 c22 -22 60 -34 104 -36" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="8" stroke-linecap="round"/>
-            <rect x="176" y="76" width="48" height="30" rx="12" fill="#121212"/>
-            <rect x="168" y="70" width="64" height="14" rx="7" fill="#ffc83d"/>
-          </g>
-          </a>
-        </svg>
       </div>
-
       <div class="hero-fuss">
         <div class="huelle">
-          <p class="hero-text">Wir bauen, sammeln, verdrahten und gestalten für deine Minecraft-Welt. Fair bezahlt in Diamanten oder Cent.</p>
-          <a class="knopf hero-knopf" href="#angebote">Angebot wählen <span class="pfeil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></a>
-          <span class="scroll-hinweis" aria-hidden="true"><i></i>Scrollen</span>
+          <p class="hero-text"><b>Topf Oder Deckel GmbH.</b> Bauprojekte, Ressourcen, Redstone und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.</p>
+          <span class="runter klein" aria-hidden="true"><i></i>Scrollen</span>
+          <button type="button" class="knopf hero-knopf" data-schublade="anfrage" data-zeiger>Anfrage starten <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button>
         </div>
       </div>
     </section>
 
     <div class="band" aria-hidden="true">
       <div class="spur">
-        <span>Bauprojekte <em>✦</em> <b>Redstone</b> <em>✦</em> Ressourcen <em>✦</em> <b>Texturen</b> <em>✦</em> Farmen <em>✦</em> <b>Burgen</b> <em>✦</em></span>
-        <span>Bauprojekte <em>✦</em> <b>Redstone</b> <em>✦</em> Ressourcen <em>✦</em> <b>Texturen</b> <em>✦</em> Farmen <em>✦</em> <b>Burgen</b> <em>✦</em></span>
+        <span>Bauprojekte<i class="stern"></i><span class="serif">Ressourcen</span><i class="stern"></i><span class="hohl">Redstone</span><i class="stern"></i>Texturen<i class="stern"></i><span class="serif">Farmen</span><i class="stern"></i><span class="hohl">Burgen</span><i class="stern"></i></span>
+        <span>Bauprojekte<i class="stern"></i><span class="serif">Ressourcen</span><i class="stern"></i><span class="hohl">Redstone</span><i class="stern"></i>Texturen<i class="stern"></i><span class="serif">Farmen</span><i class="stern"></i><span class="hohl">Burgen</span><i class="stern"></i></span>
       </div>
     </div>
 
-    <section id="angebote" class="angebote-bereich">
+    <section class="aussage">
       <div class="huelle">
-        <div class="angebote-kopf">
-          <div>
-            <p class="marker">Angebote / 05</p>
-            <h2 class="titel display"><span class="maske"><span>Was darf</span></span><span class="maske"><span class="gelb">es sein?</span></span></h2>
-          </div>
-          <p class="aufsteigen">Wähl eine Zeile aus. Darunter öffnet sich sofort das passende Formular, und deine Anfrage landet direkt bei uns auf Discord.</p>
+        <span class="klein">Über uns</span>
+        <p id="aussage">Wir sind ein kleines Team, das für dich baut, sammelt, verdrahtet und gestaltet. <span class="serif">Ehrlich, schnell</span> und zu einem festen Preis, den du vorher kennst.</p>
+      </div>
+    </section>
+
+    <section id="angebote" aria-label="Angebote">
+      <div class="huelle">
+        <div class="abschnitt-kopf">
+          <h2>Was wir<br><span class="serif iri" style="font-weight:400">für dich tun.</span></h2>
+          <p>Fünf Angebote, ein Ablauf: Wähl aus, füll das kurze Formular aus, und deine Anfrage landet direkt bei uns auf Discord.</p>
         </div>
-
-        <div class="liste" id="angebote-liste" role="tablist" aria-label="Angebote">
-          <button type="button" class="angebot" role="tab" aria-selected="true" aria-controls="formkarte" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="hammer" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">
-            <span class="nr">(01)</span>
-            <span class="name">Bauprojekte<small>Base, Burg oder Haus: von der Idee bis zum letzten Block.</small></span>
-            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
-          </button>
-          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="material" data-kanal="material" data-icon="box" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">
-            <span class="nr">(02)</span>
-            <span class="name">Ressourcen<small>Blöcke, Items und Baumaterial, gesammelt für dich.</small></span>
-            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
-          </button>
-          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="aufgabe" data-kanal="redstone" data-icon="zap" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">
-            <span class="nr">(03)</span>
-            <span class="name">Redstone<small>Schaltungen, automatische Türen, Farmen und Maschinen.</small></span>
-            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
-          </button>
-          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="textur" data-kanal="textur" data-icon="palette" data-titel="Textur-Ideen" data-text="Du hast eine Idee für eine eigene Textur? Sag uns, für welches Item, wie es heißen soll und was daraus werden soll.">
-            <span class="nr">(04)</span>
-            <span class="name">Texturen<small>Deine Idee für ein Item: Name, Aussehen, Vorbild.</small></span>
-            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
-          </button>
-          <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="hitman" data-kanal="hitman" data-icon="crosshair" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">
-            <span class="nr">(05)</span>
-            <span class="name">Hitman<span class="etikett">Bald</span><small>Aufträge in Minecraft: Ziel nennen, Preis vorschlagen.</small></span>
-            <span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
-          </button>
-        </div>
-
-        <div class="formkarte" id="formkarte">
-          <div id="detail" class="detail" role="tabpanel" aria-live="polite">
-            <div class="symbol" data-icon-slot="hammer"></div>
-            <div><h3>Bauprojekte</h3><p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p></div>
-          </div>
-
-          <form id="anfrage" class="formular" novalidate>
-            <p class="lbl" style="margin-bottom:20px">Deine Anfrage: <strong id="anfrage-titel">Bauprojekte</strong></p>
-            <p id="bald" class="bald" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</span></p>
-            <div class="zwei">
-              <div class="feld">
-                <label class="lbl" for="mcname">Minecraft-Name</label>
-                <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required placeholder="z. B. Steve">
-              </div>
-              <div class="feld">
-                <label class="lbl" for="dcname">Discord-Name</label>
-                <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required placeholder="damit wir dich erreichen">
-              </div>
+        <div class="stapel">
+          <article class="karte" style="--glut:rgba(165,148,255,.4)">
+            <div class="karte-l"><span class="karte-nr">01</span><h3>Bau&shy;projekte</h3></div>
+            <div class="karte-r">
+              <p>Base, Burg oder Haus: Wir planen mit dir, bauen mit dir oder bauen für dich, von der ersten Idee bis zum letzten Block.</p>
+              <ul class="liste"><li>Kanal<span>#bauprojekte</span></li><li>Bezahlung<span>Diamanten oder Cent</span></li></ul>
+              <div><button type="button" class="knopf" data-angebot="0" data-zeiger>Bauprojekt anfragen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
             </div>
-
-            <fieldset id="feld-aufgabe">
-              <div class="feld">
-                <label class="lbl" for="aufgabe">Was sollen wir für dich tun?</label>
-                <textarea class="eingabe" id="aufgabe" name="aufgabe" placeholder="Zum Beispiel: Ein Haus aus Holz, 20 mal 20 Blöcke groß." maxlength="1500" required></textarea>
-              </div>
-            </fieldset>
-
-            <fieldset id="feld-material" hidden disabled>
-              <div class="feld">
-                <span class="lbl" id="material-lbl">Was brauchst du?</span>
-                <div id="zeilen" role="group" aria-labelledby="material-lbl"></div>
-                <button type="button" class="textknopf" id="mehr"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Weitere Zeile</button>
-                <p class="hinweis" id="dia-hinweis" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span><strong>Diamanten kaufen:</strong> <span data-kurs-text></span></span></p>
-              </div>
-            </fieldset>
-
-            <fieldset id="feld-textur" hidden disabled>
-              <div class="zwei">
-                <div class="feld">
-                  <label class="lbl" for="t-item">Welches Item?</label>
-                  <input class="eingabe" id="t-item" maxlength="60" placeholder="z. B. Diamantspitzhacke" list="bloecke" autocomplete="off" required>
-                </div>
-                <div class="feld">
-                  <label class="lbl" for="t-name">Wie soll es heißen?</label>
-                  <input class="eingabe" id="t-name" maxlength="60" placeholder="z. B. Bohrhammer" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="t-idee">Was soll daraus werden?</label>
-                <textarea class="eingabe" id="t-idee" maxlength="1200" placeholder="Farben, Form, Vorbild ..." required></textarea>
-              </div>
-            </fieldset>
-
-            <fieldset id="feld-hitman" hidden disabled>
-              <div class="feld">
-                <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
-                <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
-              </div>
-            </fieldset>
-
-            <div class="feld" id="feld-preis">
-              <label class="lbl" for="preis">Preisvorstellung (optional)</label>
-              <div class="preis">
-                <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag" inputmode="numeric">
-                <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
-              </div>
-              <p class="hinweis"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span>Kurs: <span data-kurs-text></span>. Wir melden uns mit einem Angebot.</span></p>
+          </article>
+          <article class="karte" style="--glut:rgba(255,213,154,.32)">
+            <div class="karte-l"><span class="karte-nr">02</span><h3>Res&shy;sourcen</h3></div>
+            <div class="karte-r">
+              <p>Blöcke, Items und Baumaterial: Du sagst, was und wie viel du brauchst, wir sammeln es für dich.</p>
+              <ul class="liste"><li>Kanal<span>#material</span></li><li>Diamanten<span data-kurs-text></span></li></ul>
+              <div><button type="button" class="knopf" data-angebot="1" data-zeiger>Ressourcen bestellen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
             </div>
-
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
-            <div class="absenden">
-              <button type="submit" class="knopf">Anfrage erstellen</button>
-              <p id="fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
+          </article>
+          <article class="karte" style="--glut:rgba(255,110,110,.32)">
+            <div class="karte-l"><span class="karte-nr">03</span><h3>Red&shy;stone</h3></div>
+            <div class="karte-r">
+              <p>Automatische Türen, Farmen, geheime Gänge und Maschinen. Wir verdrahten, du drückst nur noch den Knopf.</p>
+              <ul class="liste"><li>Kanal<span>#redstone</span></li><li>Bezahlung<span>Diamanten oder Cent</span></li></ul>
+              <div><button type="button" class="knopf" data-angebot="2" data-zeiger>Redstone-Hilfe anfragen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
             </div>
-
-            <div id="ergebnis" class="ergebnis" hidden>
-              <span class="lbl" id="status" aria-live="polite"></span>
-              <pre id="text"></pre>
-              <div class="aktionen">
-                <button type="button" class="knopf hell klein" id="kopieren">Kopieren</button>
-                <p id="kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
-              </div>
+          </article>
+          <article class="karte" style="--glut:rgba(255,158,196,.36)">
+            <div class="karte-l"><span class="karte-nr">04</span><h3><span class="serif">Texturen</span></h3></div>
+            <div class="karte-r">
+              <p>Deine Idee als eigenes Item: Sag uns, welches Item, wie es heißen soll und wie es aussehen soll.</p>
+              <ul class="liste"><li>Kanal<span>#textur</span></li><li>Du brauchst<span>Name &amp; Idee</span></li></ul>
+              <div><button type="button" class="knopf" data-angebot="3" data-zeiger>Idee einreichen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
             </div>
-            <datalist id="bloecke">
-              <option value="Eichenholz"><option value="Birkenholz"><option value="Stein"><option value="Bruchstein"><option value="Ziegelsteine">
-              <option value="Glas"><option value="Sand"><option value="Erde"><option value="Eisenbarren"><option value="Goldbarren">
-              <option value="Diamant"><option value="Smaragd"><option value="Redstone"><option value="Lapislazuli"><option value="Obsidian"><option value="Kohle">
-            </datalist>
-          </form>
+          </article>
+          <article class="karte" style="--glut:rgba(140,200,255,.3)">
+            <div class="karte-l"><span class="karte-nr">05</span><h3>Hitman<span class="abzeichen" id="hitman-etikett">Bald</span></h3></div>
+            <div class="karte-r">
+              <p id="hitman-text">Aufträge in Minecraft: Ziel nennen, Preis vorschlagen. Bald kannst du hier bestellen.</p>
+              <ul class="liste"><li>Kanal<span>#hitman</span></li><li>Status<span id="hitman-status">Noch gesperrt</span></li></ul>
+              <div><button type="button" class="knopf glas" data-angebot="4" data-zeiger>Ansehen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="kurs" aria-label="Unser Kurs">
+    <section class="kurs" id="kurs" aria-label="Unser Kurs">
       <div class="huelle">
-        <p class="marker" style="display:flex;justify-content:center;margin-bottom:48px">Fester Kurs</p>
-        <h2 class="zahl display"><span class="zaehler" data-ziel="16">16</span><sup>◆</sup></h2>
-        <p><strong>Diamanten = 1 Cent.</strong> Ein fester, transparenter Kurs für alle Angebote. Du weißt immer vorher, woran du bist.</p>
+        <span class="klein">Fester Kurs</span>
+        <h2 class="zahl iri"><span class="zaehler" data-ziel="16">16</span></h2>
+        <p><b>Diamanten = 1 Cent.</b> Ein Kurs für alle Angebote. Du weißt immer vorher, woran du bist.</p>
       </div>
     </section>
 
-    <section id="ablauf" class="ablauf">
+    <section class="ablauf" id="ablauf" aria-label="Ablauf">
       <div class="huelle">
-        <div class="ablauf-kopf">
-          <p class="marker">Ablauf</p>
-          <h2 class="titel display"><span class="maske"><span>Drei Schritte.</span></span><span class="maske"><span>Fertig.</span></span></h2>
-        </div>
+        <div class="abschnitt-kopf"><h2>Drei Schritte.<br><span class="serif" style="font-weight:400">Fertig.</span></h2></div>
         <div class="schritte">
-          <div class="schritt"><span class="gross">01</span><h3>Angebot wählen</h3><p>Bauprojekt, Ressourcen, Redstone oder Textur: Klick auf die passende Zeile.</p></div>
-          <div class="schritt"><span class="gross">02</span><h3>Formular ausfüllen</h3><p>Minecraft-Name, Discord-Name und was du brauchst. Dazu optional dein Preis.</p></div>
-          <div class="schritt"><span class="gross">03</span><h3>Wir melden uns</h3><p>Deine Anfrage landet direkt bei uns auf Discord. Wir schicken dir ein Angebot.</p></div>
+          <div class="schritt"><i class="fuell"></i><span class="serif">01</span><h3>Angebot wählen</h3><p>Bauprojekt, Ressourcen, Redstone oder Textur: Klick auf das passende Angebot.</p></div>
+          <div class="schritt"><i class="fuell"></i><span class="serif">02</span><h3>Formular ausfüllen</h3><p>Minecraft-Name, Discord-Name und was du brauchst. Dazu optional dein Preis.</p></div>
+          <div class="schritt"><i class="fuell"></i><span class="serif">03</span><h3>Wir melden uns</h3><p>Deine Anfrage landet direkt bei uns auf Discord. Wir schicken dir ein Angebot.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="warum" class="warum">
+    <section class="mitmachen" id="mitmachen-bereich" aria-label="Mitmachen">
       <div class="huelle">
-        <p class="marker">Warum wir</p>
-        <h2 class="titel display"><span class="maske"><span>Faire Preise.</span></span><span class="maske"><span class="pink">Echte Hilfe.</span></span></h2>
-        <div class="werte">
-          <div class="wert"><div class="symbol" data-icon-slot="coins"></div><h3>Faire Preise</h3><p>Passende Angebote, die zu deinem Projekt passen.</p></div>
-          <div class="wert"><div class="symbol" data-icon-slot="handshake"></div><h3>Zuverlässig</h3><p>Freundlicher Kontakt, klar und ehrlich.</p></div>
-          <div class="wert"><div class="symbol" data-icon-slot="zap"></div><h3>Unkompliziert</h3><p>Handel mit Blöcken und Services so einfach wie möglich.</p></div>
+        <div class="abschnitt-kopf">
+          <h2>Werde Teil<br><span class="serif iri" style="font-weight:400">des Teams.</span></h2>
+          <p>Erst ein Praktikumstag zum Reinschnuppern, danach kannst du dich bewerben. Zum Schluss gibt es eine halbstündige Ausbildung.</p>
         </div>
-      </div>
-    </section>
-
-    <section id="mitmachen" class="mitmachen">
-      <div class="huelle">
-        <p class="marker">Mitmachen</p>
-        <h2 class="titel display"><span class="maske"><span>Werde Teil</span></span><span class="maske"><span>des Teams.</span></span></h2>
-        <p class="unter">Bewirb dich als Mitarbeiter oder schnupper erst mal mit einem Praktikum rein.</p>
-        <div class="wahl2" role="tablist" aria-label="Mitmachen">
-          <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" data-modus="bewerbung" data-icon="briefcase" data-titel="Bewerbung als Mitarbeiter" data-text="Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.">
-            <span class="kopfzeile"><span class="symbol" data-icon-slot="briefcase"></span><span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
+        <div class="duo">
+          <button type="button" class="licht-karte" data-mit="0" data-zeiger>
+            <span class="oben"><span class="klein">Fest dabei</span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
             <span><h3>Bewerbung</h3><p>Als Mitarbeiter fest ins Team. Voraussetzung: ein Praktikumstag vorher.</p></span>
           </button>
-          <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" tabindex="-1" data-modus="praktikum" data-icon="graduation" data-titel="Praktikum" data-text="Du willst erst mal reinschnuppern? Mach ein Praktikum bei uns und lerne Bauen, Redstone und den Shop kennen.">
-            <span class="kopfzeile"><span class="symbol" data-icon-slot="graduation"></span><span class="rund"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
-            <span><h3>Praktikum</h3><p>Erst mal reinschnuppern: Bauen, Redstone und den Shop kennenlernen.</p></span>
+          <button type="button" class="licht-karte" data-mit="1" data-zeiger>
+            <span class="oben"><span class="klein">Reinschnuppern</span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
+            <span><h3><span class="serif" style="font-weight:400">Praktikum</span></h3><p>Lerne Bauen, Redstone und den Shop kennen, ganz ohne Verpflichtung.</p></span>
           </button>
-        </div>
-
-        <div class="formkarte" id="formkarte2" hidden>
-          <div id="detail2" class="detail" role="tabpanel" aria-live="polite"></div>
-          <form id="mitmachen-form" class="formular" novalidate>
-            <p class="lbl" style="margin-bottom:20px"><span id="m-prefix">Deine</span> <strong id="m-titel">Bewerbung als Mitarbeiter</strong></p>
-            <div class="zwei">
-              <div class="feld">
-                <label class="lbl" for="m-mcname">Minecraft-Name</label>
-                <input class="eingabe" id="m-mcname" autocomplete="off" maxlength="32" required>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="m-dc">Discord-Name</label>
-                <input class="eingabe" id="m-dc" maxlength="40" autocomplete="off" required placeholder="damit wir dich erreichen">
-              </div>
-            </div>
-
-            <fieldset id="feld-bewerbung">
-              <p class="bald info"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Vor deiner Bewerbung musst du ein <strong>1-tägiges Praktikum</strong> bei uns gemacht haben. Danach folgt noch eine <strong>halbstündige Ausbildung</strong>.</span></p>
-              <div class="feld">
-                <label class="haken"><input type="checkbox" id="b-praktikum" required> Ich habe bereits ein 1-tägiges Praktikum bei euch gemacht.</label>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="b-warum">Warum möchtest du bei uns mitarbeiten?</label>
-                <textarea class="eingabe" id="b-warum" maxlength="1200" required></textarea>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="b-erfahrung">Deine Erfahrung in Minecraft (Bauen, Redstone, Handel ...)</label>
-                <textarea class="eingabe" id="b-erfahrung" maxlength="1200" required></textarea>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="b-zeit">Wie viel Zeit hast du pro Woche?</label>
-                <input class="eingabe" id="b-zeit" maxlength="60" placeholder="z. B. 5 Stunden" required>
-              </div>
-            </fieldset>
-
-            <fieldset id="feld-praktikum" hidden disabled>
-              <div class="zwei">
-                <div class="feld">
-                  <label class="lbl" for="p-dauer">Dauer des Praktikums</label>
-                  <select class="eingabe" id="p-dauer"><option>1 Tag</option><option>2 Tage</option><option>3 Tage</option></select>
-                </div>
-                <div class="feld">
-                  <label class="lbl" for="p-bereich">Wunschbereich</label>
-                  <select class="eingabe" id="p-bereich"><option>Bauen</option><option>Redstone</option><option>Ressourcen &amp; Shop</option><option>Egal, ich lasse mich überraschen</option></select>
-                </div>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="p-start">Gewünschter Start</label>
-                <input class="eingabe" id="p-start" maxlength="60" placeholder="z. B. nächste Woche oder 20.11." required>
-              </div>
-              <div class="feld">
-                <label class="lbl" for="p-warum">Warum möchtest du ein Praktikum machen?</label>
-                <textarea class="eingabe" id="p-warum" maxlength="1200" required></textarea>
-              </div>
-            </fieldset>
-
-            <input type="text" id="m-website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
-            <div class="absenden">
-              <button type="submit" class="knopf">Bewerbung abschicken</button>
-              <p id="m-fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
-            </div>
-
-            <div id="m-ergebnis" class="ergebnis" hidden>
-              <span class="lbl" id="m-status" aria-live="polite"></span>
-              <pre id="m-text"></pre>
-              <div class="aktionen">
-                <button type="button" class="knopf hell klein" id="m-kopieren">Kopieren</button>
-                <p id="m-kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </section>
 
     <section class="schluss" aria-label="Los geht's">
-      <div class="huelle oben">
-        <h2 class="titel display"><span class="maske"><span>Bereit für</span></span><span class="maske"><span class="orange">dein Projekt?</span></span></h2>
-        <div class="rechts">
-          <p>Schick uns deine erste Anfrage. Wir melden uns auf Discord mit einem fairen Angebot.</p>
-          <a class="knopf hell" href="#angebote">Jetzt anfragen <span class="pfeil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></a>
-        </div>
+      <div class="huelle schluss-reihe">
+        <h2>Lass uns<br><span class="serif iri">loslegen.</span></h2>
+        <button type="button" class="magnet" data-schublade="anfrage" data-zeiger><span>Anfragen <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button>
       </div>
-      <p class="fussname" aria-hidden="true">Topf oder Deckel</p>
+      <p class="wortmarke" aria-hidden="true">Topf oder Deckel</p>
     </section>
   </main>
 
   <footer class="fusszeile">
-    <span>© 2026 Topf Oder Deckel GmbH</span>
+    <span><a class="geheim" href="freikaufen.html" aria-label="Geheimer Bereich">©</a> 2026 Topf Oder Deckel GmbH</span>
+    <nav aria-label="Fußzeile"><a href="#angebote">Angebote</a><a href="#kurs">Kurs</a><a href="#mitmachen-bereich">Mitmachen</a></nav>
     <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <!-- ================= Schublade: Anfrage ================= -->
+  <div class="schleier" id="schleier"></div>
+  <aside class="schublade" id="schublade-anfrage" role="dialog" aria-modal="true" aria-labelledby="sch1-titel">
+    <div class="sch-kopf"><h2 id="sch1-titel">Anfrage</h2><button type="button" class="rund" data-zu-schublade aria-label="Schließen"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    <div class="sch-innen" id="angebote">
+      <div class="reiter" id="angebote-liste" role="tablist" aria-label="Angebote">
+        <button type="button" class="angebot" role="tab" aria-selected="true" aria-controls="formkarte" data-modus="aufgabe" data-kanal="bauprojekte" data-icon="hammer" data-titel="Bauprojekte" data-text="Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.">Bauprojekte</button>
+        <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="material" data-kanal="material" data-icon="box" data-titel="Blöcke, Items &amp; Ressourcen" data-text="Verschiedene Blöcke und Baumaterialien, nützliche Items und gesammelte Ressourcen. Wir sammeln sie für dich, damit du direkt weiterbauen kannst.">Ressourcen</button>
+        <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="aufgabe" data-kanal="redstone" data-icon="zap" data-titel="Redstone-Hilfe" data-text="Hilfe bei Redstone-Schaltungen, automatischen Türen, Farmen und Maschinen.">Redstone</button>
+        <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="textur" data-kanal="textur" data-icon="palette" data-titel="Textur-Ideen" data-text="Du hast eine Idee für eine eigene Textur? Sag uns, für welches Item, wie es heißen soll und was daraus werden soll.">Texturen</button>
+        <button type="button" class="angebot" role="tab" aria-selected="false" aria-controls="formkarte" tabindex="-1" data-modus="hitman" data-kanal="hitman" data-icon="crosshair" data-titel="Hitman (Coming soon)" data-text="Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Coming soon, bald kannst du hier bestellen!">Hitman <span class="etikett">Bald</span></button>
+      </div>
+
+      <div class="formkarte" id="formkarte">
+        <div id="detail" class="detail" role="tabpanel" aria-live="polite">
+          <div class="symbol" data-icon-slot="hammer"></div>
+          <div><h3>Bauprojekte</h3><p>Wir helfen dir bei deinem Bauprojekt, von der ersten Idee bis zum letzten Block, oder bauen deine Base, Burg oder dein Haus mit dir weiter aus.</p></div>
+        </div>
+
+        <form id="anfrage" class="formular" novalidate>
+          <p class="lbl" style="margin-bottom:20px">Deine Anfrage: <strong id="anfrage-titel" style="color:var(--tinte)">Bauprojekte</strong></p>
+          <p id="bald" class="bald" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Coming soon: Hitman-Aufträge sind bald verfügbar. Bestellen ist noch nicht möglich.</span></p>
+          <div class="zwei">
+            <div class="feld">
+              <label class="lbl" for="mcname">Minecraft-Name</label>
+              <input class="eingabe" id="mcname" name="mcname" autocomplete="off" maxlength="32" required placeholder="z. B. Steve">
+            </div>
+            <div class="feld">
+              <label class="lbl" for="dcname">Discord-Name</label>
+              <input class="eingabe" id="dcname" autocomplete="off" maxlength="40" required placeholder="damit wir dich erreichen">
+            </div>
+          </div>
+
+          <fieldset id="feld-aufgabe">
+            <div class="feld">
+              <label class="lbl" for="aufgabe">Was sollen wir für dich tun?</label>
+              <textarea class="eingabe" id="aufgabe" name="aufgabe" placeholder="Zum Beispiel: Ein Haus aus Holz, 20 mal 20 Blöcke groß." maxlength="1500" required></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-material" hidden disabled>
+            <div class="feld">
+              <span class="lbl" id="material-lbl">Was brauchst du?</span>
+              <div id="zeilen" role="group" aria-labelledby="material-lbl"></div>
+              <button type="button" class="textknopf" id="mehr"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Weitere Zeile</button>
+              <p class="hinweis" id="dia-hinweis" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span><strong>Diamanten kaufen:</strong> <span data-kurs-text></span></span></p>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-textur" hidden disabled>
+            <div class="zwei">
+              <div class="feld">
+                <label class="lbl" for="t-item">Welches Item?</label>
+                <input class="eingabe" id="t-item" maxlength="60" placeholder="z. B. Diamantspitzhacke" list="bloecke" autocomplete="off" required>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="t-name">Wie soll es heißen?</label>
+                <input class="eingabe" id="t-name" maxlength="60" placeholder="z. B. Bohrhammer" autocomplete="off" required>
+              </div>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="t-idee">Was soll daraus werden?</label>
+              <textarea class="eingabe" id="t-idee" maxlength="1200" placeholder="Farben, Form, Vorbild ..." required></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-hitman" hidden disabled>
+            <div class="feld">
+              <label class="lbl" for="ziel">Name des Ziels (Minecraft-Name)</label>
+              <input class="eingabe" id="ziel" name="ziel" maxlength="32" placeholder="Minecraft-Name des Spielers" autocomplete="off">
+            </div>
+          </fieldset>
+
+          <div class="feld" id="feld-preis">
+            <label class="lbl" for="preis">Preisvorstellung (optional)</label>
+            <div class="preis">
+              <input class="eingabe" id="preis" name="preis" type="number" min="0" max="100000" step="1" placeholder="Betrag" inputmode="numeric">
+              <select class="eingabe" id="einheit" name="einheit" aria-label="Einheit"><option value="Diamanten">Diamanten</option><option value="Cent">Cent</option></select>
+            </div>
+            <p class="hinweis"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M2 9h20"/></svg><span>Kurs: <span data-kurs-text></span>. Wir melden uns mit einem Angebot.</span></p>
+          </div>
+
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
+          <div class="absenden">
+            <button type="submit" class="knopf">Anfrage erstellen</button>
+            <p id="fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
+          </div>
+
+          <div id="ergebnis" class="ergebnis" hidden>
+            <span class="lbl" id="status" aria-live="polite"></span>
+            <pre id="text"></pre>
+            <div class="aktionen">
+              <button type="button" class="knopf klein" id="kopieren">Kopieren</button>
+              <p id="kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
+            </div>
+          </div>
+          <datalist id="bloecke">
+            <option value="Eichenholz"><option value="Birkenholz"><option value="Stein"><option value="Bruchstein"><option value="Ziegelsteine">
+            <option value="Glas"><option value="Sand"><option value="Erde"><option value="Eisenbarren"><option value="Goldbarren">
+            <option value="Diamant"><option value="Smaragd"><option value="Redstone"><option value="Lapislazuli"><option value="Obsidian"><option value="Kohle">
+          </datalist>
+        </form>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= Schublade: Mitmachen ================= -->
+  <aside class="schublade" id="schublade-mitmachen" role="dialog" aria-modal="true" aria-labelledby="sch2-titel">
+    <div class="sch-kopf"><h2 id="sch2-titel">Mitmachen</h2><button type="button" class="rund" data-zu-schublade aria-label="Schließen"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    <div class="sch-innen" id="mitmachen">
+      <div class="reiter" role="tablist" aria-label="Mitmachen">
+        <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" data-modus="bewerbung" data-icon="briefcase" data-titel="Bewerbung als Mitarbeiter" data-text="Du willst im Team der Topf Oder Deckel GmbH mitarbeiten? Erzähl uns von dir und bewirb dich als Mitarbeiter. Voraussetzung: ein 1-tägiges Praktikum vorher. Nach deiner Bewerbung folgt noch eine halbstündige Ausbildung.">Bewerbung</button>
+        <button type="button" class="karte2" role="tab" aria-selected="false" aria-controls="formkarte2" tabindex="-1" data-modus="praktikum" data-icon="graduation" data-titel="Praktikum" data-text="Du willst erst mal reinschnuppern? Mach ein Praktikum bei uns und lerne Bauen, Redstone und den Shop kennen.">Praktikum</button>
+      </div>
+
+      <div class="formkarte" id="formkarte2" hidden>
+        <div id="detail2" class="detail" role="tabpanel" aria-live="polite"></div>
+        <form id="mitmachen-form" class="formular" novalidate>
+          <p class="lbl" style="margin-bottom:20px"><span id="m-prefix">Deine</span> <strong id="m-titel" style="color:var(--tinte)">Bewerbung als Mitarbeiter</strong></p>
+          <div class="zwei">
+            <div class="feld">
+              <label class="lbl" for="m-mcname">Minecraft-Name</label>
+              <input class="eingabe" id="m-mcname" autocomplete="off" maxlength="32" required>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="m-dc">Discord-Name</label>
+              <input class="eingabe" id="m-dc" maxlength="40" autocomplete="off" required placeholder="damit wir dich erreichen">
+            </div>
+          </div>
+
+          <fieldset id="feld-bewerbung">
+            <p class="bald info"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Vor deiner Bewerbung musst du ein <strong>1-tägiges Praktikum</strong> bei uns gemacht haben. Danach folgt noch eine <strong>halbstündige Ausbildung</strong>.</span></p>
+            <div class="feld">
+              <label class="haken"><input type="checkbox" id="b-praktikum" required> Ich habe bereits ein 1-tägiges Praktikum bei euch gemacht.</label>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-warum">Warum möchtest du bei uns mitarbeiten?</label>
+              <textarea class="eingabe" id="b-warum" maxlength="1200" required></textarea>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-erfahrung">Deine Erfahrung in Minecraft (Bauen, Redstone, Handel ...)</label>
+              <textarea class="eingabe" id="b-erfahrung" maxlength="1200" required></textarea>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="b-zeit">Wie viel Zeit hast du pro Woche?</label>
+              <input class="eingabe" id="b-zeit" maxlength="60" placeholder="z. B. 5 Stunden" required>
+            </div>
+          </fieldset>
+
+          <fieldset id="feld-praktikum" hidden disabled>
+            <div class="zwei">
+              <div class="feld">
+                <label class="lbl" for="p-dauer">Dauer des Praktikums</label>
+                <select class="eingabe" id="p-dauer"><option>1 Tag</option><option>2 Tage</option><option>3 Tage</option></select>
+              </div>
+              <div class="feld">
+                <label class="lbl" for="p-bereich">Wunschbereich</label>
+                <select class="eingabe" id="p-bereich"><option>Bauen</option><option>Redstone</option><option>Ressourcen &amp; Shop</option><option>Egal, ich lasse mich überraschen</option></select>
+              </div>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="p-start">Gewünschter Start</label>
+              <input class="eingabe" id="p-start" maxlength="60" placeholder="z. B. nächste Woche oder 20.11." required>
+            </div>
+            <div class="feld">
+              <label class="lbl" for="p-warum">Warum möchtest du ein Praktikum machen?</label>
+              <textarea class="eingabe" id="p-warum" maxlength="1200" required></textarea>
+            </div>
+          </fieldset>
+
+          <input type="text" id="m-website" tabindex="-1" autocomplete="off" aria-hidden="true" class="falle">
+          <div class="absenden">
+            <button type="submit" class="knopf">Bewerbung abschicken</button>
+            <p id="m-fehlermeldung" class="hinweis meldetext" role="alert" hidden></p>
+          </div>
+
+          <div id="m-ergebnis" class="ergebnis" hidden>
+            <span class="lbl" id="m-status" aria-live="polite"></span>
+            <pre id="m-text"></pre>
+            <div class="aktionen">
+              <button type="button" class="knopf klein" id="m-kopieren">Kopieren</button>
+              <p id="m-kopiert" class="kopiert" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kopiert</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </aside>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script>
     // =====================================================================
     //  Einstellungen
@@ -789,7 +780,6 @@
           modus(b);
           form.classList.remove('einfahren'); void form.offsetWidth; form.classList.add('einfahren');
         }
-        hinScrollen(formkarte);
       });
     });
     pfeiltasten(tabs);
@@ -918,12 +908,7 @@
     var m = { modus: 'bewerbung', kanal: 'bewerbung', titel: 'Bewerbung als Mitarbeiter' };
 
     function wechsel2(b) {
-      if (b.getAttribute('aria-selected') === 'true') {
-        tabs2.forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
-        formkarte2.hidden = true;
-        if (window.ScrollTrigger) ScrollTrigger.refresh();
-        return;
-      }
+      if (b.getAttribute('aria-selected') === 'true') return;
       m.modus = b.dataset.modus; m.kanal = b.dataset.modus; m.titel = b.dataset.titel;
       var bew = m.modus === 'bewerbung';
       var fb = $('feld-bewerbung'), fp = $('feld-praktikum');
@@ -992,6 +977,7 @@
       hb.dataset.text = 'Hitman-Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
       var tag = hb.querySelector('.etikett'); if (tag) tag.textContent = 'Neu';
       if (hb.getAttribute('aria-selected') === 'true') { zeigeDetail(detail, hb); modus(hb); }
+      hitmanSzene();
     }
     if (HITMAN_FREI) hitmanFreischalten();
     try {
@@ -1000,14 +986,139 @@
         .catch(function () {});
     } catch (x) {}
 
-    // =====================================================================
-    //  Animationen: GSAP + ScrollTrigger + Lenis
-    //  Ohne Bibliotheken oder bei "weniger Bewegung" bleibt alles sichtbar und benutzbar.
-    // =====================================================================
-    window.addEventListener('DOMContentLoaded', function () {
-      if (!window.gsap || RUHIG) return;
-      gsap.registerPlugin(ScrollTrigger);
 
+
+    // =====================================================================
+    //  Schubladen mit den Formularen
+    // =====================================================================
+    var offeneSchublade = null, letzterFokus = null;
+    function oeffneSchublade(name) {
+      var s = $('schublade-' + name);
+      if (offeneSchublade && offeneSchublade !== s) offeneSchublade.classList.remove('offen');
+      letzterFokus = document.activeElement; offeneSchublade = s;
+      s.classList.add('offen'); $('schleier').classList.add('offen');
+      document.body.style.overflow = 'hidden';
+      if (window.__lenis) window.__lenis.stop();
+      setTimeout(function () { var f = s.querySelector('[aria-selected="true"]') || s.querySelector('button, input'); if (f) f.focus({ preventScroll: true }); }, 60);
+    }
+    function schliesseSchublade() {
+      if (!offeneSchublade) return;
+      offeneSchublade.classList.remove('offen'); $('schleier').classList.remove('offen');
+      offeneSchublade = null; document.body.style.overflow = '';
+      if (window.__lenis) window.__lenis.start();
+      if (letzterFokus && letzterFokus.focus) letzterFokus.focus({ preventScroll: true });
+    }
+    $('schleier').addEventListener('click', schliesseSchublade);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-zu-schublade]'), function (b) { b.addEventListener('click', schliesseSchublade); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') schliesseSchublade(); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-schublade]'), function (b) { b.addEventListener('click', function () { oeffneSchublade(b.getAttribute('data-schublade')); }); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-angebot]'), function (b) {
+      b.addEventListener('click', function () { var t = tabs[+b.getAttribute('data-angebot')]; oeffneSchublade('anfrage'); t.click(); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mit]'), function (b) {
+      b.addEventListener('click', function () { var t = tabs2[+b.getAttribute('data-mit')]; if (t.getAttribute('aria-selected') !== 'true') t.click(); oeffneSchublade('mitmachen'); });
+    });
+    function hitmanSzene() {
+      if (!HITMAN_FREI) return;
+      $('hitman-etikett').textContent = 'Neu';
+      $('hitman-text').textContent = 'Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
+      $('hitman-status').textContent = 'Freigeschaltet';
+    }
+    if (HITMAN_FREI) hitmanSzene();
+
+    // Lichtkegel unter der Maus auf den Mitmachen-Karten
+    Array.prototype.forEach.call(document.querySelectorAll('.licht-karte'), function (k) {
+      k.addEventListener('pointermove', function (e) { var r = k.getBoundingClientRect(); k.style.setProperty('--x', (e.clientX - r.left) + 'px'); k.style.setProperty('--y', (e.clientY - r.top) + 'px'); });
+    });
+
+    // Aussage: jedes Wort einzeln, damit es beim Scrollen aufleuchten kann
+    (function () {
+      var p = $('aussage');
+      Array.prototype.slice.call(p.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.nodeValue.split(/(\s+)/).forEach(function (t) { if (!t) return; if (/^\s+$/.test(t)) frag.appendChild(document.createTextNode(t)); else { var s = document.createElement('span'); s.className = 'w'; s.textContent = t; frag.appendChild(s); } });
+          p.replaceChild(frag, n);
+        } else if (n.nodeType === 1) { n.classList.add('w'); }
+      });
+    })();
+
+    // =====================================================================
+    //  3D: Chrom-Skulptur im Hero (three.js)
+    // =====================================================================
+    var STEIN = { scroll: 0, maus: { x: 0, y: 0 } };
+    (function chrom() {
+      var cv = $('leinwand'), gl = null;
+      try { gl = window.THREE && (cv.getContext('webgl') || cv.getContext('experimental-webgl')); } catch (x) {}
+      if (!gl) { cv.style.display = 'none'; return; }
+      var renderer = new THREE.WebGLRenderer({ canvas: cv, context: gl, antialias: true, alpha: true });
+      renderer.setClearColor(0x000000, 0);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+      var szene = new THREE.Scene();
+      var kamera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+      kamera.position.set(0, 0, 9);
+
+      // Spiegelbild-Umgebung: leuchtende Farbflächen rundherum, daraus eine Umgebungs-Textur
+      var umg = new THREE.Scene();
+      umg.background = new THREE.Color(0x050508);
+      function tafel(farbe, w, h, x, y, z, ry, rx) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: farbe, side: THREE.DoubleSide }));
+        m.position.set(x, y, z); m.rotation.y = ry || 0; m.rotation.x = rx || 0; umg.add(m);
+      }
+      tafel(0xb3a4ff, 14, 3, -6, 4, -6, 0.6);
+      tafel(0xff9ec4, 4, 12, 7, 0, -3, -1.1);
+      tafel(0xffd59a, 10, 2, 0, -5, 5, 0, -1.2);
+      tafel(0xffffff, 3, 8, -8, -1, 3, 1.3);
+      tafel(0x6f8cff, 8, 8, 0, 8, 0, 0, 1.57);
+      var pmrem = new THREE.PMREMGenerator(renderer);
+      var env = pmrem.fromScene(umg, 0.04).texture;
+
+      var geo = new THREE.TorusKnotGeometry(1.05, 0.36, 360, 64, 2, 3);
+      var stoff = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.14, envMap: env, envMapIntensity: 1.25 });
+      var form = new THREE.Mesh(geo, stoff);
+      szene.add(form);
+      var licht = new THREE.DirectionalLight(0xffffff, 0.6); licht.position.set(3, 4, 5); szene.add(licht);
+
+      var breite = 0, hoehe = 0, sichtbar = true;
+      function groesse() {
+        var b = cv.clientWidth, h = cv.clientHeight;
+        if (b === breite && h === hoehe) return;
+        breite = b; hoehe = h;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(b, h, false);
+        kamera.aspect = b / h; kamera.updateProjectionMatrix();
+        kamera.position.z = b / h < 0.8 ? 12.5 : 9;
+      }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { sichtbar = e[0].isIntersecting; }).observe($('hero'));
+      window.addEventListener('pointermove', function (e) { STEIN.maus.x = e.clientX / window.innerWidth - .5; STEIN.maus.y = e.clientY / window.innerHeight - .5; });
+      var t0 = performance.now(), mx = 0, my = 0, intro = RUHIG ? 1 : 0;
+      STEIN.intro = function (v) { intro = v; };
+      (function bild(jetzt) {
+        requestAnimationFrame(bild);
+        if (!sichtbar || document.hidden) return;
+        groesse();
+        var t = (jetzt - t0) / 1000, s = STEIN.scroll;
+        mx += (STEIN.maus.x - mx) * 0.05; my += (STEIN.maus.y - my) * 0.05;
+        var dreh = RUHIG ? 0 : t * 0.25;
+        form.rotation.set(0.35 + my * 0.6 + s * 1.2, dreh + mx * 0.9 + s * 2.6, s * 0.6);
+        var sk = (0.55 + 0.45 * intro) * (1 + s * 0.5);
+        form.scale.setScalar(sk);
+        form.position.y = -s * 0.8;
+        renderer.render(szene, kamera);
+      })(t0);
+    })();
+
+    // =====================================================================
+    //  Bewegung: Vorspann, weiches Scrollen, Scroll-Animationen
+    // =====================================================================
+    var gestartet = false;
+    function starteSeite() {
+      if (gestartet) return; gestartet = true;
+      document.body.classList.remove('laedt');
+      if (!window.gsap || RUHIG) { if (STEIN.intro) STEIN.intro(1); $('vorspann').hidden = true; return; }
+      gsap.registerPlugin(ScrollTrigger);
       if (window.Lenis) {
         var lenis = new Lenis({ duration: 1.15, smoothWheel: true });
         window.__lenis = lenis;
@@ -1015,95 +1126,86 @@
         gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
         gsap.ticker.lagSmoothing(0);
         Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
-          a.addEventListener('click', function (e) {
-            var ziel = document.querySelector(a.getAttribute('href'));
-            if (!ziel) return;
-            e.preventDefault(); lenis.scrollTo(ziel, { offset: a.getAttribute('href') === '#start' ? 0 : -20 });
-          });
+          a.addEventListener('click', function (e) { var z = document.querySelector(a.getAttribute('href')); if (!z) return; e.preventDefault(); lenis.scrollTo(z, { offset: a.getAttribute('href') === '#start' ? 0 : -70 }); });
         });
       }
 
-      var mm = gsap.matchMedia();
+      // Vorspann gleitet nach oben weg, Titel fährt hoch, Skulptur wächst
+      var o = { v: 0 };
+      gsap.timeline()
+        .to('#vorspann', { yPercent: -100, duration: 1.1, ease: 'expo.inOut' })
+        .to(o, { v: 1, duration: 1.6, ease: 'expo.out', onUpdate: function () { if (STEIN.intro) STEIN.intro(o.v); } }, .3)
+        .from('.hero-titel .zeile-m > span', { yPercent: 110, duration: 1.3, stagger: .1, ease: 'expo.out' }, .45)
+        .from('.hero-fuss .huelle > *, .nav .huelle > *', { y: 24, opacity: 0, duration: 1, stagger: .06, ease: 'expo.out' }, .6)
+        .set('#vorspann', { display: 'none' });
 
-      // ---- Start: Wörter fahren aus der Maske, Topf fällt rein ----
-      var intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
-      intro.from('.riesig .maske > span', { yPercent: 110, duration: 1.3, stagger: .12 })
-        .from('.topf-koerper', { y: 120, opacity: 0, duration: 1.2 }, .25)
-        .from('.deckel-g', { y: -160, rotation: -25, transformOrigin: '50% 100%', opacity: 0, duration: 1.3, ease: 'back.out(1.6)' }, .45)
-        .from('.oder', { scale: 0, rotation: -12, duration: .9, ease: 'back.out(2)' }, .9)
-        .from('.hero-fuss .huelle > *', { y: 30, opacity: 0, duration: .9, stagger: .1 }, .8)
-        .from('.nav', { y: -40, opacity: 0, duration: .9 }, .4);
-      setTimeout(function () { if (intro.progress() < 1) intro.progress(1); }, 4000); // Sicherheitsnetz
+      // Hero bleibt kurz stehen, die Skulptur dreht mit dem Scrollen
+      ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: '+=100%', pin: true, scrub: true, onUpdate: function (s) { STEIN.scroll = s.progress; } });
+      gsap.to('.hero-titel', { scale: .82, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=100%', scrub: true } });
+      gsap.to('.hero-fuss', { opacity: 0, y: 40, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=40%', scrub: true } });
 
-      // ---- Desktop: Hero bleibt stehen, Deckel hebt sich, Wörter fahren auseinander ----
-      mm.add('(min-width: 761px)', function () {
-        gsap.set('.dampf path', { strokeDasharray: 220, strokeDashoffset: 220 });
-        var tl = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120%', scrub: 1, pin: true } });
-        tl.to('.deckel-g', { y: -150, rotation: -14, transformOrigin: '50% 100%', ease: 'power2.out' }, 0)
-          .to('.dampf path', { opacity: .85, strokeDashoffset: 0, stagger: .08 }, .1)
-          .to('.riesig .topf', { xPercent: -12, ease: 'none' }, 0)
-          .to('.riesig .deckel', { xPercent: 12, ease: 'none' }, 0)
-          .to('.oder', { scale: 1.6, y: -30, ease: 'none' }, 0)
-          .to('.topf-svg', { scale: .92, y: 30, ease: 'none' }, 0)
-          .to('.hero-fuss', { opacity: 0, y: 40, ease: 'none' }, 0);
-      });
-      // ---- Handy: Topf wackelt leicht, Dampf steigt einmal auf ----
-      mm.add('(max-width: 760px)', function () {
-        gsap.set('.dampf path', { strokeDasharray: 220, strokeDashoffset: 220 });
-        gsap.to('.dampf path', { opacity: .85, strokeDashoffset: 0, duration: 1.6, stagger: .15, delay: 1.6, ease: 'power2.out' });
-        gsap.to('.deckel-g', { y: -40, rotation: -6, transformOrigin: '50% 100%', duration: 1.4, delay: 1.8, yoyo: true, repeat: -1, repeatDelay: 1.2, ease: 'sine.inOut' });
-      });
-
-      // ---- Laufband: läuft immer, beim Scrollen schneller und mit Richtung ----
-      var spur = document.querySelector('.band .spur');
-      var lauf = gsap.to(spur, { xPercent: -50, duration: 22, ease: 'none', repeat: -1 });
+      // Laufband: beschleunigt mit dem Scrollen
+      var lauf = gsap.to('.spur', { xPercent: -50, duration: 26, ease: 'none', repeat: -1 });
       ScrollTrigger.create({ trigger: '.band', start: 'top bottom', end: 'bottom top', onUpdate: function (s) {
-        var tempo = gsap.utils.clamp(-4, 4, s.getVelocity() / 300);
-        gsap.to(lauf, { timeScale: tempo === 0 ? 1 : (tempo > 0 ? 1 + tempo : -1 + tempo), duration: .3, overwrite: true, onComplete: function () { gsap.to(lauf, { timeScale: s.direction < 0 ? -1 : 1, duration: 1 }); } });
+        var v = gsap.utils.clamp(-5, 5, s.getVelocity() / 260);
+        gsap.to(lauf, { timeScale: v === 0 ? 1 : (v > 0 ? 1 + v : -1 + v), duration: .3, overwrite: true, onComplete: function () { gsap.to(lauf, { timeScale: s.direction < 0 ? -1 : 1, duration: 1 }); } });
       } });
 
-      // ---- Überschriften fahren aus der Maske ----
-      gsap.utils.toArray('.titel').forEach(function (t) {
-        gsap.from(t.querySelectorAll('.maske > span'), { yPercent: 110, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
-      });
-      gsap.utils.toArray('.marker, .aufsteigen, .unter').forEach(function (el) {
-        gsap.from(el, { y: 24, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+      // Aussage leuchtet Wort für Wort auf
+      gsap.to('#aussage .w', { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: '.aussage', start: 'top 75%', end: 'bottom 55%', scrub: true } });
+
+      // Überschriften steigen auf
+      gsap.utils.toArray('.abschnitt-kopf h2, .schluss h2').forEach(function (h) {
+        gsap.from(h, { y: 80, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
       });
 
-      // ---- Angebote: Zeilen schieben sich nacheinander herein ----
-      gsap.from('.angebot', { y: 60, opacity: 0, duration: 1, stagger: .08, ease: 'expo.out', scrollTrigger: { trigger: '.liste', start: 'top 85%', once: true } });
-      gsap.from('.formkarte#formkarte', { y: 80, opacity: 0, rotation: 1.5, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '#formkarte', start: 'top 92%', once: true } });
+      // Gestapelte Karten: die vordere schiebt die hintere zurück
+      var karten = gsap.utils.toArray('.karte');
+      karten.forEach(function (k, i) {
+        if (i === karten.length - 1) return;
+        gsap.to(k, { scale: .92, filter: 'brightness(.4)', ease: 'none', scrollTrigger: { trigger: karten[i + 1], start: 'top 70%', end: 'top 12%', scrub: true } });
+      });
 
-      // ---- Kurs: riesige Zahl zählt hoch und wächst ----
+      // Kurs zählt hoch
       Array.prototype.forEach.call(document.querySelectorAll('.zaehler'), function (z) {
         var ziel = Number(z.getAttribute('data-ziel')) || 0, obj = { n: 0 };
         z.textContent = '0';
-        gsap.to(obj, { n: ziel, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: z, start: 'top 85%', once: true }, onUpdate: function () { z.textContent = Math.round(obj.n); } });
+        gsap.to(obj, { n: ziel, duration: 2, ease: 'power3.out', scrollTrigger: { trigger: z, start: 'top 85%', once: true }, onUpdate: function () { z.textContent = Math.round(obj.n); } });
       });
-      gsap.fromTo('.kurs .zahl', { scale: .7 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.kurs', start: 'top bottom', end: 'center center', scrub: true } });
 
-      // ---- Ablauf ----
-      gsap.from('.schritt', { y: 70, opacity: 0, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '.schritte', start: 'top 85%', once: true } });
+      // Ablauf: Linien füllen sich
+      gsap.to('.schritt .fuell', { scaleX: 1, stagger: .25, ease: 'none', scrollTrigger: { trigger: '.schritte', start: 'top 80%', end: 'top 40%', scrub: true } });
+      gsap.from('.schritt', { y: 50, opacity: 0, stagger: .12, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.schritte', start: 'top 85%', once: true } });
+      gsap.from('.licht-karte', { y: 70, opacity: 0, stagger: .12, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.duo', start: 'top 88%', once: true } });
 
-      // ---- Warum: Fläche schiebt sich hoch, Karten fächern auf ----
-      gsap.from('.warum', { borderRadius: '120px 120px 0 0', ease: 'none', scrollTrigger: { trigger: '.warum', start: 'top bottom', end: 'top 30%', scrub: true } });
-      gsap.from('.wert', { y: 90, rotation: function (i) { return [-6, 3, 7][i]; }, opacity: 0, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.werte', start: 'top 85%', once: true } });
+      // Wortmarke fährt hoch
+      gsap.from('.wortmarke', { yPercent: 60, ease: 'none', scrollTrigger: { trigger: '.schluss', start: 'top bottom', end: 'bottom bottom', scrub: true } });
 
-      // ---- Mitmachen ----
-      gsap.from('.karte2', { y: 70, opacity: 0, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '.wahl2', start: 'top 88%', once: true } });
-
-      // ---- Schluss: riesiger Name fährt von unten hoch ----
-      gsap.from('.fussname', { yPercent: 60, ease: 'none', scrollTrigger: { trigger: '.schluss', start: 'top bottom', end: 'bottom bottom', scrub: true } });
-
-      // ---- Magnetische Knöpfe (nur mit Maus) ----
+      // Magnetischer Knopf und eigener Mauszeiger (nur mit Maus)
       if (window.matchMedia('(pointer: fine)').matches) {
-        Array.prototype.forEach.call(document.querySelectorAll('.knopf:not(.klein)'), function (b) {
-          var xTo = gsap.quickTo(b, 'x', { duration: .6, ease: 'elastic.out(1, .4)' }), yTo = gsap.quickTo(b, 'y', { duration: .6, ease: 'elastic.out(1, .4)' });
-          b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .3); yTo((e.clientY - r.top - r.height / 2) * .4); });
-          b.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
-        });
+        var mg = document.querySelector('.magnet');
+        var xTo = gsap.quickTo(mg, 'x', { duration: .7, ease: 'elastic.out(1, .4)' }), yTo = gsap.quickTo(mg, 'y', { duration: .7, ease: 'elastic.out(1, .4)' });
+        mg.addEventListener('pointermove', function (e) { var r = mg.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .35); yTo((e.clientY - r.top - r.height / 2) * .35); });
+        mg.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
+        var punkt = document.querySelector('.zeiger'), ring = document.querySelector('.zeiger-ring');
+        var px = gsap.quickTo(punkt, 'left', { duration: .1 }), py = gsap.quickTo(punkt, 'top', { duration: .1 });
+        var rx = gsap.quickTo(ring, 'left', { duration: .45, ease: 'power3.out' }), ry = gsap.quickTo(ring, 'top', { duration: .45, ease: 'power3.out' });
+        window.addEventListener('pointermove', function (e) { px(e.clientX); py(e.clientY); rx(e.clientX); ry(e.clientY); });
+        document.addEventListener('pointerover', function (e) { ring.classList.toggle('gross', !!(e.target.closest && e.target.closest('a, button, [data-zeiger]'))); });
       }
-    });
+    }
+
+    // Vorspann: Zähler 0 → 100
+    (function vorspann() {
+      if (RUHIG || !window.gsap) { $('vorspann').hidden = true; starteSeite(); return; }
+      var z = { n: 0 };
+      gsap.to(z, { n: 100, duration: 2.2, ease: 'power2.inOut', onUpdate: function () {
+        $('vzahl').textContent = Math.round(z.n);
+        $('vbalken').style.transform = 'scaleX(' + (z.n / 100) + ')';
+      }, onComplete: starteSeite });
+      // Sicherheitsnetz: falls Animationen pausieren (z. B. Tab im Hintergrund), startet die Seite trotzdem
+      setTimeout(function () { if (!gestartet) { $('vorspann').hidden = true; starteSeite(); } }, 4500);
+    })();
   </script>
 </body>
 </html>
