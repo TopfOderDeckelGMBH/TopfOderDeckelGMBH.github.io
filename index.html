@@ -408,7 +408,7 @@
   </main>
 
   <footer class="fusszeile">
-    <span><a class="geheim" href="freikaufen.html" aria-label="Geheimer Bereich">©</a> 2026 Topf Oder Deckel GmbH</span>
+    <span>© 2026 Topf Oder Deckel GmbH</span>
     <nav aria-label="Fußzeile"><a href="#angebote">Angebote</a><a href="#kurs">Kurs</a><a href="#mitmachen-bereich">Mitmachen</a></nav>
     <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
   </footer>
@@ -1101,10 +1101,25 @@
             return new THREE.MeshStandardMaterial({ map: feld(p[0], p[1], p[2]), roughness: 0.75, metalness: 0, transparent: !!durchsichtig, alphaTest: durchsichtig ? 0.5 : 0, side: durchsichtig ? THREE.DoubleSide : THREE.FrontSide, envMap: env, envMapIntensity: 0.35 });
           });
         }
-        form.add(new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.1, 2.1), seiten(0)));
+        kopf = new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.1, 2.1), seiten(0));
+        form.add(kopf);
         form.add(new THREE.Mesh(new THREE.BoxGeometry(2.3, 2.3, 2.3), seiten(32, true)));
       };
       bild0.src = 'skin.png';
+
+      // Geheimer Eingang: ein Klick auf das linke Auge (von vorne gesehen) führt zum Freikaufen
+      var kopf = null, strahl = new THREE.Raycaster(), zeigerPos = new THREE.Vector2(), druck = null;
+      cv.addEventListener('pointerdown', function (e) { druck = { x: e.clientX, y: e.clientY }; });
+      cv.addEventListener('pointerup', function (e) {
+        if (!kopf || !druck || Math.abs(e.clientX - druck.x) + Math.abs(e.clientY - druck.y) > 8) return;
+        var r = cv.getBoundingClientRect();
+        zeigerPos.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+        strahl.setFromCamera(zeigerPos, kamera);
+        var hit = strahl.intersectObject(kopf)[0];
+        if (!hit || !hit.face || hit.face.materialIndex !== 4 || !hit.uv) return;   // 4 = Gesicht vorne
+        var u = hit.uv.x * 8, v = (1 - hit.uv.y) * 8;                              // Pixel im 8×8-Gesicht
+        if (u >= 0.8 && u < 2.2 && v >= 3.8 && v < 5.2) location.href = 'freikaufen.html';
+      });
 
       var breite = 0, hoehe = 0, sichtbar = true;
       function groesse() {
