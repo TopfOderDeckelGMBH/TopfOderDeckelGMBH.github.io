@@ -84,7 +84,7 @@
     .hero { position: relative; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; }
     .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
     .hero-glut { position: absolute; left: 50%; top: 52%; width: 70vmin; height: 70vmin; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(165, 148, 255, .28), rgba(255, 158, 196, .12) 40%, transparent 70%); filter: blur(30px); z-index: 0; }
-    .hero-titel { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; pointer-events: none; mix-blend-mode: difference; }
+    .hero-titel { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; pointer-events: none; text-shadow: 0 10px 40px rgba(7, 7, 10, .55); }
     .hero-titel h1 { margin: 0; font-weight: 600; font-size: clamp(64px, 13.5vw, 230px); line-height: .84; letter-spacing: -.055em; }
     .hero-titel h1 .serif { font-weight: 400; letter-spacing: -.03em; }
     .hero-fuss { position: absolute; left: 0; right: 0; bottom: clamp(20px, 4vh, 40px); z-index: 3; }
@@ -183,9 +183,9 @@
 
     /* Formular-Schublade (aus dem gemeinsamen Baustein) */
         /* ---------- Schublade mit Formularen ---------- */
-    .schleier { position: fixed; inset: 0; z-index: 40; background: rgba(2, 3, 8, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
+    .schleier { position: fixed; inset: 0; z-index: 70; background: rgba(2, 3, 8, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
     .schleier.offen { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
-    .schublade { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(620px, 100vw); background: #0b0d15; box-shadow: -30px 0 70px -30px rgba(0, 0, 0, .8), inset 1px 0 0 var(--linie); overflow-y: auto; overscroll-behavior: contain; transform: translateX(104%); visibility: hidden; transition: transform .6s var(--ease), visibility 0s linear .6s; }
+    .schublade { position: fixed; top: 0; right: 0; bottom: 0; z-index: 80; width: min(620px, 100vw); background: #0b0d15; box-shadow: -30px 0 70px -30px rgba(0, 0, 0, .8), inset 1px 0 0 var(--linie); overflow-y: auto; overscroll-behavior: contain; transform: translateX(104%); visibility: hidden; transition: transform .6s var(--ease), visibility 0s linear .6s; }
     .schublade.offen { transform: none; visibility: visible; transition: transform .6s var(--ease); }
     .sch-kopf { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 28px; background: rgba(11, 13, 21, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linie); }
     .sch-kopf h2 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: 2rem; line-height: 1; }
@@ -270,7 +270,7 @@
         <a href="#angebote">Angebote</a>
         <a href="#kurs">Kurs</a>
         <a href="#ablauf">Ablauf</a>
-        <a href="#mitmachen">Mitmachen</a>
+        <a href="#mitmachen-bereich">Mitmachen</a>
       </nav>
       <button type="button" class="knopf klein" data-schublade="anfrage" data-zeiger>Anfragen</button>
     </div>
@@ -1075,11 +1075,36 @@
       var pmrem = new THREE.PMREMGenerator(renderer);
       var env = pmrem.fromScene(umg, 0.04).texture;
 
-      var geo = new THREE.TorusKnotGeometry(1.05, 0.36, 360, 64, 2, 3);
-      var stoff = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.14, envMap: env, envMapIntensity: 1.25 });
-      var form = new THREE.Mesh(geo, stoff);
+      // OderDeckels Minecraft-Kopf: Würfel mit den 8×8-Feldern aus dem Skin (skin.png, 64×64)
+      // plus zweite, etwas größere Schicht (Haare/Hut) mit durchsichtigen Stellen.
+      var form = new THREE.Group();
+      form.rotation.order = 'YXZ';
       szene.add(form);
-      var licht = new THREE.DirectionalLight(0xffffff, 0.6); licht.position.set(3, 4, 5); szene.add(licht);
+      szene.add(new THREE.HemisphereLight(0xe8e4ff, 0x2a1830, 0.9));
+      var licht = new THREE.DirectionalLight(0xffffff, 0.9); licht.position.set(3, 4, 5); szene.add(licht);
+      var rand = new THREE.DirectionalLight(0xa594ff, 0.7); rand.position.set(-5, -2, -4); szene.add(rand);
+      var bild0 = new Image();
+      bild0.onload = function () {
+        function feld(x, y, spiegeln) {
+          var c = document.createElement('canvas'); c.width = 8; c.height = 8;
+          var k = c.getContext('2d'); k.imageSmoothingEnabled = false;
+          if (spiegeln) { k.translate(0, 8); k.scale(1, -1); }
+          k.drawImage(bild0, x, y, 8, 8, 0, 0, 8, 8);
+          var tx = new THREE.CanvasTexture(c);
+          tx.magFilter = THREE.NearestFilter; tx.minFilter = THREE.NearestFilter; tx.generateMipmaps = false;
+          tx.encoding = THREE.sRGBEncoding;
+          return tx;
+        }
+        // Reihenfolge bei three.js: rechts(+x), links(-x), oben, unten, vorne(+z), hinten(-z)
+        function seiten(ox, durchsichtig) {
+          return [[ox + 16, 8], [ox + 0, 8], [ox + 8, 0], [ox + 16, 0, true], [ox + 8, 8], [ox + 24, 8]].map(function (p) {
+            return new THREE.MeshStandardMaterial({ map: feld(p[0], p[1], p[2]), roughness: 0.75, metalness: 0, transparent: !!durchsichtig, alphaTest: durchsichtig ? 0.5 : 0, side: durchsichtig ? THREE.DoubleSide : THREE.FrontSide, envMap: env, envMapIntensity: 0.35 });
+          });
+        }
+        form.add(new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.1, 2.1), seiten(0)));
+        form.add(new THREE.Mesh(new THREE.BoxGeometry(2.3, 2.3, 2.3), seiten(32, true)));
+      };
+      bild0.src = 'skin.png';
 
       var breite = 0, hoehe = 0, sichtbar = true;
       function groesse() {
@@ -1101,11 +1126,11 @@
         groesse();
         var t = (jetzt - t0) / 1000, s = STEIN.scroll;
         mx += (STEIN.maus.x - mx) * 0.05; my += (STEIN.maus.y - my) * 0.05;
-        var dreh = RUHIG ? 0 : t * 0.25;
-        form.rotation.set(0.35 + my * 0.6 + s * 1.2, dreh + mx * 0.9 + s * 2.6, s * 0.6);
-        var sk = (0.55 + 0.45 * intro) * (1 + s * 0.5);
+        var dreh = RUHIG ? 0 : Math.sin(t * 0.6) * 0.55;
+        form.rotation.set(0.12 + my * 0.5 + Math.sin(t * 0.8) * 0.05, dreh + mx * 0.9 + s * Math.PI * 2, 0);
+        var sk = (0.55 + 0.45 * intro) * (1 + s * 0.3) * (kamera.aspect < 0.8 ? 0.78 : 0.68);
         form.scale.setScalar(sk);
-        form.position.y = -s * 0.8;
+        form.position.y = (kamera.aspect < 0.8 ? 1.45 : 1.22) + Math.sin(t * 1.1) * 0.06 - s * 1.2;
         renderer.render(szene, kamera);
       })(t0);
     })();
