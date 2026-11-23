@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0b0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Spurlos">
+<meta name="description" content="Echtes Fangen mit Freunden: Gruppen, Live-Karte, Pings, Schutzzonen und Fähigkeiten.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Spurlos – Echtes Fangen mit Freunden</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Spiel-Tab: Overlay über der Karte -->
+<div id="hud" class="screen">
+  <div id="hudTop"></div>
+  <div id="hudBottom"></div>
+</div>
+
+<!-- Andere Tabs: ganze Seiten -->
+<section id="pg-camera" class="page screen hidden"></section>
+<section id="pg-chat" class="page screen hidden"></section>
+<section id="pg-groups" class="page screen hidden"></section>
+<section id="pg-profile" class="page screen hidden"></section>
+
+<nav id="tabbar">
+  <button data-a="tab" data-tab="game"><i>📍</i><span>Spiel</span></button>
+  <button data-a="tab" data-tab="camera"><i>📷</i><span>Kamera</span></button>
+  <button data-a="tab" data-tab="chat"><i>💬</i><span>Nachrichten</span><b class="dot hidden" id="unreadDot"></b></button>
+  <button data-a="tab" data-tab="groups"><i>👥</i><span>Gruppen</span></button>
+  <button data-a="tab" data-tab="profile"><i id="tabAvatar">👤</i><span>Profil</span></button>
+</nav>
+
+<div id="modalRoot"></div>
+<div id="toast" class="hidden"></div>
+<input type="file" id="fileInput" accept="image/*" capture="environment" class="hidden">
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="js/util.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/net.js"></script>
+<script src="js/map.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
