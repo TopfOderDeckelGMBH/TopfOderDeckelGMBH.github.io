@@ -12,7 +12,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ---------- Themen (wie in einer Minecraft-Mod umschaltbar) ---------- */
     :root, [data-thema="nacht"] { --bg: #0b0b10; --bg2: #14141c; --bg3: #1c1c26; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .1); --akzent: #a594ff; --akzent-ink: #0b0b10; --glut: rgba(165, 148, 255, .28); }
@@ -226,73 +226,6 @@
     .ergebnis pre { background: var(--bg); }
     .bald { background: color-mix(in srgb, var(--akzent) 12%, transparent); color: var(--ink); }
 
-    /* =====================================================================
-       Feinschliff: hochwertiger, aber genauso einfach aufgebaut
-       ===================================================================== */
-    :root, [data-thema="nacht"] { --akzent-2: #ff9ec4; }
-    [data-thema="hell"]    { --akzent-2: #ff6fa8; }
-    [data-thema="pink"]    { --akzent-2: #8b5cf6; }
-    [data-thema="creeper"] { --akzent-2: #c5f36b; }
-    [data-thema="ozean"]   { --akzent-2: #818cf8; }
-    :root { --verlauf: linear-gradient(120deg, var(--akzent), var(--akzent-2)); --serif-akzent: "Instrument Serif", Georgia, serif; }
-
-    /* Schwebende Glas-Leiste */
-    .nav { top: 12px; background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; margin-top: 12px; }
-    .nav .huelle { max-width: 1120px; height: 60px; padding: 0 8px 0 18px; border-radius: calc(var(--r) + 6px); background: color-mix(in srgb, var(--bg2) 72%, transparent); border: 1px solid var(--line); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 12px 40px -20px rgba(0, 0, 0, .5); }
-    @media (max-width: 1180px) { .nav .huelle { margin: 0 clamp(12px, 3vw, 32px); } }
-
-    /* Knöpfe mit Verlauf und weichem Leuchten */
-    .knopf { background: var(--verlauf); box-shadow: 0 12px 30px -12px color-mix(in srgb, var(--akzent) 75%, transparent), inset 0 1px 0 rgba(255, 255, 255, .25); transition: filter .2s, transform .25s var(--ease), box-shadow .25s; }
-    .knopf:hover { transform: translateY(-1px); box-shadow: 0 16px 36px -12px color-mix(in srgb, var(--akzent) 85%, transparent), inset 0 1px 0 rgba(255, 255, 255, .3); }
-    .knopf.zweit { background: var(--bg2); border: 1px solid var(--line); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent); }
-    .knopf:disabled { background: var(--bg3); box-shadow: none; }
-
-    /* Etiketten als kleine Pillen */
-    .hero .klein, .kopfzeile-a .klein { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: var(--r-knopf); border: 1px solid var(--line); background: color-mix(in srgb, var(--bg2) 80%, transparent); font-size: .72rem; }
-    .hero .klein::before, .kopfzeile-a .klein::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--akzent); box-shadow: 0 0 10px var(--akzent); }
-
-    /* Hero: Licht-Raster und farbige Schimmer */
-    .hero { position: relative; overflow: hidden; margin-top: -84px; padding-top: calc(clamp(40px, 8vh, 90px) + 84px); }
-    .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 65% at 60% 35%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 65% at 60% 35%, #000 20%, transparent 75%); opacity: .7; }
-    .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 45% 50% at 78% 40%, var(--glut), transparent 70%), radial-gradient(ellipse 40% 35% at 8% 0%, color-mix(in srgb, var(--akzent-2) 18%, transparent), transparent 70%); }
-    .hero .huelle { position: relative; z-index: 1; }
-    .hero h1 { font-size: clamp(50px, 7.4vw, 104px); }
-    .hero h1 em, .kopfzeile-a h2 em { font-style: normal; background: var(--verlauf); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; padding-right: .06em; }
-    [data-schrift="modern"] .hero h1 em, [data-schrift="modern"] .kopfzeile-a h2 em { font-family: var(--serif-akzent); font-style: italic; font-weight: 400; letter-spacing: -.02em; }
-    .kurz-fakten { gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: color-mix(in srgb, var(--bg2) 70%, transparent); width: fit-content; max-width: 100%; }
-    .kurz-fakten div { padding: 14px 22px; border-right: 1px solid var(--line); }
-    .kurz-fakten div:last-child { border-right: 0; }
-    @media (max-width: 480px) { .kurz-fakten div { padding: 12px 14px; } .kurz-fakten b { font-size: 1.2rem; } }
-
-    /* Kopf auf einem leuchtenden Sockel mit Ringen */
-    .kopf-buehne::after { content: ""; position: absolute; left: 50%; top: 50%; width: 92%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid var(--line); box-shadow: 0 0 0 36px color-mix(in srgb, var(--line) 40%, transparent), inset 0 0 80px color-mix(in srgb, var(--akzent) 12%, transparent); pointer-events: none; }
-    [data-ecken="eckig"] .kopf-buehne::after { border-radius: 0; width: 80%; }
-    .kopf-buehne canvas { z-index: 1; }
-
-    /* Edlere Karten mit Lichtkante und Nummer */
-    .raster { counter-reset: karte; }
-    .angebotskarte { counter-increment: karte; background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent), 0 24px 50px -34px rgba(0, 0, 0, .7); overflow: hidden; }
-    .angebotskarte::before { content: ""; position: absolute; left: 15%; right: 15%; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--akzent), transparent); opacity: 0; transition: opacity .3s; }
-    .angebotskarte:hover::before { opacity: 1; }
-    .angebotskarte::after { content: "0" counter(karte); position: absolute; top: 24px; right: 24px; font-size: .8rem; font-weight: 600; color: var(--mute); font-variant-numeric: tabular-nums; }
-    .angebotskarte .symbol { background: var(--verlauf); color: var(--akzent-ink); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--akzent) 70%, transparent); }
-    .angebotskarte.dezent .symbol { background: var(--bg3); color: var(--mute); box-shadow: none; }
-
-    /* Kurs-Karte mit Verlauf, Schritte mit farbigen Nummern */
-    .kurskarte { position: relative; overflow: hidden; background: var(--verlauf); box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--akzent) 70%, transparent); }
-    .kurskarte::after { content: "◆"; position: absolute; right: -4%; bottom: -18%; font-size: 260px; line-height: 1; opacity: .12; }
-    .schritte { background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); }
-    .schritt .nr { background: var(--verlauf); color: var(--akzent-ink); }
-    .mitkarte { background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent); }
-    .mitkarte .kreis { background: var(--verlauf); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--akzent) 70%, transparent); transition: transform .3s var(--ease); }
-    .mitkarte:hover .kreis { transform: rotate(-45deg); }
-
-    /* Großer Schriftzug am Ende */
-    .fussmarke { margin: 40px 0 0; text-align: center; font-weight: 700; font-size: 11.5vw; line-height: .85; letter-spacing: -.06em; white-space: nowrap; background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 22%, transparent), transparent 85%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; user-select: none; }
-    @media (min-width: 1180px) { .fussmarke { font-size: 136px; } }
-    [data-schrift="pixel"] .fussmarke { letter-spacing: 0; font-size: 8.6vw; }
-    .design { top: 86px; }
-
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
       html { scroll-behavior: auto; }
@@ -358,7 +291,7 @@
     <section class="abschnitt" id="angebote" aria-label="Angebote">
       <div class="huelle">
         <div class="kopfzeile-a auf">
-          <div><span class="klein">Angebote</span><h2>Was wir für dich <em>tun</em></h2></div>
+          <div><span class="klein">Angebote</span><h2>Was wir für dich tun</h2></div>
           <p>Klick auf ein Angebot, füll das kurze Formular aus, und deine Anfrage landet direkt bei uns auf Discord.</p>
         </div>
         <div class="raster">
@@ -373,7 +306,7 @@
 
     <section class="abschnitt" id="kurs" aria-label="Kurs und Ablauf">
       <div class="huelle">
-        <div class="kopfzeile-a auf"><div><span class="klein">Kurs &amp; Ablauf</span><h2>Einfach und <em>fair</em></h2></div></div>
+        <div class="kopfzeile-a auf"><div><span class="klein">Kurs &amp; Ablauf</span><h2>Einfach und fair</h2></div></div>
         <div class="zwei-spalten">
           <div class="kurskarte auf"><span class="klein">Fester Kurs</span><span class="zahl"><span class="zaehler">16</span></span><p>Diamanten = 1 Cent. Ein Kurs für alle Angebote, du weißt immer vorher, woran du bist.</p></div>
           <div class="schritte auf">
@@ -387,7 +320,7 @@
 
     <section class="abschnitt" id="mitmachen-bereich" aria-label="Mitmachen">
       <div class="huelle">
-        <div class="kopfzeile-a auf"><div><span class="klein">Mitmachen</span><h2>Werde Teil des <em>Teams</em></h2></div><p>Erst ein Praktikumstag zum Reinschnuppern, danach kannst du dich bewerben.</p></div>
+        <div class="kopfzeile-a auf"><div><span class="klein">Mitmachen</span><h2>Werde Teil des Teams</h2></div><p>Erst ein Praktikumstag zum Reinschnuppern, danach kannst du dich bewerben.</p></div>
         <div class="duo">
           <button type="button" class="mitkarte auf" data-mit="0"><span><h3>Bewerbung</h3><p>Als Mitarbeiter fest ins Team. Voraussetzung: ein Praktikumstag vorher.</p></span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
           <button type="button" class="mitkarte auf" data-mit="1"><span><h3>Praktikum</h3><p>Lerne Bauen, Redstone und den Shop kennen, ganz ohne Verpflichtung.</p></span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
@@ -396,7 +329,6 @@
     </section>
 
     <div class="huelle">
-      <p class="fussmarke" aria-hidden="true">Topf Oder Deckel</p>
       <footer class="fusszeile">
         <span>© 2026 Topf Oder Deckel GmbH</span>
         <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
