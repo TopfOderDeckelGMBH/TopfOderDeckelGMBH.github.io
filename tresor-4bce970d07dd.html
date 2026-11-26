@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-thema="nacht" data-ecken="rund" data-schrift="modern">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#07070a">
+  <script>
+    // Design aus dem Design-Menü der Startseite übernehmen
+    try { var d = JSON.parse(localStorage.getItem('design') || '{}'); ['thema', 'ecken', 'schrift'].forEach(function (k) { if (d[k]) document.documentElement.setAttribute('data-' + k, d[k]); }); } catch (x) {}
+  </script>
   <title>Geheimer Bereich – Topf Oder Deckel GmbH</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     :root {
       --creme: #f4eee4; --tinte: #121212; --tinte-2: #3a3a3a; --grau: #6f6a62;
@@ -266,91 +270,118 @@
     .adminzeile button { font: inherit; font-weight: 600; color: #09090b; background: #fff; border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
 
     /* =====================================================================
-       Premium-Look passend zur Startseite: dunkel, Inter Tight + Instrument Serif, Farbverlauf
+       Design wie auf der Startseite – folgt dem Design-Menü (Thema, Ecken, Schrift)
        ===================================================================== */
-    :root {
-      --creme: #07070a; --tinte: #f2efe9; --tinte-2: #c7c3cc; --grau: #8d8a93; --weiss: #0e0e13;
-      --orange: #ff9ec4; --gelb: #ffd59a; --lila: #a594ff;
-      --nacht: #07070a; --nacht-2: #0e0e13; --nacht-rand: rgba(242, 239, 233, .12);
-      --linie: rgba(242, 239, 233, .12);
-      --iri: linear-gradient(100deg, #a594ff 0%, #ff9ec4 48%, #ffd59a 100%);
-      --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
-      --schrift: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif;
-      --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    :root, [data-thema="nacht"] { --bg: #0b0b10; --bg2: #14141c; --bg3: #1c1c26; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .1); --akzent: #a594ff; --akzent-ink: #0b0b10; --glut: rgba(165, 148, 255, .28); }
+    [data-thema="hell"]   { --bg: #f6f4ef; --bg2: #ffffff; --bg3: #eeebe4; --ink: #15151a; --mute: #6b6873; --line: rgba(21, 21, 26, .1); --akzent: #6c4cff; --akzent-ink: #ffffff; --glut: rgba(108, 76, 255, .18); }
+    [data-thema="pink"]   { --bg: #1a0b1c; --bg2: #26112a; --bg3: #321638; --ink: #fff0fb; --mute: #c9a3c6; --line: rgba(255, 240, 251, .12); --akzent: #ec05ec; --akzent-ink: #ffffff; --glut: rgba(236, 5, 236, .3); }
+    [data-thema="creeper"]{ --bg: #0d1a10; --bg2: #142619; --bg3: #1b3222; --ink: #eaf7ec; --mute: #8fb59a; --line: rgba(234, 247, 236, .1); --akzent: #4caf50; --akzent-ink: #06140a; --glut: rgba(76, 175, 80, .28); }
+    [data-thema="ozean"]  { --bg: #071624; --bg2: #0d2236; --bg3: #132c45; --ink: #e8f3ff; --mute: #8fb0cc; --line: rgba(232, 243, 255, .1); --akzent: #38bdf8; --akzent-ink: #04121f; --glut: rgba(56, 189, 248, .26); }
+    [data-ecken="rund"]   { --r: 22px; --r-klein: 12px; --r-knopf: 999px; }
+    [data-ecken="eckig"]  { --r: 0px; --r-klein: 0px; --r-knopf: 0px; }
+    [data-schrift="modern"] { --font: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif; --titel-abstand: -.045em; }
+    [data-schrift="pixel"]  { --font: "Pixelify Sans", "Inter Tight", system-ui, sans-serif; --titel-abstand: 0; }
+    /* Der Film bleibt immer dunkel, egal welches Thema gewählt ist */
+    .kino { --bg: #0b0b10; --bg2: #14141c; --bg3: #1c1c26; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .1); }
+    /* Alte Farbnamen der Seite auf die Themen-Farben umlenken */
+    :root, .kino {
+      --creme: var(--bg); --tinte: var(--ink); --tinte-2: var(--mute); --grau: var(--mute); --weiss: var(--bg2);
+      --orange: var(--akzent); --gelb: var(--akzent); --lila: var(--akzent);
+      --nacht: var(--bg); --nacht-2: var(--bg2); --nacht-rand: var(--line); --linie: var(--line);
+      --iri: linear-gradient(120deg, var(--akzent), color-mix(in srgb, var(--akzent) 55%, var(--ink)));
+      --display: var(--font); --schrift: var(--font); --serif: var(--font);
     }
-    html, body { color-scheme: dark; }
-    ::selection { background: #a594ff; color: #07070a; }
-    :focus-visible { outline: 1.5px solid #a594ff; }
+    html, body { background: var(--bg); color: var(--ink); }
+    [data-thema="hell"] { color-scheme: light; } :root:not([data-thema="hell"]) { color-scheme: dark; }
+    ::selection { background: var(--akzent); color: var(--akzent-ink); }
+    :focus-visible { outline: 2px solid var(--akzent); }
+    .korn { display: none; }
     .display, .regel h3, .titel-ebene .zeile > span, .ptext b, .stempel, .stempel-kino, .gesperrt strong, .preis .wert, .oder-kreis, .schl-knopf span, .kacheln span, .marke {
-      text-transform: none; font-weight: 600; letter-spacing: -.04em;
+      text-transform: none; font-weight: 700; letter-spacing: var(--titel-abstand);
     }
-    .riesig { font-size: clamp(3.6rem, 9.5vw, 9rem); line-height: .9; }
-    .titel { line-height: .9; }
-    .riesig .orange, .titel .orange, .titel-ebene .zeile.orange > span {
-      font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.02em;
-      background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-    }
-    .nav { background: rgba(7, 7, 10, .7); border-bottom: 1px solid var(--linie); }
-    .marke { font-size: 1.05rem; display: inline-flex; align-items: center; gap: 10px; }
-    .marke::before { content: ""; width: 20px; height: 20px; border-radius: 50%; background: var(--iri); box-shadow: 0 0 16px rgba(165, 148, 255, .5); }
-    .knopf { color: #07070a; background: #f2efe9; }
-    .knopf::before { background: var(--iri); }
-    .knopf .pfeil { background: #07070a; color: #f2efe9; }
-    .knopf.orange { background: var(--iri); color: #07070a; }
-    .knopf.orange::before { background: #f2efe9; }
-    .knopf.orange:hover { color: #07070a; }
-    .knopf:disabled { background: #2a2a33; color: #6f6d76; }
-    .marker::before, .regel .nr { background: none; }
-    .marker::before { background: var(--iri); }
-    .marker, .regel .nr, .start-aktion small, .lbl2 { color: var(--grau); }
-    .regeln { border-top: 1px solid var(--linie); }
-    .regel { border-right: 1px solid var(--linie); }
-    .regel .nr { font-family: var(--serif); font-style: italic; font-size: 1.1rem; text-transform: none; letter-spacing: 0; }
-    @media (max-width: 640px) { .regel, .regel + .regel { border-bottom: 1px solid var(--linie); } }
-    .deko::before { content: ""; position: absolute; inset: 6%; border-radius: 50%; background: radial-gradient(circle, rgba(165, 148, 255, .3), rgba(255, 158, 196, .12) 45%, transparent 70%); filter: blur(30px); z-index: -1; }
-    .deko svg { filter: drop-shadow(0 40px 60px rgba(0, 0, 0, .6)); }
-    .stempel { background: rgba(7, 7, 10, .75); color: #ff9ec4; border-color: #ff9ec4; border-width: 2px; font-size: clamp(1rem, 1.8vw, 1.4rem); }
-    .gesperrt { background: rgba(255, 110, 110, .1); color: #ffc2c2; border: 1px solid rgba(255, 110, 110, .3); }
+    .riesig { font-size: clamp(3.2rem, 8vw, 7.5rem); line-height: .95; }
+    .titel { font-size: clamp(3rem, 7.5vw, 6.5rem); line-height: .95; }
+    .riesig .orange, .titel .orange, .titel-ebene .zeile.orange > span { color: var(--akzent); }
 
-    /* Film */
-    .kino { color: #f2efe9; }
-    .titel-ebene .zeile > span { color: #f2efe9; font-size: clamp(2.6rem, 8vw, 6.8rem); }
-    .stage { border: 1px solid var(--linie); }
-    .blase { background: #f2efe9; color: #07070a; }
-    .kino .eingabe { color: #f2efe9; background: #07070a; border: 1px solid var(--linie); }
-    .kino .eingabe:focus { border-color: #a594ff; }
-    .dossier { background: #0e0e13; border-color: var(--linie); }
-    .dossier-kopf .schlossnr { background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .ptext b { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.01em; font-size: 2rem; background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
-    .ptext.tippt::after { color: #a594ff; }
-    .tipptext { background: rgba(255, 213, 154, .08); border-color: rgba(255, 213, 154, .25); color: #ffe6c4; }
-    .decoder { background: #07070a; border-color: var(--linie); }
-    .kacheln span { background: #15151c; color: var(--grau); }
-    .kacheln.klar span { background: var(--iri); color: #07070a; }
-    .dreh button { background: #15151c; border-color: var(--linie); color: #f2efe9; }
-    .dreh button:hover { background: #f2efe9; color: #07070a; }
-    .schl-knopf { background: var(--iri); color: #07070a; }
-    .schl-knopf:hover { box-shadow: 0 16px 34px -12px rgba(255, 158, 196, .6); }
-    .karte { background: var(--iri); color: #07070a; }
+    .nav { background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line); }
+    .nav .huelle { height: 68px; }
+    .marke { font-size: 1.05rem; display: inline-flex; align-items: center; gap: 10px; }
+    .marke svg { width: 26px; height: 26px; }
+
+    .knopf { color: var(--akzent-ink); background: var(--akzent); border-radius: var(--r-knopf); padding: 14px 22px; }
+    .knopf::before { display: none; }
+    .knopf:hover { filter: brightness(1.1); }
+    .knopf .pfeil { background: var(--akzent-ink); color: var(--akzent); }
+    .knopf.orange { background: var(--akzent); color: var(--akzent-ink); }
+    .knopf.orange:hover { color: var(--akzent-ink); }
+    .knopf.klein { padding: 9px 15px; }
+    .knopf:disabled { background: var(--bg3); color: var(--mute); }
+    [data-ecken="eckig"] .knopf { box-shadow: inset -3px -3px 0 rgba(0, 0, 0, .25), inset 3px 3px 0 rgba(255, 255, 255, .18); }
+    .nav .knopf { color: var(--ink); background: var(--bg3); }
+
+    .marker { color: var(--mute); }
+    .marker::before { background: var(--akzent); }
+    .regeln { border-top: 1px solid var(--line); }
+    .regel { border-right: 1px solid var(--line); }
+    .regel .nr { color: var(--akzent); }
+    .regel p, .lead, .start-aktion small, .lbl2 { color: var(--mute); }
+    @media (max-width: 640px) { .regel, .regel + .regel { border-bottom: 1px solid var(--line); } }
+    .deko::before { content: ""; position: absolute; inset: 6%; border-radius: 50%; background: radial-gradient(circle, var(--glut), transparent 70%); filter: blur(28px); z-index: -1; }
+    .deko svg { filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .45)); }
+    .stempel { background: var(--bg2); color: var(--akzent); border: 2px solid var(--akzent); border-radius: var(--r-klein); font-size: clamp(1rem, 1.8vw, 1.4rem); }
+    .gesperrt { background: rgba(255, 110, 110, .1); color: var(--ink); border: 1px solid rgba(255, 110, 110, .35); border-radius: var(--r); }
+
+    /* Film (immer dunkel) */
+    .kino { background: var(--bg); color: var(--ink); font-family: var(--font); }
+    .titel-ebene .zeile > span { color: var(--ink); font-size: clamp(2.6rem, 8vw, 6.8rem); }
+    .titel-ebene .zeile.orange > span { color: var(--akzent); }
+    .stage { border: 1px solid var(--line); border-radius: var(--r); }
+    .blase { background: var(--ink); color: var(--bg); }
+    .kino .eingabe { color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-klein); }
+    .kino .eingabe:focus { border-color: var(--akzent); }
+    .dossier { background: var(--bg2); border-color: var(--line); border-radius: var(--r); }
+    .dossier-kopf .schlossnr { color: var(--akzent); }
+    .ptext b { font-size: 1.8rem; color: var(--akzent); }
+    .ptext.tippt::after { color: var(--akzent); }
+    .tipptext { background: color-mix(in srgb, var(--akzent) 10%, transparent); border-color: color-mix(in srgb, var(--akzent) 30%, transparent); color: var(--ink); border-radius: var(--r-klein); }
+    .textknopf { border-radius: var(--r-knopf); border-color: var(--line); }
+    .decoder { background: var(--bg); border-color: var(--line); border-radius: var(--r-klein); }
+    .kacheln span { background: var(--bg3); color: var(--mute); border-radius: var(--r-klein); }
+    .kacheln.klar span { background: var(--akzent); color: var(--akzent-ink); }
+    .dreh button { background: var(--bg3); border-color: var(--line); color: var(--ink); border-radius: var(--r-knopf); }
+    .dreh button:hover { background: var(--akzent); color: var(--akzent-ink); }
+    .schl-knopf { background: var(--akzent); color: var(--akzent-ink); border-radius: var(--r); }
+    .schl-knopf svg path, .schl-knopf svg circle { stroke: currentColor; }
+    .karte { background: var(--akzent); color: var(--akzent-ink); border-radius: var(--r-klein); }
 
     /* Tresor */
-    .kartenchip { background: rgba(242, 239, 233, .06); border: 1px solid var(--linie); color: #f2efe9; }
-    .preis { border: 1px solid var(--linie); }
-    .preis.euro { background: var(--iri); color: #07070a; border: 0; }
-    .preis.dia { background: #0e0e13; color: #f2efe9; }
-    .preis .wert { font-size: clamp(2.4rem, 5.4vw, 4.4rem); }
-    .oder-kreis { background: #15151c; color: #f2efe9; border: 1px solid var(--linie); font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.3rem; }
-    .formkarte { background: #0e0e13; border: 1px solid var(--linie); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8); }
-    .eingabe { border-bottom-color: rgba(242, 239, 233, .22); }
-    .eingabe::placeholder { color: #5f5d66; }
-    .eingabe:focus { border-color: #a594ff; }
+    .kartenchip { background: var(--bg2); border: 1px solid var(--line); color: var(--ink); border-radius: var(--r-knopf); }
+    .preis { border: 1px solid var(--line); border-radius: var(--r); }
+    .preis.euro { background: var(--akzent); color: var(--akzent-ink); border: 0; }
+    .preis.dia { background: var(--bg2); color: var(--ink); }
+    .preis .wert { font-size: clamp(2.3rem, 5vw, 4rem); }
+    .oder-kreis { background: var(--bg3); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r-knopf); font-size: 1rem; }
+    .kurs-hinweis, .hinweis, .leise { color: var(--mute); }
+    .formkarte { background: var(--bg2); border: 1px solid var(--line); border-radius: var(--r); box-shadow: none; }
+    .formkarte .lbl { color: var(--mute); font-family: var(--font); }
+    .eingabe { color: var(--ink); border-bottom-color: color-mix(in srgb, var(--ink) 22%, transparent); }
+    .eingabe::placeholder { color: var(--mute); }
+    .eingabe:focus { border-color: var(--akzent); }
     select.eingabe { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f2efe9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
-    select.eingabe option { background: #0e0e13; color: #f2efe9; }
-    .ergebnis { background: #15151c; }
-    .ergebnis pre { background: #07070a; }
-    .kopiert { color: #7ee2a8; }
-    .zurueck:hover { color: #ff9ec4; }
+    [data-thema="hell"] select.eingabe { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2315151a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
+    select.eingabe option { background: var(--bg2); color: var(--ink); }
+    .ergebnis { background: var(--bg3); border-radius: var(--r-klein); }
+    .ergebnis .lbl { color: var(--ink); }
+    .ergebnis pre { background: var(--bg); color: var(--mute); border-radius: var(--r-klein); }
+    .kopiert { color: #4ade80; }
+    .zurueck:hover { color: var(--akzent); }
+    .werkzeugknopf { color: var(--mute); }
     .adminpw .rfehler { color: #ff8a8a; }
+
+    /* Bezahl-Infos (nur sichtbar, wenn oben im Skript etwas eingetragen ist) */
+    .bezahlinfo { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0 0; padding: 14px 16px; border-radius: var(--r-klein); background: color-mix(in srgb, var(--akzent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--akzent) 30%, transparent); color: var(--ink); font-size: .95rem; white-space: pre-line; }
+    .bezahlinfo strong { display: block; margin-bottom: 2px; }
+    .bezahlinfo a { color: var(--akzent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -362,7 +393,7 @@
 
   <header class="nav">
     <div class="huelle">
-      <a class="marke" href="index.html">Topf/Deckel</a>
+      <a class="marke" href="index.html"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><rect width="8" height="8" fill="#ec05ec"/><rect x="1" y="4" width="1" height="1" fill="#000"/><rect x="6" y="4" width="1" height="1" fill="#000"/><rect x="2" y="6" width="4" height="1" fill="#000"/></svg>Topf Oder Deckel</a>
       <a class="knopf klein" href="index.html">Zur Startseite</a>
     </div>
   </header>
@@ -449,6 +480,11 @@
               <option value="178 Diamantblöcke">178 Diamantblöcke</option>
             </select>
             <p class="hinweis">Wir melden uns bei dir und sprechen die Bezahlung ab. Bezahlt wird hier auf der Seite nichts.</p>
+            <div class="feld" id="feld-bezahlart" hidden style="margin:16px 0 0">
+              <label class="lbl" for="bezahlart">Wie möchtest du in Euro bezahlen?</label>
+              <select class="eingabe" id="bezahlart"><option value="Bar">Bar</option><option value="Karte / Überweisung">Karte / Überweisung</option></select>
+            </div>
+            <div class="bezahlinfo" id="bezahlinfo" hidden></div>
           </div>
 
           <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
@@ -669,6 +705,12 @@
     var DISCORD_STANDARD = '';
     // Deine Discord-ID, damit dich der Bot mit @ markiert (Anleitung siehe index.html).
     var DISCORD_USER_ID = '';
+
+    // Bezahlen in Euro: Auswahl "Bar oder Karte/Überweisung" + Hinweis (bei "1 Euro").
+    // Die Auswahl landet in der Discord-Nachricht, die Bezahldaten schickt ihr privat. (Gleiche Texte auch in index.html.)
+    var BEZAHL_TITEL = 'Bezahlen in Euro';
+    var BEZAHL_TEXT = 'Wähl oben, ob du bar oder per Karte/Überweisung bezahlen möchtest. Die Bezahldaten bekommst du dann privat von uns auf Discord.';
+    var BEZAHL_LINK = '';   // z. B. ein PayPal.me-Link, muss mit https:// beginnen
 
     var $ = function (id) { return document.getElementById(id); };
     var v = function (id) { return $(id).value.trim(); };
@@ -1123,10 +1165,25 @@
     var form = $('formular');
     var ergebnis = $('ergebnis');
 
+    function zeigeBezahlinfo() {
+      var box = $('bezahlinfo'), euro = $('zahlung').value === '1 Euro';
+      $('feld-bezahlart').hidden = !euro;
+      if (!euro || !(BEZAHL_TEXT || BEZAHL_LINK)) { box.hidden = true; return; }
+      box.innerHTML = '';
+      var inhalt = document.createElement('div');
+      var titel = document.createElement('strong'); titel.textContent = BEZAHL_TITEL; inhalt.appendChild(titel);
+      if (BEZAHL_TEXT) inhalt.appendChild(document.createTextNode(BEZAHL_TEXT));
+      if (/^https:\/\//.test(BEZAHL_LINK)) { inhalt.appendChild(document.createTextNode(BEZAHL_TEXT ? '\n' : '')); var a = document.createElement('a'); a.href = BEZAHL_LINK; a.target = '_blank'; a.rel = 'noopener'; a.textContent = BEZAHL_LINK.replace(/^https:\/\//, ''); inhalt.appendChild(a); }
+      box.appendChild(inhalt); box.hidden = false;
+    }
+    $('zahlung').addEventListener('change', zeigeBezahlinfo);
+    zeigeBezahlinfo();
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!KARTE_NR) return;
-      var t = 'Freikauf bei der Topf Oder Deckel GmbH\n\nFreikauf-Karte: Nr. ' + KARTE_NR + '\nMinecraft-Name: ' + v('mcname') + '\nDiscord: ' + v('dcname') + '\nBezahlung: ' + v('zahlung');
+      var bezahlart = v('zahlung') === '1 Euro' ? v('bezahlart') : '';
+      var t = 'Freikauf bei der Topf Oder Deckel GmbH\n\nFreikauf-Karte: Nr. ' + KARTE_NR + '\nMinecraft-Name: ' + v('mcname') + '\nDiscord: ' + v('dcname') + '\nBezahlung: ' + v('zahlung') + (bezahlart ? '\nZahlungsart: ' + bezahlart : '');
       $('text').textContent = t;
       var status = $('status');
       var senden = form.querySelector('button[type=submit]');
@@ -1154,7 +1211,7 @@
               { name: '💬 Discord', value: '`' + v('dcname') + '`', inline: true },
               { name: '🎫 Freikauf-Karte', value: 'Nr. ' + KARTE_NR, inline: true },
               { name: '💰 Bezahlung', value: v('zahlung'), inline: true }
-            ],
+            ].concat(bezahlart ? [{ name: '💳 Zahlungsart', value: bezahlart + ' (Bezahldaten bitte privat schicken)', inline: false }] : []),
             footer: { text: '⏳ Offen · Reagiere mit ✅, wenn erledigt' },
             timestamp: new Date().toISOString()
           }]
