@@ -1,191 +1,163 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-thema="nacht" data-ecken="rund" data-schrift="modern">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Topf Oder Deckel GmbH – Bauen, Sammeln, Verdrahten</title>
   <meta name="description" content="Bauprojekte, Ressourcen, Redstone-Hilfe und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.">
-  <meta name="theme-color" content="#07070a">
+  <meta name="theme-color" content="#0b0b10">
+  <script>
+    // Gespeichertes Design sofort setzen (bevor die Seite gezeichnet wird, damit nichts flackert)
+    try { var d = JSON.parse(localStorage.getItem('design') || '{}'); ['thema', 'ecken', 'schrift'].forEach(function (k) { if (d[k]) document.documentElement.setAttribute('data-' + k, d[k]); }); } catch (x) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ---------- Themen (wie in einer Minecraft-Mod umschaltbar) ---------- */
+    :root, [data-thema="nacht"] { --bg: #0b0b10; --bg2: #14141c; --bg3: #1c1c26; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .1); --akzent: #a594ff; --akzent-ink: #0b0b10; --glut: rgba(165, 148, 255, .28); }
+    [data-thema="hell"]   { --bg: #f6f4ef; --bg2: #ffffff; --bg3: #eeebe4; --ink: #15151a; --mute: #6b6873; --line: rgba(21, 21, 26, .1); --akzent: #6c4cff; --akzent-ink: #ffffff; --glut: rgba(108, 76, 255, .18); }
+    [data-thema="pink"]   { --bg: #1a0b1c; --bg2: #26112a; --bg3: #321638; --ink: #fff0fb; --mute: #c9a3c6; --line: rgba(255, 240, 251, .12); --akzent: #ec05ec; --akzent-ink: #ffffff; --glut: rgba(236, 5, 236, .3); }
+    [data-thema="creeper"]{ --bg: #0d1a10; --bg2: #142619; --bg3: #1b3222; --ink: #eaf7ec; --mute: #8fb59a; --line: rgba(234, 247, 236, .1); --akzent: #4caf50; --akzent-ink: #06140a; --glut: rgba(76, 175, 80, .28); }
+    [data-thema="ozean"]  { --bg: #071624; --bg2: #0d2236; --bg3: #132c45; --ink: #e8f3ff; --mute: #8fb0cc; --line: rgba(232, 243, 255, .1); --akzent: #38bdf8; --akzent-ink: #04121f; --glut: rgba(56, 189, 248, .26); }
+    [data-ecken="rund"]   { --r: 22px; --r-klein: 12px; --r-knopf: 999px; }
+    [data-ecken="eckig"]  { --r: 0px; --r-klein: 0px; --r-knopf: 0px; }
+    [data-schrift="modern"] { --font: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif; --titel-abstand: -.045em; }
+    [data-schrift="pixel"]  { --font: "Pixelify Sans", "Inter Tight", system-ui, sans-serif; --titel-abstand: 0; }
     :root {
-      --bg: #07070a; --bg-2: #0e0e13; --bg-3: #15151c; --ink: #f2efe9; --mute: #8d8a93; --line: rgba(242, 239, 233, .12);
-      --a1: #a594ff; --a2: #ff9ec4; --a3: #ffd59a;
-      --iri: linear-gradient(100deg, var(--a1) 0%, var(--a2) 48%, var(--a3) 100%);
-      --sans: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif;
-      --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
       --ease: cubic-bezier(.2, .8, .2, 1);
       /* Namen, die die Formular-Schublade benutzt */
-      --nacht: var(--bg); --tinte: var(--ink); --linie: var(--line); --panel-2: var(--bg-3); --akzent: var(--a1); --warm: var(--a3); --rot: #ff7a7a; --gruen: #7ee2a8;
+      --nacht: var(--bg); --tinte: var(--ink); --linie: var(--line); --panel-2: var(--bg3); --warm: var(--akzent); --rot: #ff6b6b; --gruen: #4ade80; --serif: var(--font);
     }
+
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html { background: var(--bg); color-scheme: dark; }
-    html.lenis, html.lenis body { height: auto; }
-    .lenis.lenis-smooth { scroll-behavior: auto !important; }
-    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    body.laedt { overflow: hidden; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 1.0625rem; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: background-color .3s, color .3s; }
+    [data-thema="hell"] { color-scheme: light; } :root:not([data-thema="hell"]) { color-scheme: dark; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-    :focus-visible { outline: 1.5px solid var(--a1); outline-offset: 3px; border-radius: 6px; }
+    :focus-visible { outline: 2px solid var(--akzent); outline-offset: 3px; }
     svg { display: block; }
-    .ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-    .huelle { max-width: 1320px; margin: 0 auto; padding: 0 clamp(18px, 3vw, 40px); }
-    .serif { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.01em; }
-    .iri { background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
-    .klein { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--mute); }
-    .zeile-m { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
-    .zeile-m > span { display: inline-block; will-change: transform; }
+    .ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .huelle { max-width: 1180px; margin: 0 auto; padding: 0 clamp(18px, 3vw, 32px); }
+    .klein { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--mute); }
+    section { scroll-margin-top: 84px; }
 
-    .korn { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .06;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-    /* ---------- Eigener Mauszeiger ---------- */
-    .zeiger, .zeiger-ring { position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none; border-radius: 50%; transform: translate(-50%, -50%); }
-    .zeiger { width: 6px; height: 6px; background: var(--ink); }
-    .zeiger-ring { width: 38px; height: 38px; border: 1px solid rgba(242, 239, 233, .45); transition: width .35s var(--ease), height .35s var(--ease), background-color .35s, border-color .35s; }
-    .zeiger-ring.gross { width: 74px; height: 74px; background: rgba(242, 239, 233, .08); border-color: transparent; }
-    @media (hover: none), (pointer: coarse) { .zeiger, .zeiger-ring { display: none; } }
-
-    /* ---------- Vorspann ---------- */
-    .vorspann { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: flex; flex-direction: column; justify-content: space-between; padding: clamp(18px, 3vw, 40px); }
-    .v-oben { display: flex; justify-content: space-between; }
-    .v-zahl { font-family: var(--serif); font-style: italic; font-size: clamp(110px, 22vw, 340px); line-height: .8; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-    .v-unten { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
-    .v-balken { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--iri); transform-origin: left; transform: scaleX(0); }
-
-    /* ---------- Navigation ---------- */
-    .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 60; pointer-events: none; }
-    .nav .huelle { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .nav a, .nav button { pointer-events: auto; }
-    .marke { font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; display: inline-flex; align-items: center; gap: 10px; }
-    .marke i { width: 22px; height: 22px; border-radius: 50%; background: var(--iri); box-shadow: 0 0 18px rgba(165, 148, 255, .5); }
-    .pille-nav { display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(21, 21, 28, .55); border: 1px solid var(--line); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
-    .pille-nav a { padding: 9px 16px; border-radius: 999px; font-size: .9rem; font-weight: 500; color: var(--mute); transition: color .25s, background-color .25s; }
-    .pille-nav a:hover { color: var(--ink); background: rgba(242, 239, 233, .07); }
-    @media (max-width: 860px) { .pille-nav { display: none; } }
-
-    .knopf { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; white-space: nowrap; font-weight: 600; font-size: .95rem; color: var(--bg); background: var(--ink); border-radius: 999px; padding: 15px 24px; transition: transform .25s var(--ease); }
-    .knopf::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--iri); transform: translateY(101%); transition: transform .5s var(--ease); }
-    .knopf:hover::before { transform: none; }
+    /* Knöpfe */
+    .knopf { display: inline-flex; align-items: center; justify-content: center; gap: 10px; white-space: nowrap; font-weight: 600; font-size: .95rem; color: var(--akzent-ink); background: var(--akzent); border-radius: var(--r-knopf); padding: 14px 22px; transition: filter .2s, transform .2s; }
+    .knopf:hover { filter: brightness(1.1); }
     .knopf:active { transform: scale(.97); }
-    .knopf .pf { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); color: var(--ink); display: grid; place-items: center; margin: -6px -12px -6px 0; transition: transform .4s var(--ease); }
-    .knopf .pf svg { width: 14px; height: 14px; }
-    .knopf:hover .pf { transform: rotate(-45deg); }
-    .knopf.klein { padding: 10px 16px; font-size: .85rem; text-transform: none; letter-spacing: 0; color: var(--bg); }
-    .knopf:disabled { background: #2a2a33; color: #6f6d76; cursor: not-allowed; }
-    .knopf:disabled::before { display: none; }
-    .knopf.glas { color: var(--ink); background: rgba(242, 239, 233, .06); border: 1px solid var(--line); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-    .knopf.glas:hover { color: var(--bg); }
+    .knopf.zweit { color: var(--ink); background: var(--bg3); }
+    .knopf.klein { padding: 9px 15px; font-size: .85rem; text-transform: none; letter-spacing: 0; }
+    .knopf:disabled { background: var(--bg3); color: var(--mute); cursor: not-allowed; filter: none; }
+    [data-ecken="eckig"] .knopf { box-shadow: inset -3px -3px 0 rgba(0, 0, 0, .25), inset 3px 3px 0 rgba(255, 255, 255, .18); }
+
+    /* ---------- Kopfzeile ---------- */
+    .nav { position: sticky; top: 0; z-index: 60; background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .nav .huelle { display: flex; align-items: center; gap: 22px; height: 68px; }
+    .marke { font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .marke svg { width: 26px; height: 26px; image-rendering: pixelated; }
+    .menue { display: flex; gap: 6px; margin-left: 8px; }
+    .menue a { padding: 8px 12px; border-radius: var(--r-klein); font-size: .92rem; font-weight: 500; color: var(--mute); transition: color .2s, background-color .2s; }
+    .menue a:hover { color: var(--ink); background: var(--bg3); }
+    .nav-rechts { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+    @media (max-width: 760px) { .menue { display: none; } .nav-design span { display: none; } }
 
     /* ---------- Hero ---------- */
-    .hero { position: relative; height: 100vh; height: 100svh; min-height: 620px; overflow: hidden; }
-    .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-    .hero-glut { position: absolute; left: 50%; top: 52%; width: 70vmin; height: 70vmin; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(165, 148, 255, .28), rgba(255, 158, 196, .12) 40%, transparent 70%); filter: blur(30px); z-index: 0; }
-    .hero-titel { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; pointer-events: none; text-shadow: 0 10px 40px rgba(7, 7, 10, .55); }
-    .hero-titel h1 { margin: 0; font-weight: 600; font-size: clamp(64px, 13.5vw, 230px); line-height: .84; letter-spacing: -.055em; }
-    .hero-titel h1 .serif { font-weight: 400; letter-spacing: -.03em; }
-    .hero-fuss { position: absolute; left: 0; right: 0; bottom: clamp(20px, 4vh, 40px); z-index: 3; }
-    .hero-fuss .huelle { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
-    .hero-fuss p { margin: 0; max-width: 34ch; color: var(--mute); font-size: 1rem; }
-    .hero-fuss p b { color: var(--ink); font-weight: 600; }
-    .runter { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; }
-    .runter i { width: 1px; height: 42px; background: linear-gradient(var(--ink), transparent); animation: tropf 2s var(--ease) infinite; transform-origin: top; }
-    @keyframes tropf { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
-    @media (max-width: 760px) {
-      .hero-fuss .huelle { flex-direction: column; align-items: flex-start; }
-      .runter { display: none; }
-    }
-
-    /* ---------- Laufband ---------- */
-    .band { padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
-    .spur { display: flex; width: max-content; }
-    .spur span { font-size: clamp(42px, 7vw, 110px); font-weight: 600; letter-spacing: -.04em; line-height: 1; padding-right: .45em; white-space: nowrap; }
-    .spur .serif { font-weight: 400; }
-    .spur .hohl { color: transparent; -webkit-text-stroke: 1.2px rgba(242, 239, 233, .55); }
-    .spur .stern { display: inline-block; width: .5em; height: .5em; margin: 0 .25em; vertical-align: .12em; border-radius: 50%; background: var(--iri); }
-
-    /* ---------- Aussage, Wort für Wort ---------- */
-    .aussage { padding: clamp(110px, 18vh, 200px) 0; }
-    .aussage p { margin: 0; max-width: 22ch; font-size: clamp(34px, 5.4vw, 92px); line-height: 1.02; letter-spacing: -.04em; font-weight: 500; }
-    .aussage .w { opacity: .14; transition: opacity .2s; }
-    .aussage .serif { font-weight: 400; }
-    .aussage .klein { display: block; margin-bottom: 28px; }
-
-    /* ---------- Angebote: gestapelte Karten ---------- */
-    .abschnitt-kopf { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; margin-bottom: 50px; flex-wrap: wrap; }
-    .abschnitt-kopf h2 { margin: 0; font-size: clamp(46px, 7vw, 120px); line-height: .9; letter-spacing: -.05em; font-weight: 600; }
-    .abschnitt-kopf p { margin: 0; max-width: 36ch; color: var(--mute); }
-    .stapel { position: relative; padding-bottom: 8vh; }
-    .karte { position: sticky; top: 12vh; min-height: 74vh; margin-bottom: 4vh; border-radius: 32px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-2); display: grid; grid-template-columns: 1.15fr .85fr; transform-origin: 50% 0; isolation: isolate; }
-    .karte::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 80% at 85% 15%, var(--glut, rgba(165, 148, 255, .35)), transparent 60%); }
-    .karte-l { padding: clamp(26px, 4vw, 56px); display: flex; flex-direction: column; justify-content: space-between; gap: 30px; }
-    .karte-nr { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3vw, 44px); color: var(--mute); }
-    .karte h3 { margin: 0; font-size: clamp(54px, 8.6vw, 150px); line-height: .86; letter-spacing: -.055em; font-weight: 600; }
-    .karte h3 .serif { font-weight: 400; }
-    .karte-r { padding: clamp(26px, 4vw, 56px); display: flex; flex-direction: column; justify-content: flex-end; gap: 26px; border-left: 1px solid var(--line); background: rgba(7, 7, 10, .35); }
-    .karte-r p { margin: 0; color: #c7c3cc; font-size: 1.08rem; max-width: 40ch; }
-    .liste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-    .liste li { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
-    .liste li span { color: var(--mute); }
-    .abzeichen { display: inline-block; vertical-align: middle; font-family: var(--sans); font-style: normal; font-size: .14em; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: 1px solid currentColor; border-radius: 999px; padding: .35em .9em; margin-left: .4em; color: var(--a3); }
+    .hero { padding: clamp(40px, 8vh, 90px) 0 clamp(50px, 9vh, 100px); }
+    .hero .huelle { display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; }
+    .hero h1 { margin: 14px 0 18px; font-size: clamp(46px, 7vw, 96px); line-height: .95; letter-spacing: var(--titel-abstand); font-weight: 700; }
+    .hero h1 em { font-style: normal; color: var(--akzent); }
+    .hero p { margin: 0 0 30px; max-width: 42ch; color: var(--mute); font-size: 1.12rem; }
+    .hero .aktionen-h { display: flex; gap: 12px; flex-wrap: wrap; }
+    .kopf-buehne { position: relative; aspect-ratio: 1; width: 100%; max-width: 480px; justify-self: center; }
+    .kopf-buehne::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, var(--glut), transparent 68%); filter: blur(24px); }
+    .kopf-buehne canvas { position: relative; width: 100%; height: 100%; display: block; }
+    .kurz-fakten { display: flex; gap: 26px; margin-top: 34px; flex-wrap: wrap; }
+    .kurz-fakten div { display: flex; flex-direction: column; }
+    .kurz-fakten b { font-size: 1.5rem; letter-spacing: -.02em; }
+    .kurz-fakten span { font-size: .85rem; color: var(--mute); }
     @media (max-width: 860px) {
-      .karte { grid-template-columns: 1fr; top: 9vh; min-height: 0; }
-      .karte-r { border-left: 0; border-top: 1px solid var(--line); }
+      .hero .huelle { grid-template-columns: 1fr; }
+      .kopf-buehne { order: -1; max-width: 300px; }
     }
 
-    /* ---------- Kurs ---------- */
-    .kurs { padding: clamp(110px, 16vh, 180px) 0; text-align: center; }
-    .kurs .zahl { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(170px, 34vw, 520px); line-height: .78; letter-spacing: -.05em; }
-    .kurs p { margin: 20px auto 0; font-size: clamp(20px, 2.4vw, 34px); letter-spacing: -.02em; max-width: 24ch; color: var(--mute); }
-    .kurs p b { color: var(--ink); font-weight: 600; }
+    /* ---------- Abschnitte ---------- */
+    .abschnitt { padding: clamp(60px, 10vh, 110px) 0; border-top: 1px solid var(--line); }
+    .kopfzeile-a { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 34px; }
+    .kopfzeile-a h2 { margin: 6px 0 0; font-size: clamp(34px, 4.6vw, 58px); line-height: 1; letter-spacing: var(--titel-abstand); font-weight: 700; }
+    .kopfzeile-a p { margin: 0; max-width: 40ch; color: var(--mute); }
 
-    /* ---------- Ablauf ---------- */
-    .ablauf { padding: 40px 0 clamp(110px, 16vh, 180px); }
-    .schritte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .schritt { position: relative; padding: 30px 0 0; }
-    .schritt::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); }
-    .schritt .fuell { position: absolute; left: 0; top: 0; height: 1px; width: 100%; background: var(--iri); transform: scaleX(0); transform-origin: left; }
-    .schritt .serif { font-size: clamp(48px, 5vw, 80px); line-height: 1; display: block; margin-bottom: 18px; }
-    .schritt h3 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: -.02em; font-weight: 600; }
-    .schritt p { margin: 0; color: var(--mute); max-width: 32ch; }
-    @media (max-width: 760px) { .schritte { grid-template-columns: 1fr; gap: 34px; } }
+    /* Angebote */
+    .raster { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .angebotskarte { position: relative; display: flex; flex-direction: column; gap: 14px; text-align: left; padding: 24px; border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); transition: transform .3s var(--ease), border-color .3s; min-height: 220px; }
+    .angebotskarte:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--akzent) 55%, transparent); }
+    .angebotskarte .symbol { width: 46px; height: 46px; border-radius: var(--r-klein); display: grid; place-items: center; background: color-mix(in srgb, var(--akzent) 16%, transparent); color: var(--akzent); }
+    .angebotskarte h3 { margin: 0; font-size: 1.45rem; letter-spacing: -.02em; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .angebotskarte p { margin: 0; color: var(--mute); font-size: .98rem; flex: 1; }
+    .angebotskarte .mehr { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: .92rem; color: var(--akzent); }
+    .angebotskarte .mehr svg { transition: transform .3s var(--ease); }
+    .angebotskarte:hover .mehr svg { transform: translateX(4px); }
+    .abzeichen { font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border-radius: var(--r-knopf); background: var(--bg3); color: var(--mute); }
+    .angebotskarte.dezent { background: transparent; border-style: dashed; }
+    @media (max-width: 900px) { .raster { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .raster { grid-template-columns: 1fr; } .angebotskarte { min-height: 0; } }
 
-    /* ---------- Mitmachen: Karten mit Lichtkegel unter der Maus ---------- */
-    .mitmachen { padding: 0 0 clamp(110px, 16vh, 180px); }
-    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .licht-karte { position: relative; overflow: hidden; text-align: left; border-radius: 28px; border: 1px solid var(--line); background: var(--bg-2); padding: clamp(26px, 3.4vw, 46px); min-height: 340px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; transition: border-color .3s, transform .5s var(--ease); }
-    .licht-karte::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(165, 148, 255, .2), transparent 60%); opacity: 0; transition: opacity .3s; }
-    .licht-karte:hover { border-color: rgba(242, 239, 233, .25); transform: translateY(-4px); }
-    .licht-karte:hover::before { opacity: 1; }
-    .licht-karte > * { position: relative; }
-    .licht-karte h3 { margin: 0; font-size: clamp(40px, 5vw, 76px); line-height: .9; letter-spacing: -.045em; font-weight: 600; }
-    .licht-karte p { margin: 10px 0 0; color: var(--mute); max-width: 38ch; }
-    .licht-karte .kreis { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: transform .5s var(--ease), background-color .3s, color .3s; }
-    .licht-karte:hover .kreis { transform: rotate(-45deg); background: var(--ink); color: var(--bg); }
-    .licht-karte .oben { display: flex; justify-content: space-between; align-items: flex-start; }
-    @media (max-width: 760px) { .duo { grid-template-columns: 1fr; } }
+    /* Kurs + Ablauf */
+    .zwei-spalten { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px; }
+    .kurskarte { border-radius: var(--r); background: var(--akzent); color: var(--akzent-ink); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 30px; min-height: 300px; }
+    .kurskarte .zahl { font-size: clamp(90px, 12vw, 150px); line-height: .85; font-weight: 700; letter-spacing: -.05em; }
+    .kurskarte p { margin: 0; font-size: 1.15rem; font-weight: 500; }
+    .kurskarte .klein { color: inherit; opacity: .75; }
+    .schritte { border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); padding: 10px 28px; }
+    .schritt { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .schritt:last-child { border-bottom: 0; }
+    .schritt .nr { width: 40px; height: 40px; border-radius: var(--r-klein); display: grid; place-items: center; font-weight: 700; background: var(--bg3); color: var(--akzent); }
+    .schritt h3 { margin: 0 0 4px; font-size: 1.15rem; }
+    .schritt p { margin: 0; color: var(--mute); font-size: .96rem; }
+    @media (max-width: 860px) { .zwei-spalten { grid-template-columns: 1fr; } .kurskarte { min-height: 0; } }
 
-    /* ---------- Schluss ---------- */
-    .schluss { padding: clamp(110px, 16vh, 180px) 0 0; border-top: 1px solid var(--line); overflow: hidden; }
-    .schluss-reihe { display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
-    .schluss h2 { margin: 0; font-size: clamp(56px, 9vw, 160px); line-height: .88; letter-spacing: -.055em; font-weight: 600; }
-    .schluss h2 .serif { font-weight: 400; }
-    .magnet { width: clamp(150px, 15vw, 210px); aspect-ratio: 1; border-radius: 50%; background: var(--iri); color: var(--bg); display: grid; place-items: center; text-align: center; font-weight: 600; font-size: 1.05rem; box-shadow: 0 30px 80px -20px rgba(255, 158, 196, .45); }
-    .magnet span { display: inline-flex; align-items: center; gap: 8px; }
-    .wortmarke { margin: clamp(80px, 12vh, 140px) 0 0; font-size: 13.4vw; line-height: .8; letter-spacing: -.06em; font-weight: 700; white-space: nowrap; text-align: center; background: linear-gradient(180deg, rgba(242, 239, 233, .9), rgba(242, 239, 233, .05)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; transform: translateY(12%); }
-    .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 22px clamp(18px, 3vw, 40px); border-top: 1px solid var(--line); font-size: .85rem; color: var(--mute); position: relative; background: var(--bg); }
-    .fusszeile nav { display: flex; gap: 22px; }
-    .fusszeile nav a:hover { color: var(--ink); }
-    .geheim { color: inherit; cursor: text; }
+    /* Mitmachen */
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .mitkarte { display: flex; justify-content: space-between; align-items: center; gap: 18px; text-align: left; padding: 28px; border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); transition: border-color .3s, transform .3s var(--ease); }
+    .mitkarte:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--akzent) 55%, transparent); }
+    .mitkarte h3 { margin: 0 0 6px; font-size: 1.6rem; letter-spacing: -.02em; }
+    .mitkarte p { margin: 0; color: var(--mute); max-width: 36ch; }
+    .mitkarte .kreis { width: 48px; height: 48px; border-radius: var(--r-knopf); display: grid; place-items: center; flex: none; background: var(--akzent); color: var(--akzent-ink); }
+    @media (max-width: 700px) { .duo { grid-template-columns: 1fr; } }
+
+    .fusszeile { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 26px 0 34px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--mute); }
+
+    /* Sanftes Einblenden beim Scrollen */
+    .auf { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .7s var(--ease); }
+    .auf.da { opacity: 1; transform: none; }
+
+    /* ---------- Design-Menü ---------- */
+    .design { position: fixed; z-index: 90; top: 76px; right: clamp(12px, 3vw, 32px); width: min(360px, calc(100vw - 24px)); background: var(--bg2); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .55); padding: 18px; opacity: 0; transform: translateY(-8px) scale(.98); transform-origin: top right; visibility: hidden; transition: opacity .25s, transform .3s var(--ease), visibility 0s linear .3s; }
+    .design.offen { opacity: 1; transform: none; visibility: visible; transition: opacity .25s, transform .3s var(--ease); }
+    [data-ecken="eckig"] .design { box-shadow: 6px 6px 0 rgba(0, 0, 0, .45); }
+    .design-kopf { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .design-kopf strong { font-size: 1.05rem; }
+    .design h4 { margin: 14px 0 8px; }
+    .themen { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .thema-wahl { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: .72rem; color: var(--mute); }
+    .thema-wahl i { width: 100%; aspect-ratio: 1; border-radius: var(--r-klein); border: 2px solid transparent; display: grid; place-items: center; transition: border-color .2s, transform .2s; }
+    .thema-wahl i::after { content: ""; width: 42%; height: 42%; border-radius: var(--r-klein); background: var(--vorschau-akzent); }
+    .thema-wahl:hover i { transform: translateY(-2px); }
+    .thema-wahl[aria-pressed="true"] i { border-color: var(--ink); }
+    .thema-wahl[aria-pressed="true"] { color: var(--ink); }
+    .schalter { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 4px; border-radius: var(--r-klein); background: var(--bg3); }
+    .schalter button { padding: 9px; border-radius: var(--r-klein); font-size: .9rem; font-weight: 600; color: var(--mute); transition: background-color .2s, color .2s; }
+    .schalter button[aria-pressed="true"] { background: var(--bg2); color: var(--ink); box-shadow: 0 1px 0 var(--line); }
+    .design-fuss { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .design-fuss button { font-size: .85rem; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
 
     /* Formular-Schublade (aus dem gemeinsamen Baustein) */
         /* ---------- Schublade mit Formularen ---------- */
-    .schleier { position: fixed; inset: 0; z-index: 70; background: rgba(2, 3, 8, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
+    .schleier { position: fixed; inset: 0; z-index: 40; background: rgba(2, 3, 8, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
     .schleier.offen { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
-    .schublade { position: fixed; top: 0; right: 0; bottom: 0; z-index: 80; width: min(620px, 100vw); background: #0b0d15; box-shadow: -30px 0 70px -30px rgba(0, 0, 0, .8), inset 1px 0 0 var(--linie); overflow-y: auto; overscroll-behavior: contain; transform: translateX(104%); visibility: hidden; transition: transform .6s var(--ease), visibility 0s linear .6s; }
+    .schublade { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(620px, 100vw); background: #0b0d15; box-shadow: -30px 0 70px -30px rgba(0, 0, 0, .8), inset 1px 0 0 var(--linie); overflow-y: auto; overscroll-behavior: contain; transform: translateX(104%); visibility: hidden; transition: transform .6s var(--ease), visibility 0s linear .6s; }
     .schublade.offen { transform: none; visibility: visible; transition: transform .6s var(--ease); }
     .sch-kopf { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 28px; background: rgba(11, 13, 21, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linie); }
     .sch-kopf h2 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: 2rem; line-height: 1; }
@@ -243,175 +215,194 @@
     @keyframes einfahren { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 
-    .sch-kopf h2 { font-family: var(--serif); font-style: italic; }
-    .detail h3 { font-family: var(--serif); font-style: italic; }
+    .schublade { background: var(--bg); }
+    .sch-kopf { background: color-mix(in srgb, var(--bg) 92%, transparent); }
+    .sch-kopf h2 { font-family: var(--font); font-weight: 700; font-size: 1.6rem; letter-spacing: -.02em; }
+    .detail h3 { font-family: var(--font); font-weight: 700; font-size: 1.3rem; }
+    .rund { width: 40px; height: 40px; border-radius: var(--r-knopf); display: grid; place-items: center; background: var(--bg3); }
+    .angebot, .karte2, .detail, .ergebnis, textarea.eingabe, .bald, .weg, .textknopf { border-radius: var(--r-klein); }
+    [data-thema="hell"] select.eingabe { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2315151a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
+    select.eingabe option { background: var(--bg2); color: var(--ink); }
+    .ergebnis pre { background: var(--bg); }
+    .bald { background: color-mix(in srgb, var(--akzent) 12%, transparent); color: var(--ink); }
+
+    /* =====================================================================
+       Feinschliff: hochwertiger, aber genauso einfach aufgebaut
+       ===================================================================== */
+    :root, [data-thema="nacht"] { --akzent-2: #ff9ec4; }
+    [data-thema="hell"]    { --akzent-2: #ff6fa8; }
+    [data-thema="pink"]    { --akzent-2: #8b5cf6; }
+    [data-thema="creeper"] { --akzent-2: #c5f36b; }
+    [data-thema="ozean"]   { --akzent-2: #818cf8; }
+    :root { --verlauf: linear-gradient(120deg, var(--akzent), var(--akzent-2)); --serif-akzent: "Instrument Serif", Georgia, serif; }
+
+    /* Schwebende Glas-Leiste */
+    .nav { top: 12px; background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; margin-top: 12px; }
+    .nav .huelle { max-width: 1120px; height: 60px; padding: 0 8px 0 18px; border-radius: calc(var(--r) + 6px); background: color-mix(in srgb, var(--bg2) 72%, transparent); border: 1px solid var(--line); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 12px 40px -20px rgba(0, 0, 0, .5); }
+    @media (max-width: 1180px) { .nav .huelle { margin: 0 clamp(12px, 3vw, 32px); } }
+
+    /* Knöpfe mit Verlauf und weichem Leuchten */
+    .knopf { background: var(--verlauf); box-shadow: 0 12px 30px -12px color-mix(in srgb, var(--akzent) 75%, transparent), inset 0 1px 0 rgba(255, 255, 255, .25); transition: filter .2s, transform .25s var(--ease), box-shadow .25s; }
+    .knopf:hover { transform: translateY(-1px); box-shadow: 0 16px 36px -12px color-mix(in srgb, var(--akzent) 85%, transparent), inset 0 1px 0 rgba(255, 255, 255, .3); }
+    .knopf.zweit { background: var(--bg2); border: 1px solid var(--line); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent); }
+    .knopf:disabled { background: var(--bg3); box-shadow: none; }
+
+    /* Etiketten als kleine Pillen */
+    .hero .klein, .kopfzeile-a .klein { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: var(--r-knopf); border: 1px solid var(--line); background: color-mix(in srgb, var(--bg2) 80%, transparent); font-size: .72rem; }
+    .hero .klein::before, .kopfzeile-a .klein::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--akzent); box-shadow: 0 0 10px var(--akzent); }
+
+    /* Hero: Licht-Raster und farbige Schimmer */
+    .hero { position: relative; overflow: hidden; margin-top: -84px; padding-top: calc(clamp(40px, 8vh, 90px) + 84px); }
+    .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 65% at 60% 35%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 65% at 60% 35%, #000 20%, transparent 75%); opacity: .7; }
+    .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 45% 50% at 78% 40%, var(--glut), transparent 70%), radial-gradient(ellipse 40% 35% at 8% 0%, color-mix(in srgb, var(--akzent-2) 18%, transparent), transparent 70%); }
+    .hero .huelle { position: relative; z-index: 1; }
+    .hero h1 { font-size: clamp(50px, 7.4vw, 104px); }
+    .hero h1 em, .kopfzeile-a h2 em { font-style: normal; background: var(--verlauf); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; padding-right: .06em; }
+    [data-schrift="modern"] .hero h1 em, [data-schrift="modern"] .kopfzeile-a h2 em { font-family: var(--serif-akzent); font-style: italic; font-weight: 400; letter-spacing: -.02em; }
+    .kurz-fakten { gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: color-mix(in srgb, var(--bg2) 70%, transparent); width: fit-content; max-width: 100%; }
+    .kurz-fakten div { padding: 14px 22px; border-right: 1px solid var(--line); }
+    .kurz-fakten div:last-child { border-right: 0; }
+    @media (max-width: 480px) { .kurz-fakten div { padding: 12px 14px; } .kurz-fakten b { font-size: 1.2rem; } }
+
+    /* Kopf auf einem leuchtenden Sockel mit Ringen */
+    .kopf-buehne::after { content: ""; position: absolute; left: 50%; top: 50%; width: 92%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid var(--line); box-shadow: 0 0 0 36px color-mix(in srgb, var(--line) 40%, transparent), inset 0 0 80px color-mix(in srgb, var(--akzent) 12%, transparent); pointer-events: none; }
+    [data-ecken="eckig"] .kopf-buehne::after { border-radius: 0; width: 80%; }
+    .kopf-buehne canvas { z-index: 1; }
+
+    /* Edlere Karten mit Lichtkante und Nummer */
+    .raster { counter-reset: karte; }
+    .angebotskarte { counter-increment: karte; background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent), 0 24px 50px -34px rgba(0, 0, 0, .7); overflow: hidden; }
+    .angebotskarte::before { content: ""; position: absolute; left: 15%; right: 15%; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--akzent), transparent); opacity: 0; transition: opacity .3s; }
+    .angebotskarte:hover::before { opacity: 1; }
+    .angebotskarte::after { content: "0" counter(karte); position: absolute; top: 24px; right: 24px; font-size: .8rem; font-weight: 600; color: var(--mute); font-variant-numeric: tabular-nums; }
+    .angebotskarte .symbol { background: var(--verlauf); color: var(--akzent-ink); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--akzent) 70%, transparent); }
+    .angebotskarte.dezent .symbol { background: var(--bg3); color: var(--mute); box-shadow: none; }
+
+    /* Kurs-Karte mit Verlauf, Schritte mit farbigen Nummern */
+    .kurskarte { position: relative; overflow: hidden; background: var(--verlauf); box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--akzent) 70%, transparent); }
+    .kurskarte::after { content: "◆"; position: absolute; right: -4%; bottom: -18%; font-size: 260px; line-height: 1; opacity: .12; }
+    .schritte { background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); }
+    .schritt .nr { background: var(--verlauf); color: var(--akzent-ink); }
+    .mitkarte { background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 4%, var(--bg2)), var(--bg2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent); }
+    .mitkarte .kreis { background: var(--verlauf); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--akzent) 70%, transparent); transition: transform .3s var(--ease); }
+    .mitkarte:hover .kreis { transform: rotate(-45deg); }
+
+    /* Großer Schriftzug am Ende */
+    .fussmarke { margin: 40px 0 0; text-align: center; font-weight: 700; font-size: 11.5vw; line-height: .85; letter-spacing: -.06em; white-space: nowrap; background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 22%, transparent), transparent 85%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; user-select: none; }
+    @media (min-width: 1180px) { .fussmarke { font-size: 136px; } }
+    [data-schrift="pixel"] .fussmarke { letter-spacing: 0; font-size: 8.6vw; }
+    .design { top: 86px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
-      .aussage .w { opacity: 1; }
+      html { scroll-behavior: auto; }
+      .auf { opacity: 1; transform: none; }
     }
   </style>
 </head>
-<body class="laedt">
-  <div class="korn" aria-hidden="true"></div>
-  <div class="zeiger" aria-hidden="true"></div>
-  <div class="zeiger-ring" aria-hidden="true"></div>
-
-  <div class="vorspann" id="vorspann" aria-hidden="true">
-    <div class="v-oben klein"><span>Topf Oder Deckel GmbH</span><span>Wird geladen</span></div>
-    <div class="v-unten"><span class="v-zahl" id="vzahl">0</span><span class="klein">Bauen · Sammeln · Verdrahten</span></div>
-    <i class="v-balken" id="vbalken"></i>
-  </div>
-
+<body>
   <header class="nav">
     <div class="huelle">
-      <a class="marke" href="#start" data-zeiger><i aria-hidden="true"></i>Topf Oder Deckel</a>
-      <nav class="pille-nav" aria-label="Hauptmenü">
+      <a class="marke" href="#start"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><rect width="8" height="8" fill="#ec05ec"/><rect x="1" y="4" width="1" height="1" fill="#000"/><rect x="6" y="4" width="1" height="1" fill="#000"/><rect x="2" y="6" width="4" height="1" fill="#000"/></svg>Topf Oder Deckel</a>
+      <nav class="menue" aria-label="Hauptmenü">
         <a href="#angebote">Angebote</a>
-        <a href="#kurs">Kurs</a>
-        <a href="#ablauf">Ablauf</a>
+        <a href="#kurs">Kurs &amp; Ablauf</a>
         <a href="#mitmachen-bereich">Mitmachen</a>
       </nav>
-      <button type="button" class="knopf klein" data-schublade="anfrage" data-zeiger>Anfragen</button>
+      <div class="nav-rechts">
+        <button type="button" class="knopf zweit klein nav-design" id="design-knopf" aria-expanded="false" aria-controls="design"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/></svg><span>Design</span></button>
+        <button type="button" class="knopf klein" data-schublade="anfrage">Anfragen</button>
+      </div>
     </div>
   </header>
 
-  <main id="start">
-    <section class="hero" id="hero" aria-label="Topf Oder Deckel GmbH">
-      <div class="hero-glut" aria-hidden="true"></div>
-      <canvas id="leinwand" aria-hidden="true"></canvas>
-      <div class="hero-titel">
-        <h1 aria-label="Wir bauen deine Welt.">
-          <span class="zeile-m" aria-hidden="true"><span>Wir bauen</span></span>
-          <span class="zeile-m" aria-hidden="true"><span><span class="serif">deine</span> Welt.</span></span>
-        </h1>
-      </div>
-      <div class="hero-fuss">
-        <div class="huelle">
-          <p class="hero-text"><b>Topf Oder Deckel GmbH.</b> Bauprojekte, Ressourcen, Redstone und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.</p>
-          <span class="runter klein" aria-hidden="true"><i></i>Scrollen</span>
-          <button type="button" class="knopf hero-knopf" data-schublade="anfrage" data-zeiger>Anfrage starten <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button>
-        </div>
-      </div>
-    </section>
-
-    <div class="band" aria-hidden="true">
-      <div class="spur">
-        <span>Bauprojekte<i class="stern"></i><span class="serif">Ressourcen</span><i class="stern"></i><span class="hohl">Redstone</span><i class="stern"></i>Texturen<i class="stern"></i><span class="serif">Farmen</span><i class="stern"></i><span class="hohl">Burgen</span><i class="stern"></i></span>
-        <span>Bauprojekte<i class="stern"></i><span class="serif">Ressourcen</span><i class="stern"></i><span class="hohl">Redstone</span><i class="stern"></i>Texturen<i class="stern"></i><span class="serif">Farmen</span><i class="stern"></i><span class="hohl">Burgen</span><i class="stern"></i></span>
-      </div>
+  <!-- Design-Menü -->
+  <div class="design" id="design" role="dialog" aria-label="Design anpassen">
+    <div class="design-kopf"><strong>Design anpassen</strong><button type="button" class="rund" id="design-zu" aria-label="Schließen"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    <h4 class="klein">Farbthema</h4>
+    <div class="themen" id="themen">
+      <button type="button" class="thema-wahl" data-wert="nacht" aria-pressed="false"><i style="background:#14141c;--vorschau-akzent:#a594ff"></i>Nacht</button>
+      <button type="button" class="thema-wahl" data-wert="hell" aria-pressed="false"><i style="background:#f6f4ef;--vorschau-akzent:#6c4cff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)"></i>Hell</button>
+      <button type="button" class="thema-wahl" data-wert="pink" aria-pressed="false"><i style="background:#26112a;--vorschau-akzent:#ec05ec"></i>Pink</button>
+      <button type="button" class="thema-wahl" data-wert="creeper" aria-pressed="false"><i style="background:#142619;--vorschau-akzent:#4caf50"></i>Creeper</button>
+      <button type="button" class="thema-wahl" data-wert="ozean" aria-pressed="false"><i style="background:#0d2236;--vorschau-akzent:#38bdf8"></i>Ozean</button>
     </div>
+    <h4 class="klein">Ecken</h4>
+    <div class="schalter" data-gruppe="ecken"><button type="button" data-wert="rund" aria-pressed="false">Rund</button><button type="button" data-wert="eckig" aria-pressed="false">Eckig</button></div>
+    <h4 class="klein">Schrift</h4>
+    <div class="schalter" data-gruppe="schrift"><button type="button" data-wert="modern" aria-pressed="false">Modern</button><button type="button" data-wert="pixel" aria-pressed="false" style="font-family:'Pixelify Sans',sans-serif">Pixel</button></div>
+    <div class="design-fuss"><span class="klein">Wird gespeichert</span><button type="button" id="design-reset">Zurücksetzen</button></div>
+  </div>
 
-    <section class="aussage">
+  <main id="start">
+    <section class="hero" aria-label="Topf Oder Deckel GmbH">
       <div class="huelle">
-        <span class="klein">Über uns</span>
-        <p id="aussage">Wir sind ein kleines Team, das für dich baut, sammelt, verdrahtet und gestaltet. <span class="serif">Ehrlich, schnell</span> und zu einem festen Preis, den du vorher kennst.</p>
+        <div>
+          <span class="klein">Topf Oder Deckel GmbH</span>
+          <h1>Wir bauen <em>deine</em> Welt.</h1>
+          <p>Bauprojekte, Ressourcen, Redstone und eigene Texturen für Minecraft. Fair bezahlt in Diamanten oder Cent.</p>
+          <div class="aktionen-h">
+            <button type="button" class="knopf" data-schublade="anfrage">Anfrage starten <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <a class="knopf zweit" href="#angebote">Angebote ansehen</a>
+          </div>
+          <div class="kurz-fakten">
+            <div><b>5</b><span>Angebote</span></div>
+            <div><b><span class="zaehler">16</span> ◆</b><span>= 1 Cent</span></div>
+            <div><b>Discord</b><span>Antwort direkt</span></div>
+          </div>
+        </div>
+        <div class="kopf-buehne"><canvas id="leinwand" aria-label="OderDeckels Minecraft-Kopf in 3D"></canvas></div>
       </div>
     </section>
 
-    <section id="angebote" aria-label="Angebote">
+    <section class="abschnitt" id="angebote" aria-label="Angebote">
       <div class="huelle">
-        <div class="abschnitt-kopf">
-          <h2>Was wir<br><span class="serif iri" style="font-weight:400">für dich tun.</span></h2>
-          <p>Fünf Angebote, ein Ablauf: Wähl aus, füll das kurze Formular aus, und deine Anfrage landet direkt bei uns auf Discord.</p>
+        <div class="kopfzeile-a auf">
+          <div><span class="klein">Angebote</span><h2>Was wir für dich <em>tun</em></h2></div>
+          <p>Klick auf ein Angebot, füll das kurze Formular aus, und deine Anfrage landet direkt bei uns auf Discord.</p>
         </div>
-        <div class="stapel">
-          <article class="karte" style="--glut:rgba(165,148,255,.4)">
-            <div class="karte-l"><span class="karte-nr">01</span><h3>Bau&shy;projekte</h3></div>
-            <div class="karte-r">
-              <p>Base, Burg oder Haus: Wir planen mit dir, bauen mit dir oder bauen für dich, von der ersten Idee bis zum letzten Block.</p>
-              <ul class="liste"><li>Kanal<span>#bauprojekte</span></li><li>Bezahlung<span>Diamanten oder Cent</span></li></ul>
-              <div><button type="button" class="knopf" data-angebot="0" data-zeiger>Bauprojekt anfragen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
-            </div>
-          </article>
-          <article class="karte" style="--glut:rgba(255,213,154,.32)">
-            <div class="karte-l"><span class="karte-nr">02</span><h3>Res&shy;sourcen</h3></div>
-            <div class="karte-r">
-              <p>Blöcke, Items und Baumaterial: Du sagst, was und wie viel du brauchst, wir sammeln es für dich.</p>
-              <ul class="liste"><li>Kanal<span>#material</span></li><li>Diamanten<span data-kurs-text></span></li></ul>
-              <div><button type="button" class="knopf" data-angebot="1" data-zeiger>Ressourcen bestellen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
-            </div>
-          </article>
-          <article class="karte" style="--glut:rgba(255,110,110,.32)">
-            <div class="karte-l"><span class="karte-nr">03</span><h3>Red&shy;stone</h3></div>
-            <div class="karte-r">
-              <p>Automatische Türen, Farmen, geheime Gänge und Maschinen. Wir verdrahten, du drückst nur noch den Knopf.</p>
-              <ul class="liste"><li>Kanal<span>#redstone</span></li><li>Bezahlung<span>Diamanten oder Cent</span></li></ul>
-              <div><button type="button" class="knopf" data-angebot="2" data-zeiger>Redstone-Hilfe anfragen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
-            </div>
-          </article>
-          <article class="karte" style="--glut:rgba(255,158,196,.36)">
-            <div class="karte-l"><span class="karte-nr">04</span><h3><span class="serif">Texturen</span></h3></div>
-            <div class="karte-r">
-              <p>Deine Idee als eigenes Item: Sag uns, welches Item, wie es heißen soll und wie es aussehen soll.</p>
-              <ul class="liste"><li>Kanal<span>#textur</span></li><li>Du brauchst<span>Name &amp; Idee</span></li></ul>
-              <div><button type="button" class="knopf" data-angebot="3" data-zeiger>Idee einreichen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
-            </div>
-          </article>
-          <article class="karte" style="--glut:rgba(140,200,255,.3)">
-            <div class="karte-l"><span class="karte-nr">05</span><h3>Hitman<span class="abzeichen" id="hitman-etikett">Bald</span></h3></div>
-            <div class="karte-r">
-              <p id="hitman-text">Aufträge in Minecraft: Ziel nennen, Preis vorschlagen. Bald kannst du hier bestellen.</p>
-              <ul class="liste"><li>Kanal<span>#hitman</span></li><li>Status<span id="hitman-status">Noch gesperrt</span></li></ul>
-              <div><button type="button" class="knopf glas" data-angebot="4" data-zeiger>Ansehen <span class="pf"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button></div>
-            </div>
-          </article>
+        <div class="raster">
+          <button type="button" class="angebotskarte auf" data-angebot="0"><span class="symbol" data-icon-slot="hammer"></span><h3>Bauprojekte</h3><p>Base, Burg oder Haus: von der ersten Idee bis zum letzten Block.</p><span class="mehr">Anfragen <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+          <button type="button" class="angebotskarte auf" data-angebot="1"><span class="symbol" data-icon-slot="box"></span><h3>Ressourcen</h3><p>Blöcke, Items und Baumaterial, gesammelt für dich.</p><span class="mehr">Bestellen <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+          <button type="button" class="angebotskarte auf" data-angebot="2"><span class="symbol" data-icon-slot="zap"></span><h3>Redstone</h3><p>Schaltungen, automatische Türen, Farmen und Maschinen.</p><span class="mehr">Anfragen <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+          <button type="button" class="angebotskarte auf" data-angebot="3"><span class="symbol" data-icon-slot="palette"></span><h3>Texturen</h3><p>Deine Idee als eigenes Item: Name, Aussehen, Vorbild.</p><span class="mehr">Idee einreichen <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+          <button type="button" class="angebotskarte dezent auf" data-angebot="4"><span class="symbol" data-icon-slot="crosshair"></span><h3>Hitman <span class="abzeichen" id="hitman-etikett">Bald</span></h3><p id="hitman-text">Aufträge in Minecraft: Ziel nennen, Preis vorschlagen. Bald verfügbar.</p><span class="mehr">Ansehen <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
         </div>
       </div>
     </section>
 
-    <section class="kurs" id="kurs" aria-label="Unser Kurs">
+    <section class="abschnitt" id="kurs" aria-label="Kurs und Ablauf">
       <div class="huelle">
-        <span class="klein">Fester Kurs</span>
-        <h2 class="zahl iri"><span class="zaehler" data-ziel="16">16</span></h2>
-        <p><b>Diamanten = 1 Cent.</b> Ein Kurs für alle Angebote. Du weißt immer vorher, woran du bist.</p>
-      </div>
-    </section>
-
-    <section class="ablauf" id="ablauf" aria-label="Ablauf">
-      <div class="huelle">
-        <div class="abschnitt-kopf"><h2>Drei Schritte.<br><span class="serif" style="font-weight:400">Fertig.</span></h2></div>
-        <div class="schritte">
-          <div class="schritt"><i class="fuell"></i><span class="serif">01</span><h3>Angebot wählen</h3><p>Bauprojekt, Ressourcen, Redstone oder Textur: Klick auf das passende Angebot.</p></div>
-          <div class="schritt"><i class="fuell"></i><span class="serif">02</span><h3>Formular ausfüllen</h3><p>Minecraft-Name, Discord-Name und was du brauchst. Dazu optional dein Preis.</p></div>
-          <div class="schritt"><i class="fuell"></i><span class="serif">03</span><h3>Wir melden uns</h3><p>Deine Anfrage landet direkt bei uns auf Discord. Wir schicken dir ein Angebot.</p></div>
+        <div class="kopfzeile-a auf"><div><span class="klein">Kurs &amp; Ablauf</span><h2>Einfach und <em>fair</em></h2></div></div>
+        <div class="zwei-spalten">
+          <div class="kurskarte auf"><span class="klein">Fester Kurs</span><span class="zahl"><span class="zaehler">16</span></span><p>Diamanten = 1 Cent. Ein Kurs für alle Angebote, du weißt immer vorher, woran du bist.</p></div>
+          <div class="schritte auf">
+            <div class="schritt"><span class="nr">1</span><div><h3>Angebot wählen</h3><p>Bauprojekt, Ressourcen, Redstone oder Textur.</p></div></div>
+            <div class="schritt"><span class="nr">2</span><div><h3>Formular ausfüllen</h3><p>Minecraft-Name, Discord-Name und was du brauchst. Dazu optional dein Preis.</p></div></div>
+            <div class="schritt"><span class="nr">3</span><div><h3>Wir melden uns</h3><p>Deine Anfrage landet direkt bei uns auf Discord. Wir schicken dir ein Angebot.</p></div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="mitmachen" id="mitmachen-bereich" aria-label="Mitmachen">
+    <section class="abschnitt" id="mitmachen-bereich" aria-label="Mitmachen">
       <div class="huelle">
-        <div class="abschnitt-kopf">
-          <h2>Werde Teil<br><span class="serif iri" style="font-weight:400">des Teams.</span></h2>
-          <p>Erst ein Praktikumstag zum Reinschnuppern, danach kannst du dich bewerben. Zum Schluss gibt es eine halbstündige Ausbildung.</p>
-        </div>
+        <div class="kopfzeile-a auf"><div><span class="klein">Mitmachen</span><h2>Werde Teil des <em>Teams</em></h2></div><p>Erst ein Praktikumstag zum Reinschnuppern, danach kannst du dich bewerben.</p></div>
         <div class="duo">
-          <button type="button" class="licht-karte" data-mit="0" data-zeiger>
-            <span class="oben"><span class="klein">Fest dabei</span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
-            <span><h3>Bewerbung</h3><p>Als Mitarbeiter fest ins Team. Voraussetzung: ein Praktikumstag vorher.</p></span>
-          </button>
-          <button type="button" class="licht-karte" data-mit="1" data-zeiger>
-            <span class="oben"><span class="klein">Reinschnuppern</span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></span>
-            <span><h3><span class="serif" style="font-weight:400">Praktikum</span></h3><p>Lerne Bauen, Redstone und den Shop kennen, ganz ohne Verpflichtung.</p></span>
-          </button>
+          <button type="button" class="mitkarte auf" data-mit="0"><span><h3>Bewerbung</h3><p>Als Mitarbeiter fest ins Team. Voraussetzung: ein Praktikumstag vorher.</p></span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+          <button type="button" class="mitkarte auf" data-mit="1"><span><h3>Praktikum</h3><p>Lerne Bauen, Redstone und den Shop kennen, ganz ohne Verpflichtung.</p></span><span class="kreis"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
         </div>
       </div>
     </section>
 
-    <section class="schluss" aria-label="Los geht's">
-      <div class="huelle schluss-reihe">
-        <h2>Lass uns<br><span class="serif iri">loslegen.</span></h2>
-        <button type="button" class="magnet" data-schublade="anfrage" data-zeiger><span>Anfragen <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></button>
-      </div>
-      <p class="wortmarke" aria-hidden="true">Topf oder Deckel</p>
-    </section>
+    <div class="huelle">
+      <p class="fussmarke" aria-hidden="true">Topf Oder Deckel</p>
+      <footer class="fusszeile">
+        <span>© 2026 Topf Oder Deckel GmbH</span>
+        <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
+      </footer>
+    </div>
   </main>
-
-  <footer class="fusszeile">
-    <span>© 2026 Topf Oder Deckel GmbH</span>
-    <nav aria-label="Fußzeile"><a href="#angebote">Angebote</a><a href="#kurs">Kurs</a><a href="#mitmachen-bereich">Mitmachen</a></nav>
-    <span>Kein offizielles Minecraft-Produkt. Nicht von Mojang genehmigt oder mit Mojang verbunden.</span>
-  </footer>
 
   <!-- ================= Schublade: Anfrage ================= -->
   <div class="schleier" id="schleier"></div>
@@ -605,9 +596,6 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script>
     // =====================================================================
     //  Einstellungen
@@ -994,23 +982,22 @@
     var offeneSchublade = null, letzterFokus = null;
     function oeffneSchublade(name) {
       var s = $('schublade-' + name);
+      schliesseDesign();
       if (offeneSchublade && offeneSchublade !== s) offeneSchublade.classList.remove('offen');
       letzterFokus = document.activeElement; offeneSchublade = s;
       s.classList.add('offen'); $('schleier').classList.add('offen');
       document.body.style.overflow = 'hidden';
-      if (window.__lenis) window.__lenis.stop();
       setTimeout(function () { var f = s.querySelector('[aria-selected="true"]') || s.querySelector('button, input'); if (f) f.focus({ preventScroll: true }); }, 60);
     }
     function schliesseSchublade() {
       if (!offeneSchublade) return;
       offeneSchublade.classList.remove('offen'); $('schleier').classList.remove('offen');
       offeneSchublade = null; document.body.style.overflow = '';
-      if (window.__lenis) window.__lenis.start();
       if (letzterFokus && letzterFokus.focus) letzterFokus.focus({ preventScroll: true });
     }
     $('schleier').addEventListener('click', schliesseSchublade);
     Array.prototype.forEach.call(document.querySelectorAll('[data-zu-schublade]'), function (b) { b.addEventListener('click', schliesseSchublade); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') schliesseSchublade(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { schliesseSchublade(); schliesseDesign(); } });
     Array.prototype.forEach.call(document.querySelectorAll('[data-schublade]'), function (b) { b.addEventListener('click', function () { oeffneSchublade(b.getAttribute('data-schublade')); }); });
     Array.prototype.forEach.call(document.querySelectorAll('[data-angebot]'), function (b) {
       b.addEventListener('click', function () { var t = tabs[+b.getAttribute('data-angebot')]; oeffneSchublade('anfrage'); t.click(); });
@@ -1022,67 +1009,65 @@
       if (!HITMAN_FREI) return;
       $('hitman-etikett').textContent = 'Neu';
       $('hitman-text').textContent = 'Aufträge in Minecraft: Nenne dein Ziel und deine Preisvorstellung. Wir melden uns mit einem Angebot.';
-      $('hitman-status').textContent = 'Freigeschaltet';
     }
     if (HITMAN_FREI) hitmanSzene();
 
-    // Lichtkegel unter der Maus auf den Mitmachen-Karten
-    Array.prototype.forEach.call(document.querySelectorAll('.licht-karte'), function (k) {
-      k.addEventListener('pointermove', function (e) { var r = k.getBoundingClientRect(); k.style.setProperty('--x', (e.clientX - r.left) + 'px'); k.style.setProperty('--y', (e.clientY - r.top) + 'px'); });
-    });
-
-    // Aussage: jedes Wort einzeln, damit es beim Scrollen aufleuchten kann
-    (function () {
-      var p = $('aussage');
-      Array.prototype.slice.call(p.childNodes).forEach(function (n) {
-        if (n.nodeType === 3) {
-          var frag = document.createDocumentFragment();
-          n.nodeValue.split(/(\s+)/).forEach(function (t) { if (!t) return; if (/^\s+$/.test(t)) frag.appendChild(document.createTextNode(t)); else { var s = document.createElement('span'); s.className = 'w'; s.textContent = t; frag.appendChild(s); } });
-          p.replaceChild(frag, n);
-        } else if (n.nodeType === 1) { n.classList.add('w'); }
+    // =====================================================================
+    //  Design-Menü: Farbthema, Ecken, Schrift (wird im Browser gespeichert)
+    // =====================================================================
+    var STANDARD = { thema: 'nacht', ecken: 'rund', schrift: 'modern' };
+    var design = {};
+    try { design = JSON.parse(localStorage.getItem('design') || '{}'); } catch (x) {}
+    var THEMA_FARBE = { nacht: '#0b0b10', hell: '#f6f4ef', pink: '#1a0b1c', creeper: '#0d1a10', ozean: '#071624' };
+    function wendeAn() {
+      Object.keys(STANDARD).forEach(function (k) { document.documentElement.setAttribute('data-' + k, design[k] || STANDARD[k]); });
+      document.querySelector('meta[name=theme-color]').setAttribute('content', THEMA_FARBE[design.thema || STANDARD.thema]);
+      Array.prototype.forEach.call(document.querySelectorAll('#themen .thema-wahl'), function (b) { b.setAttribute('aria-pressed', b.dataset.wert === (design.thema || STANDARD.thema) ? 'true' : 'false'); });
+      Array.prototype.forEach.call(document.querySelectorAll('.schalter'), function (g) {
+        var k = g.dataset.gruppe;
+        Array.prototype.forEach.call(g.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b.dataset.wert === (design[k] || STANDARD[k]) ? 'true' : 'false'); });
       });
-    })();
+    }
+    function speichere() { try { localStorage.setItem('design', JSON.stringify(design)); } catch (x) {} wendeAn(); }
+    Array.prototype.forEach.call(document.querySelectorAll('#themen .thema-wahl'), function (b) { b.addEventListener('click', function () { design.thema = b.dataset.wert; speichere(); }); });
+    Array.prototype.forEach.call(document.querySelectorAll('.schalter'), function (g) {
+      Array.prototype.forEach.call(g.querySelectorAll('button'), function (b) { b.addEventListener('click', function () { design[g.dataset.gruppe] = b.dataset.wert; speichere(); }); });
+    });
+    $('design-reset').addEventListener('click', function () { design = {}; try { localStorage.removeItem('design'); } catch (x) {} wendeAn(); });
+    function schliesseDesign() { $('design').classList.remove('offen'); $('design-knopf').setAttribute('aria-expanded', 'false'); }
+    $('design-knopf').addEventListener('click', function (e) {
+      e.stopPropagation();
+      var auf = !$('design').classList.contains('offen');
+      $('design').classList.toggle('offen', auf); $('design-knopf').setAttribute('aria-expanded', auf ? 'true' : 'false');
+    });
+    $('design-zu').addEventListener('click', schliesseDesign);
+    document.addEventListener('click', function (e) { if (!e.target.closest('#design') && !e.target.closest('#design-knopf')) schliesseDesign(); });
+    wendeAn();
+
+    // Abschnitte blenden beim Scrollen sanft ein
+    if ('IntersectionObserver' in window && !RUHIG) {
+      var beob = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('da'); beob.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+      Array.prototype.forEach.call(document.querySelectorAll('.auf'), function (el, i) { el.style.transitionDelay = (i % 3) * 60 + 'ms'; beob.observe(el); });
+    } else Array.prototype.forEach.call(document.querySelectorAll('.auf'), function (el) { el.classList.add('da'); });
 
     // =====================================================================
-    //  3D: Chrom-Skulptur im Hero (three.js)
+    //  OderDeckels Minecraft-Kopf in 3D (skin.png, 64 × 64)
+    //  Geheimer Eingang: ein Klick auf das linke Auge (von vorne gesehen) führt zum Freikaufen.
     // =====================================================================
-    var STEIN = { scroll: 0, maus: { x: 0, y: 0 } };
-    (function chrom() {
+    (function kopf3d() {
       var cv = $('leinwand'), gl = null;
       try { gl = window.THREE && (cv.getContext('webgl') || cv.getContext('experimental-webgl')); } catch (x) {}
-      if (!gl) { cv.style.display = 'none'; return; }
+      if (!gl) { cv.parentNode.hidden = true; return; }
       var renderer = new THREE.WebGLRenderer({ canvas: cv, context: gl, antialias: true, alpha: true });
       renderer.setClearColor(0x000000, 0);
       renderer.outputEncoding = THREE.sRGBEncoding;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.15;
       var szene = new THREE.Scene();
-      var kamera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-      kamera.position.set(0, 0, 9);
-
-      // Spiegelbild-Umgebung: leuchtende Farbflächen rundherum, daraus eine Umgebungs-Textur
-      var umg = new THREE.Scene();
-      umg.background = new THREE.Color(0x050508);
-      function tafel(farbe, w, h, x, y, z, ry, rx) {
-        var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: farbe, side: THREE.DoubleSide }));
-        m.position.set(x, y, z); m.rotation.y = ry || 0; m.rotation.x = rx || 0; umg.add(m);
-      }
-      tafel(0xb3a4ff, 14, 3, -6, 4, -6, 0.6);
-      tafel(0xff9ec4, 4, 12, 7, 0, -3, -1.1);
-      tafel(0xffd59a, 10, 2, 0, -5, 5, 0, -1.2);
-      tafel(0xffffff, 3, 8, -8, -1, 3, 1.3);
-      tafel(0x6f8cff, 8, 8, 0, 8, 0, 0, 1.57);
-      var pmrem = new THREE.PMREMGenerator(renderer);
-      var env = pmrem.fromScene(umg, 0.04).texture;
-
-      // OderDeckels Minecraft-Kopf: Würfel mit den 8×8-Feldern aus dem Skin (skin.png, 64×64)
-      // plus zweite, etwas größere Schicht (Haare/Hut) mit durchsichtigen Stellen.
-      var form = new THREE.Group();
-      form.rotation.order = 'YXZ';
-      szene.add(form);
-      szene.add(new THREE.HemisphereLight(0xe8e4ff, 0x2a1830, 0.9));
-      var licht = new THREE.DirectionalLight(0xffffff, 0.9); licht.position.set(3, 4, 5); szene.add(licht);
-      var rand = new THREE.DirectionalLight(0xa594ff, 0.7); rand.position.set(-5, -2, -4); szene.add(rand);
+      var kamera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+      kamera.position.set(0, 0, 7.2);
+      szene.add(new THREE.HemisphereLight(0xffffff, 0x2a1830, 0.95));
+      var licht = new THREE.DirectionalLight(0xffffff, 0.8); licht.position.set(3, 4, 5); szene.add(licht);
+      var form = new THREE.Group(); form.rotation.order = 'YXZ'; szene.add(form);
+      var kopf = null;
       var bild0 = new Image();
       bild0.onload = function () {
         function feld(x, y, spiegeln) {
@@ -1091,24 +1076,22 @@
           if (spiegeln) { k.translate(0, 8); k.scale(1, -1); }
           k.drawImage(bild0, x, y, 8, 8, 0, 0, 8, 8);
           var tx = new THREE.CanvasTexture(c);
-          tx.magFilter = THREE.NearestFilter; tx.minFilter = THREE.NearestFilter; tx.generateMipmaps = false;
-          tx.encoding = THREE.sRGBEncoding;
+          tx.magFilter = THREE.NearestFilter; tx.minFilter = THREE.NearestFilter; tx.generateMipmaps = false; tx.encoding = THREE.sRGBEncoding;
           return tx;
         }
         // Reihenfolge bei three.js: rechts(+x), links(-x), oben, unten, vorne(+z), hinten(-z)
         function seiten(ox, durchsichtig) {
           return [[ox + 16, 8], [ox + 0, 8], [ox + 8, 0], [ox + 16, 0, true], [ox + 8, 8], [ox + 24, 8]].map(function (p) {
-            return new THREE.MeshStandardMaterial({ map: feld(p[0], p[1], p[2]), roughness: 0.75, metalness: 0, transparent: !!durchsichtig, alphaTest: durchsichtig ? 0.5 : 0, side: durchsichtig ? THREE.DoubleSide : THREE.FrontSide, envMap: env, envMapIntensity: 0.35 });
+            return new THREE.MeshLambertMaterial({ map: feld(p[0], p[1], p[2]), transparent: !!durchsichtig, alphaTest: durchsichtig ? 0.5 : 0, side: durchsichtig ? THREE.DoubleSide : THREE.FrontSide });
           });
         }
-        kopf = new THREE.Mesh(new THREE.BoxGeometry(2.1, 2.1, 2.1), seiten(0));
+        kopf = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), seiten(0));
         form.add(kopf);
-        form.add(new THREE.Mesh(new THREE.BoxGeometry(2.3, 2.3, 2.3), seiten(32, true)));
+        form.add(new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.2, 2.2), seiten(32, true)));
       };
       bild0.src = 'skin.png';
 
-      // Geheimer Eingang: ein Klick auf das linke Auge (von vorne gesehen) führt zum Freikaufen
-      var kopf = null, strahl = new THREE.Raycaster(), zeigerPos = new THREE.Vector2(), druck = null;
+      var strahl = new THREE.Raycaster(), zeigerPos = new THREE.Vector2(), druck = null;
       cv.addEventListener('pointerdown', function (e) { druck = { x: e.clientX, y: e.clientY }; });
       cv.addEventListener('pointerup', function (e) {
         if (!kopf || !druck || Math.abs(e.clientX - druck.x) + Math.abs(e.clientY - druck.y) > 8) return;
@@ -1121,130 +1104,22 @@
         if (u >= 0.8 && u < 2.2 && v >= 3.8 && v < 5.2) location.href = 'freikaufen.html';
       });
 
-      var breite = 0, hoehe = 0, sichtbar = true;
-      function groesse() {
-        var b = cv.clientWidth, h = cv.clientHeight;
-        if (b === breite && h === hoehe) return;
-        breite = b; hoehe = h;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        renderer.setSize(b, h, false);
-        kamera.aspect = b / h; kamera.updateProjectionMatrix();
-        kamera.position.z = b / h < 0.8 ? 12.5 : 9;
-      }
-      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { sichtbar = e[0].isIntersecting; }).observe($('hero'));
-      window.addEventListener('pointermove', function (e) { STEIN.maus.x = e.clientX / window.innerWidth - .5; STEIN.maus.y = e.clientY / window.innerHeight - .5; });
-      var t0 = performance.now(), mx = 0, my = 0, intro = RUHIG ? 1 : 0;
-      STEIN.intro = function (v) { intro = v; };
+      var maus = { x: 0, y: 0 }, mx = 0, my = 0, sichtbar = true, breite = 0, hoehe = 0;
+      window.addEventListener('pointermove', function (e) { maus.x = e.clientX / window.innerWidth - .5; maus.y = e.clientY / window.innerHeight - .5; });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { sichtbar = e[0].isIntersecting; }).observe(cv);
+      var t0 = performance.now();
       (function bild(jetzt) {
         requestAnimationFrame(bild);
         if (!sichtbar || document.hidden) return;
-        groesse();
-        var t = (jetzt - t0) / 1000, s = STEIN.scroll;
-        mx += (STEIN.maus.x - mx) * 0.05; my += (STEIN.maus.y - my) * 0.05;
-        var dreh = RUHIG ? 0 : Math.sin(t * 0.6) * 0.55;
-        form.rotation.set(0.12 + my * 0.5 + Math.sin(t * 0.8) * 0.05, dreh + mx * 0.9 + s * Math.PI * 2, 0);
-        var sk = (0.55 + 0.45 * intro) * (1 + s * 0.3) * (kamera.aspect < 0.8 ? 0.78 : 0.68);
-        form.scale.setScalar(sk);
-        form.position.y = (kamera.aspect < 0.8 ? 1.45 : 1.22) + Math.sin(t * 1.1) * 0.06 - s * 1.2;
+        var b = cv.clientWidth, h = cv.clientHeight;
+        if (b !== breite || h !== hoehe) { breite = b; hoehe = h; renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(b, h, false); kamera.aspect = b / h; kamera.updateProjectionMatrix(); }
+        var t = (jetzt - t0) / 1000;
+        mx += (maus.x - mx) * 0.06; my += (maus.y - my) * 0.06;
+        var schwenk = RUHIG ? 0 : Math.sin(t * 0.6) * 0.5;
+        form.rotation.set(0.1 + my * 0.5, schwenk + mx * 0.8, 0);
+        form.position.y = RUHIG ? 0 : Math.sin(t * 1.1) * 0.06;
         renderer.render(szene, kamera);
       })(t0);
-    })();
-
-    // =====================================================================
-    //  Bewegung: Vorspann, weiches Scrollen, Scroll-Animationen
-    // =====================================================================
-    var gestartet = false;
-    function starteSeite() {
-      if (gestartet) return; gestartet = true;
-      document.body.classList.remove('laedt');
-      if (!window.gsap || RUHIG) { if (STEIN.intro) STEIN.intro(1); $('vorspann').hidden = true; return; }
-      gsap.registerPlugin(ScrollTrigger);
-      if (window.Lenis) {
-        var lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-        window.__lenis = lenis;
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
-        gsap.ticker.lagSmoothing(0);
-        Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
-          a.addEventListener('click', function (e) { var z = document.querySelector(a.getAttribute('href')); if (!z) return; e.preventDefault(); lenis.scrollTo(z, { offset: a.getAttribute('href') === '#start' ? 0 : -70 }); });
-        });
-      }
-
-      // Vorspann gleitet nach oben weg, Titel fährt hoch, Skulptur wächst
-      var o = { v: 0 };
-      gsap.timeline()
-        .to('#vorspann', { yPercent: -100, duration: 1.1, ease: 'expo.inOut' })
-        .to(o, { v: 1, duration: 1.6, ease: 'expo.out', onUpdate: function () { if (STEIN.intro) STEIN.intro(o.v); } }, .3)
-        .from('.hero-titel .zeile-m > span', { yPercent: 110, duration: 1.3, stagger: .1, ease: 'expo.out' }, .45)
-        .from('.hero-fuss .huelle > *, .nav .huelle > *', { y: 24, opacity: 0, duration: 1, stagger: .06, ease: 'expo.out' }, .6)
-        .set('#vorspann', { display: 'none' });
-
-      // Hero bleibt kurz stehen, die Skulptur dreht mit dem Scrollen
-      ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: '+=100%', pin: true, scrub: true, onUpdate: function (s) { STEIN.scroll = s.progress; } });
-      gsap.to('.hero-titel', { scale: .82, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=100%', scrub: true } });
-      gsap.to('.hero-fuss', { opacity: 0, y: 40, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=40%', scrub: true } });
-
-      // Laufband: beschleunigt mit dem Scrollen
-      var lauf = gsap.to('.spur', { xPercent: -50, duration: 26, ease: 'none', repeat: -1 });
-      ScrollTrigger.create({ trigger: '.band', start: 'top bottom', end: 'bottom top', onUpdate: function (s) {
-        var v = gsap.utils.clamp(-5, 5, s.getVelocity() / 260);
-        gsap.to(lauf, { timeScale: v === 0 ? 1 : (v > 0 ? 1 + v : -1 + v), duration: .3, overwrite: true, onComplete: function () { gsap.to(lauf, { timeScale: s.direction < 0 ? -1 : 1, duration: 1 }); } });
-      } });
-
-      // Aussage leuchtet Wort für Wort auf
-      gsap.to('#aussage .w', { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: '.aussage', start: 'top 75%', end: 'bottom 55%', scrub: true } });
-
-      // Überschriften steigen auf
-      gsap.utils.toArray('.abschnitt-kopf h2, .schluss h2').forEach(function (h) {
-        gsap.from(h, { y: 80, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: h, start: 'top 88%', once: true } });
-      });
-
-      // Gestapelte Karten: die vordere schiebt die hintere zurück
-      var karten = gsap.utils.toArray('.karte');
-      karten.forEach(function (k, i) {
-        if (i === karten.length - 1) return;
-        gsap.to(k, { scale: .92, filter: 'brightness(.4)', ease: 'none', scrollTrigger: { trigger: karten[i + 1], start: 'top 70%', end: 'top 12%', scrub: true } });
-      });
-
-      // Kurs zählt hoch
-      Array.prototype.forEach.call(document.querySelectorAll('.zaehler'), function (z) {
-        var ziel = Number(z.getAttribute('data-ziel')) || 0, obj = { n: 0 };
-        z.textContent = '0';
-        gsap.to(obj, { n: ziel, duration: 2, ease: 'power3.out', scrollTrigger: { trigger: z, start: 'top 85%', once: true }, onUpdate: function () { z.textContent = Math.round(obj.n); } });
-      });
-
-      // Ablauf: Linien füllen sich
-      gsap.to('.schritt .fuell', { scaleX: 1, stagger: .25, ease: 'none', scrollTrigger: { trigger: '.schritte', start: 'top 80%', end: 'top 40%', scrub: true } });
-      gsap.from('.schritt', { y: 50, opacity: 0, stagger: .12, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.schritte', start: 'top 85%', once: true } });
-      gsap.from('.licht-karte', { y: 70, opacity: 0, stagger: .12, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.duo', start: 'top 88%', once: true } });
-
-      // Wortmarke fährt hoch
-      gsap.from('.wortmarke', { yPercent: 60, ease: 'none', scrollTrigger: { trigger: '.schluss', start: 'top bottom', end: 'bottom bottom', scrub: true } });
-
-      // Magnetischer Knopf und eigener Mauszeiger (nur mit Maus)
-      if (window.matchMedia('(pointer: fine)').matches) {
-        var mg = document.querySelector('.magnet');
-        var xTo = gsap.quickTo(mg, 'x', { duration: .7, ease: 'elastic.out(1, .4)' }), yTo = gsap.quickTo(mg, 'y', { duration: .7, ease: 'elastic.out(1, .4)' });
-        mg.addEventListener('pointermove', function (e) { var r = mg.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .35); yTo((e.clientY - r.top - r.height / 2) * .35); });
-        mg.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
-        var punkt = document.querySelector('.zeiger'), ring = document.querySelector('.zeiger-ring');
-        var px = gsap.quickTo(punkt, 'left', { duration: .1 }), py = gsap.quickTo(punkt, 'top', { duration: .1 });
-        var rx = gsap.quickTo(ring, 'left', { duration: .45, ease: 'power3.out' }), ry = gsap.quickTo(ring, 'top', { duration: .45, ease: 'power3.out' });
-        window.addEventListener('pointermove', function (e) { px(e.clientX); py(e.clientY); rx(e.clientX); ry(e.clientY); });
-        document.addEventListener('pointerover', function (e) { ring.classList.toggle('gross', !!(e.target.closest && e.target.closest('a, button, [data-zeiger]'))); });
-      }
-    }
-
-    // Vorspann: Zähler 0 → 100
-    (function vorspann() {
-      if (RUHIG || !window.gsap) { $('vorspann').hidden = true; starteSeite(); return; }
-      var z = { n: 0 };
-      gsap.to(z, { n: 100, duration: 2.2, ease: 'power2.inOut', onUpdate: function () {
-        $('vzahl').textContent = Math.round(z.n);
-        $('vbalken').style.transform = 'scaleX(' + (z.n / 100) + ')';
-      }, onComplete: starteSeite });
-      // Sicherheitsnetz: falls Animationen pausieren (z. B. Tab im Hintergrund), startet die Seite trotzdem
-      setTimeout(function () { if (!gestartet) { $('vorspann').hidden = true; starteSeite(); } }, 4500);
     })();
   </script>
 </body>
